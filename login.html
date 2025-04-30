@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="english">
+  <head>
+    <title>Login Page - Simulator Longsor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+    
+    <!-- Favicons -->
+    <link href="assets/img/favicon.ico" rel="icon">
+    <link href="assets/img/favicon/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <style data-tag="reset-style-sheet">
+      html {
+        line-height: 1.15;
+      }
+      body {
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+        border-width: 0;
+        border-style: solid;
+        -webkit-font-smoothing: antialiased;
+      }
+      p, li, ul, pre, div, h1, h2, h3, h4, h5, h6, figure, blockquote, figcaption {
+        margin: 0;
+        padding: 0;
+      }
+      button {
+        background-color: transparent;
+      }
+      button, input, optgroup, select, textarea {
+        font-family: inherit;
+        font-size: 100%;
+        line-height: 1.15;
+        margin: 0;
+      }
+      button, select {
+        text-transform: none;
+      }
+      button, [type="button"], [type="reset"], [type="submit"] {
+        -webkit-appearance: button;
+        appearance: button;
+        color: inherit;
+      }
+      button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner {
+        border-style: none;
+        padding: 0;
+      }
+      button:-moz-focus, [type="button"]:-moz-focus, [type="reset"]:-moz-focus, [type="submit"]:-moz-focus {
+        outline: 1px dotted ButtonText;
+      }
+      a {
+        color: inherit;
+        text-decoration: inherit;
+      }
+      input {
+        padding: 2px 4px;
+      }
+      img {
+        display: block;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+    <style data-tag="default-style-sheet">
+      html {
+        font-family: Inter;
+        font-size: 16px;
+      }
+      body {
+        font-weight: 400;
+        font-style: normal;
+        text-decoration: none;
+        text-transform: none;
+        letter-spacing: normal;
+        line-height: 1.15;
+        color: var(--dl-color-theme-neutral-dark);
+        background: var(--dl-color-theme-neutral-light);
+        fill: var(--dl-color-theme-neutral-dark);
+      }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/animate.css@4.1.1/animate.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css" />
+  </head>
+  <body>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <div>
+      <link href="assets/css/login.css" rel="stylesheet" />
+
+      <div class="login-page-container">
+        <div class="login-page-login-page">
+          <img
+            src="assets/img/login/bgcontact3112-d3p-900h.png"
+            alt="bgcontact3112"
+            class="login-page-bgcontact"
+          />
+            <a class="login-page-logo">
+              <img src="assets/img/logo.png" alt="logo">
+              <span class="login-page-text10">SIMULATOR <br> LONGSOR</span>
+            </a>
+            <div class="login-page-login-form">
+              <form id="loginForm" action="php/submit-login.php" method="POST">
+                <div class="login-page-login-card">
+                  <div class="login-page-group180">
+                    <span class="login-page-text11">LOGIN</span>
+                    <a href="index.html" class="login-page-text12">Kembali Ke Halaman Utama</a>
+                    <div id="message"></div> <!-- Menampilkan pesan login -->
+                    <div class="login-page-button">
+                      <button type="submit" class="login-page-text13">LOGIN</button>
+                    </div>
+                    <div class="login-page-email">
+                      <img
+                        src="assets/img/login/rectangle112951-x6t9.svg"
+                        alt="Rectangle112951"
+                        class="login-page-rectangle11"
+                      />
+                      <input type="email" name="email" class="login-page-text14" placeholder="Email" required />
+                      <div class="login-page-group341">
+                        <div class="login-page-group331">
+                          <img
+                            src="assets/img/login/ellipse272951-13e4-200w.png"
+                            alt="Ellipse272951"
+                            class="login-page-ellipse271"
+                          />
+                          <img
+                            src="assets/img/login/ellipse282951-qgj-200h.png"
+                            alt="Ellipse282951"
+                            class="login-page-ellipse28"
+                          />
+                          <img
+                            src="assets/img/login/ellipse292951-a69c-200h.png"
+                            alt="Ellipse292951"
+                            class="login-page-ellipse29"
+                          />
+                        </div>
+                      </div>
+                      <span class="login-page-text15">Email</span>
+                    </div>
+                    <div class="login-page-password">
+                      <img
+                        src="assets/img/login/rectangle122952-472r-200h.png"
+                        alt="Rectangle122952"
+                        class="login-page-rectangle12"
+                      />
+                      <div class="login-page-group342">
+                        <div class="login-page-group332">
+                          <img
+                            src="assets/img/login/rectangle272952-zwo-200h.png"
+                            alt="Rectangle272952"
+                            class="login-page-rectangle27"
+                          />
+                          <img
+                            src="assets/img/login/rectangle282952-mt5-200h.png"
+                            alt="Rectangle282952"
+                            class="login-page-rectangle28"
+                          />
+                          <img
+                            src="assets/img/login/ellipse272952-lzn6-200h.png"
+                            alt="Ellipse272952"
+                            class="login-page-ellipse272"
+                          />
+                        </div>
+                        <img
+                          src="assets/img/login/line32952-4ta.svg"
+                          alt="Line32952"
+                          class="login-page-line32"
+                        />
+                      </div>
+                      <input type="password" name="password" class="login-page-text17" placeholder="Password" required />
+                      <span class="login-page-text18">Password</span>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            <div class="login-page-vector">
+              <img
+              src="assets/img/login/file22969-otjx-500w.png"
+              alt="file22969"
+              class="login-page-file2"
+              />
+            </div>
+            </div>
+          <div class="login-page-collab">
+            <a href="https://aws-web-jkt.kai.id/corporate/organization/">
+              <img
+                src="assets/img/login/images2removebgpreview12969-br5-200h.png"
+                alt="images2removebgpreview12969"
+                class="login-page-images2removebgpreview1"
+              />
+            
+            <a href="https://telkomuniversity.ac.id/">
+            <img
+              src="assets/img/login/logotelkomuniversity12969-nqao-200h.png"
+              alt="logotelkomuniversity12969"
+              class="login-page-logotelkomuniversity1"
+            />
+          </a>
+            <span class="login-page-text19">In collaboration with :</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="assets/js/login.js"></script>
+  </body>
+</html>

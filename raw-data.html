@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Raw Data - Simulator Longsor</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.ico" rel="icon">
+  <link href="assets/img/favicon/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  
+  <!-- Main CSS File -->
+  <link href="assets/css/raw-data.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- XLSX.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+
+</head>
+
+<body>
+    <!-- Overlay Loading -->
+  <div id="loadingPage">
+    <div class="loading-indicator">
+      <span>Loading...</span>
+    </div>
+  </div>
+  <div class="frame-home-page1-container">
+    <div class="frame-home-page1-frame-home-page1">
+      <img src="assets/img/home/bghome3112-hau9-900h.png" alt="bgHome3112" class="frame-home-page1-bg-home" />
+      
+      <!-- Raw Data Table and Graphs -->
+      <div class="frame-home-page1-history-table">
+        <h2>Raw Data Simulasi</h2>
+        <p id="simulationNameDisplay">Nama Simulasi: <strong>Loading...</strong></p>
+        <div class="d-flex align-items-center gap-2 mb-3 flex-wrap">
+          <button class="btn btn-secondary" onclick="backToHistory()">← Kembali ke History</button>
+          <button class="btn btn-primary" onclick="downloadExcel()">Unduh Excel</button>
+        
+          <!-- Dropdown untuk memilih interval -->
+          <div>
+            <label for="intervalSelector" class="form-label mb-0 me-2 fw-bold">Interval:</label>
+            <select id="intervalSelector" class="form-select form-select-sm d-inline-block w-auto" onchange="updateInterval()">
+              <option value="5min">5 Menit</option>
+              <option value="15min">15 Menit</option>
+              <option value="30min">30 Menit</option>
+              <option value="1h" selected>1 Jam</option>
+              <option value="all">Seluruhnya</option>
+            </select>            
+          </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" style="display: none;" class="loading-indicator">
+          <span>Loading...</span>
+        </div>
+
+        <!-- Raw Data Section -->
+        <div id="rawDataSection" style="display: none;">
+          <!-- Grafik -->
+          <div class="charts-container">
+            <!-- Grafik Kelembaban Tanah -->
+            <div class="chart-container" style="width: 100%;">
+              <canvas id="humidityChart"></canvas>
+            </div>
+            
+            <!-- Grafik Kemiringan dan Curah Hujan (Sejajar) -->
+            <div class="chart-row">
+              <div class="chart-container" style="width: 50%;">
+                <canvas id="slopeChart"></canvas>
+              </div>
+              <div class="chart-container" style="width: 50%;">
+                <canvas id="rainfallChart"></canvas>
+              </div>
+            </div>
+          </div>
+                 
+          
+          <!-- Tabel Raw Data -->
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th rowspan="2">No</th>
+                <th rowspan="2">Waktu</th>
+                <th colspan="6" class="text-center">Kelembaban Tanah</th>
+                <th colspan="2" class="text-center">Kemiringan</th>
+                <th colspan="2" class="text-center">Curah Hujan</th>
+              </tr>
+              <tr>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>Input</th>
+                <th>Output</th>
+                <th>Input</th>
+                <th>Output</th>
+              </tr>
+            </thead>                               
+            <tbody id="simulationTableBody">
+              <!-- Data akan dimasukkan dari JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Script -->
+  <script src="assets/js/raw-data.js"></script>
+
+  <!-- Inline Styles (optional for loading indicator and general styles) -->
+</body>
+</html>

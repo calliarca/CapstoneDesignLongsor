@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>History Simulasi - Simulator Longsor</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.ico" rel="icon">
+  <link href="assets/img/favicon/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  
+  <!-- Main CSS File -->
+  <link href="assets/css/user.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+    <div class="frame-home-page1-container">
+        <div class="frame-home-page1-frame-home-page1">
+          <img src="assets/img/home/bghome3112-hau9-900h.png" alt="bgHome3112" class="frame-home-page1-bg-home" />
+          <!-- Sidebar -->
+          <div class="frame-home-page1-sidebar">
+            <div class="frame-home-page1-home" onclick="window.location.href='home-admin.html'">
+              <img src="assets/img/user/Home Vector.svg" alt="HomeVector3118" class="frame-home-page1-home-vector" />
+              <span class="frame-home-page1-text46">Home</span>
+            </div>
+            <div class="frame-home-page1-history" onclick="window.location.href='history.html'">
+              <img src="assets/img/user/history.svg" alt="History" class="frame-home-page1-history-vector" />
+              <span class="frame-home-page1-text42">History</span>
+            </div>
+            <div class="frame-home-page1-logout" onclick="navigateTo('logout')">
+              <img src="assets/img/user/logout.svg" alt="Lock8838" class="frame-home-page1-lock" />
+              <span class="frame-home-page1-text44">Logout</span>
+            </div>
+            <div class="frame-home-page1-user" onclick="window.location.href='user.html'">
+              <img
+                src="assets/img/user/user.svg"
+                alt="UserIcon"
+                class="frame-home-page1-user-vector"
+              />
+              <span class="frame-home-page1-text48">User</span>
+            </div>
+            <span class="user-name" id="user-name">Loading...</span>
+          </div>
+
+          <!-- Add User -->
+            <div class="container d-flex justify-content-center align-items-center mt-5">
+                <div class="card p-4 shadow-lg" style="max-width: 700px; width: 100%;">
+                    <div class="row g-0">
+                        <!-- Left Section -->
+                        <div class="col-md-5 d-flex align-items-center">
+                            <img src="./assets/img/user/file14915-tr9-500h.png" class="img-fluid rounded-start" alt="Simulator Longsor">
+                        </div>
+
+                        <!-- Right Section -->
+                        <div class="col-md-7">
+                            <div class="card-body">
+                                <h4 class="text-center fw-bold">Registrasi Pengguna Baru</h4>
+                                <form id="registerForm">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Nama</label>
+                                        <input type="text" class="form-control" id="name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" required>
+                                    </div>
+                                    <div class="mb-3 position-relative">
+                                        <label for="password" class="form-label">Password</label>
+                                        <div class="input-group">
+                                            <input type="password" class="form-control" id="password" required>
+                                            <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('password', 'togglePass1')">
+                                                <i id="togglePass1" class="fa-solid fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 position-relative">
+                                        <label for="confirmPassword" class="form-label">Ketik Ulang Password</label>
+                                        <div class="input-group">
+                                            <input type="password" class="form-control" id="confirmPassword" required>
+                                            <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('confirmPassword', 'togglePass2')">
+                                                <i id="togglePass2" class="fa-solid fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="accountType" class="form-label">Tipe Akun</label>
+                                        <select class="form-select" id="accountType" required>
+                                            <option value="">Pilih Tipe Akun</option>
+                                            <option value="admin">Admin</option>
+                                            <option value="user">User</option>
+                                        </select>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary w-100">Daftar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+
+        </div>
+    </div>
+    <script src="assets/js/user.js"></script>
+  </body>
+</html>

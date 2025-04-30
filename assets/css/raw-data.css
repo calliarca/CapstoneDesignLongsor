@@ -1,0 +1,392 @@
+/* Global Settings */
+html, body {
+  overflow: hidden; /* Mencegah halaman di-scroll */
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fonts */
+:root {
+  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --heading-font: "Nunito Sans", sans-serif;
+  --nav-font: "Poppins", sans-serif;
+}
+
+/* Global Colors */
+:root {
+  --background-color: #ffffff;
+  --default-color: #555555;
+  --heading-color: #364146;
+  --accent-color: #009cea;
+  --surface-color: #ffffff;
+  --contrast-color: #ffffff;
+}
+
+/* Nav Menu Colors */
+:root {
+  --nav-color: #828c91;
+  --nav-hover-color: #009cea;
+  --nav-mobile-background-color: #ffffff;
+  --nav-dropdown-background-color: #ffffff;
+  --nav-dropdown-color: #555555;
+  --nav-dropdown-hover-color: #009cea;
+}
+
+/* Smooth scroll */
+:root {
+  scroll-behavior: smooth;
+}
+
+/*--------------------------------------------------------------
+# History Table on Background
+--------------------------------------------------------------*/
+.frame-home-page1-history-table {
+  position: absolute;
+  top: 30px;
+  left: 20px;
+  right: 20px;
+  padding: 20px;
+  background-color: var(--surface-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+}
+
+.frame-home-page1-history-table::-webkit-scrollbar {
+  width: 8px;
+}
+
+.frame-home-page1-history-table::-webkit-scrollbar-thumb {
+  background-color: var(--accent-color);
+  border-radius: 10px;
+}
+
+.frame-home-page1-history-table h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-family: var(--heading-font);
+  color: var(--heading-color);
+  font-weight: 600;
+}
+
+.frame-home-page1-history-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--default-font);
+}
+
+.frame-home-page1-history-table th,
+.frame-home-page1-history-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.frame-home-page1-history-table th {
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.frame-home-page1-history-table td {
+  color: var(--default-color);
+  font-size: 14px;
+}
+
+.frame-home-page1-history-table tr:hover {
+  background-color: rgba(0, 156, 234, 0.05);
+}
+
+/* Detail Button */
+.detail-button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  margin: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.detail-button:hover {
+  background-color: #0056b3;
+}
+
+.detail-button:nth-child(2) {
+  background-color: #28a745;
+}
+
+.detail-button:nth-child(2):hover {
+  background-color: #1e7e34;
+}
+
+.detail-button:nth-child(3) {
+  background-color: #ffc107;
+  color: black;
+}
+
+.detail-button:nth-child(3):hover {
+  background-color: #e0a800;
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+  .frame-home-page1-history-table {
+    left: 20px;
+    right: 20px;
+    padding: 10px;
+  }
+
+  .frame-home-page1-history-table table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .frame-home-page1-history-table th,
+  .frame-home-page1-history-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .frame-home-page1-history-table h2 {
+    font-size: 20px;
+  }
+
+  .detail-button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+/* Overlay */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+}
+
+/*--------------------------------------------------------------
+# Chart.js - Graph Section
+--------------------------------------------------------------*/
+.charts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Jarak antar grafik */
+}
+
+.chart-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem; /* Jarak antar grafik kemiringan dan curah hujan */
+}
+
+.chart-container {
+  background-color: var(--surface-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+canvas {
+  width: 100%;
+  height: 300px; /* Ukuran tinggi grafik */
+}
+
+/* Grafik Kelembaban Tanah */
+#humidityChart {
+  height: 300px;  /* Sesuaikan ukuran tinggi grafik kelembaban tanah */
+}
+
+
+/*--------------------------------------------------------------
+# Raw Data Table Section
+--------------------------------------------------------------*/
+.table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+td {
+  color: var(--default-color);
+  font-size: 14px;
+}
+
+tr:hover {
+  background-color: rgba(0, 156, 234, 0.05);
+}
+
+/*--------------------------------------------------------------
+# Buttons Section - Excel Download Button
+--------------------------------------------------------------*/
+button {
+  font-size: 1em;
+  padding: 10px 15px;
+  margin: 10px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--accent-color);
+}
+
+/* Specific Button Style for Download */
+.btn-primary {
+  background-color: #009cea;
+  color: #ffffff;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #007bb5;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: #ffffff;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+  .charts-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  canvas {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .frame-home-page1-history-table {
+    left: 20px;
+    right: 20px;
+    padding: 10px;
+  }
+
+  .frame-home-page1-history-table table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .frame-home-page1-history-table th,
+  .frame-home-page1-history-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .frame-home-page1-history-table h2 {
+    font-size: 20px;
+  }
+
+  button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+#loadingIndicator {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  display: none;
+}
+
+.loading-indicator {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 20px;
+}
+.charts-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+.charts-container canvas {
+  width: 32%;
+  height: 250px;
+}
+
+/* Efek Loading */
+#loadingPage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.3s ease-out;
+}
+
+#loadingPage.hidden {
+  opacity: 0;
+  pointer-events: none; /* Menonaktifkan interaksi saat loading */
+}
+
+/* Transisi halaman masuk */
+body {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+body.loaded {
+  opacity: 1;
+}

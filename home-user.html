@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>History Simulasi - Simulator Longsor</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.ico" rel="icon">
+  <link href="assets/img/favicon/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  
+  <!-- Main CSS File -->
+  <link href="assets/css/home-user.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <div class="frame-home-page1-container">
+        <div class="frame-home-page1-frame-home-page1">
+          <img src="assets/img/home/bghome3112-hau9-900h.png" alt="bgHome3112" class="frame-home-page1-bg-home" />
+          <!-- Sidebar -->
+          <div class="frame-home-page1-sidebar">
+            <div class="frame-home-page1-history" onclick="window.location.href='#'">
+              <img src="assets/img/history/history.svg" alt="History" class="frame-home-page1-history-vector" />
+              <span class="frame-home-page1-text42">History</span>
+            </div>
+            <div class="frame-home-page1-logout" onclick="navigateTo('logout')">
+              <img src="assets/img/history/logout.svg" alt="Lock8838" class="frame-home-page1-lock" />
+              <span class="frame-home-page1-text44">Logout</span>
+            </div>        
+            <span class="user-name" id="user-name">Loading...</span>
+          </div>
+          <!-- History Table -->
+          <div class="frame-home-page1-history-table">
+            <h2>History Simulasi</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Tanggal</th>
+                  <th>Timestamp</th>
+                  <th>Waktu Simulasi</th>
+                  <th>Nama Simulasi</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="simulationTableBody">
+                <!-- Data akan dimasukkan dari JavaScript -->
+            </tbody>            
+            </table>
+          </div>
+        </div>
+      </div>
+      <script src="assets/js/home-user.js"></script>
+    </body>
+  </html>

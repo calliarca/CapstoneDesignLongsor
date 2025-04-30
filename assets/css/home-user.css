@@ -1,0 +1,305 @@
+/* Fonts */
+:root {
+    --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --heading-font: "Nunito Sans",  sans-serif;
+    --nav-font: "Poppins",  sans-serif;
+  }
+  
+  /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
+  :root { 
+    --background-color: #ffffff; /* Background color for the entire website, including individual sections */
+    --default-color: #555555; /* Default color used for the majority of the text content across the entire website */
+    --heading-color: #364146; /* Color for headings, subheadings and title throughout the website */
+    --accent-color: #009cea; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+    --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
+    --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+  }
+  
+  /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
+  :root {
+    --nav-color: #828c91;  /* The default color of the main navmenu links */
+    --nav-hover-color: #009cea; /* Applied to main navmenu links when they are hovered over or active */
+    --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
+    --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
+    --nav-dropdown-color: #555555; /* Used for navigation links of the dropdown items in the navigation menu. */
+    --nav-dropdown-hover-color: #009cea; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+  }
+  
+  /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
+  
+  .light-background {
+    --background-color: #f6f8fa;
+    --surface-color: #ffffff;
+  }
+  
+  .feature-background {
+    --background-color: #EFEFEF; /* Feature color for the website */
+    --surface-color: #ffffff;
+  }
+  
+  .dark-background {
+    --background-color: #060606;
+    --default-color: #ffffff;
+    --heading-color: #ffffff;
+    --surface-color: #252525;
+    --contrast-color: #ffffff;
+  }
+  
+  /* Smooth scroll */
+  :root {
+    scroll-behavior: smooth;
+  }
+
+/*--------------------------------------------------------------
+# Background Container
+--------------------------------------------------------------*/
+
+.frame-home-page1-container {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+.frame-home-page1-frame-home-page1 {
+  width: 100%;
+  height: 100vh; /* Adjust to full viewport height */
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  align-items: flex-start;
+  flex-shrink: 0;
+  background-color: rgba(255, 255, 255, 1);
+}
+.frame-home-page1-bg-home {
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  object-fit: cover; /* Ensure background covers the area */
+}
+
+/*--------------------------------------------------------------
+# Sidebar
+--------------------------------------------------------------*/
+.frame-home-page1-sidebar {
+    top: 0px;
+    left: 0px;
+    width: 72px;
+    height: 100vh; /* Adjust height to full viewport height */
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+    background-color: rgba(255, 255, 255, 1);
+  }
+.frame-home-page1-sidebar div {
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+.frame-home-page1-sidebar div:hover {
+    transform: scale(1.05); /* Sedikit membesar saat hover */
+  }
+.frame-home-page1-sidebar div:active {
+    background-color: rgba(200, 200, 200, 1); /* Warna saat klik */
+    transform: scale(0.95); /* Sedikit mengecil saat klik */
+  }
+.frame-home-page1-history {
+    top: 5%;
+    left: 13px;
+    width: 49px;
+    height: 57px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+    margin-bottom: 20px; /* Add gap */
+  }
+.frame-home-page1-text42 {
+    top: 40px;
+    color: rgba(15, 139, 120, 1);
+    height: auto;
+    position: absolute;
+    font-size: 14px;
+    font-style: SemiBold;
+    text-align: left;
+    font-weight: 600;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+.frame-home-page1-history-vector {
+    top: 0px;
+    left: 5px;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+  }
+.frame-home-page1-logout {
+    top: 15%;
+    left: 14px;
+    width: 47px;
+    height: 60px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+    margin-bottom: 10px; /* Add gap */
+  }
+.frame-home-page1-text44 {
+    top: 43px;
+    color: rgba(0, 0, 0, 1);
+    height: auto;
+    position: absolute;
+    font-size: 14px;
+    font-style: SemiBold;
+    text-align: left;
+    font-weight: 600;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+.frame-home-page1-lock {
+    top: 0px;
+    left: 2px;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+  }
+.frame-home-page1-text42,
+.frame-home-page1-text44,
+.frame-home-page1-text46,
+.frame-home-page1-text48 {
+    font-family: var(--nav-font); /* Gunakan font Poppins */
+}
+
+/*--------------------------------------------------------------
+# History Table on Background
+--------------------------------------------------------------*/
+
+.frame-home-page1-history-table {
+    position: absolute;
+    top: 20px;
+    left: 100px;
+    right: 20px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+  }
+  
+  .frame-home-page1-history-table h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-family: var(--heading-font);
+    color: var(--heading-color);
+    font-weight: 600;
+  }
+  
+  .frame-home-page1-history-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--default-font);
+  }
+  
+  .frame-home-page1-history-table th,
+  .frame-home-page1-history-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .frame-home-page1-history-table th {
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+  
+  .frame-home-page1-history-table td {
+    color: var(--default-color);
+    font-size: 14px;
+  }
+  
+  .frame-home-page1-history-table tr:hover {
+    background-color: rgba(0, 156, 234, 0.05);
+  }
+  
+  .detail-button {
+    background-color: #007bff; /* Warna biru */
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    margin: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .detail-button:hover {
+    background-color: #0056b3; /* Warna biru lebih gelap saat hover */
+  }
+  
+  .detail-button:nth-child(2) {
+    background-color: #28a745; /* Warna hijau untuk "Lihat Valid Data" */
+  }
+  
+  .detail-button:nth-child(2):hover {
+    background-color: #1e7e34;
+  }
+  
+  .detail-button:nth-child(3) {
+    background-color: #ffc107; /* Warna kuning untuk "Tambahkan User" */
+    color: black;
+  }
+  
+  .detail-button:nth-child(3):hover {
+    background-color: #e0a800;
+  }
+  
+  /* Responsive Table */
+  @media (max-width: 768px) {
+    .frame-home-page1-history-table {
+      left: 80px;
+      right: 10px;
+      padding: 10px;
+    }
+  
+    .frame-home-page1-history-table table {
+      display: block;
+      overflow-x: auto;
+    }
+  
+    .frame-home-page1-history-table th,
+    .frame-home-page1-history-table td {
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+  
+    .frame-home-page1-history-table h2 {
+      font-size: 20px;
+    }
+  
+    .detail-button {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+  }
+
+  .user-name {
+    position: absolute; /* Pastikan tetap di dalam sidebar */
+    bottom: 20px; /* Beri jarak dari bawah */
+    left: 50%; /* Pusatkan secara horizontal */
+    transform: translateX(-50%); /* Agar teks benar-benar di tengah */
+    text-align: center; /* Teks rata tengah */
+    width: 100%; /* Sesuaikan lebar */
+    font-weight: bold; /* Buat teks lebih jelas */
+    color: black; /* Sesuaikan warna teks agar kontras */
+    padding: 10px 0; /* Ruang atas dan bawah */
+  }
+  

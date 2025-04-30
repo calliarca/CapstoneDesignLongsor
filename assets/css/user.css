@@ -1,0 +1,372 @@
+/* Fonts */
+:root {
+    --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --heading-font: "Nunito Sans",  sans-serif;
+    --nav-font: "Poppins",  sans-serif;
+  }
+  
+  /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
+  :root { 
+    --background-color: #ffffff; /* Background color for the entire website, including individual sections */
+    --default-color: #555555; /* Default color used for the majority of the text content across the entire website */
+    --heading-color: #364146; /* Color for headings, subheadings and title throughout the website */
+    --accent-color: #009cea; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+    --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
+    --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+  }
+  
+  /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
+  :root {
+    --nav-color: #828c91;  /* The default color of the main navmenu links */
+    --nav-hover-color: #009cea; /* Applied to main navmenu links when they are hovered over or active */
+    --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
+    --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
+    --nav-dropdown-color: #555555; /* Used for navigation links of the dropdown items in the navigation menu. */
+    --nav-dropdown-hover-color: #009cea; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+  }
+  
+  /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
+  
+  .light-background {
+    --background-color: #f6f8fa;
+    --surface-color: #ffffff;
+  }
+  
+  .feature-background {
+    --background-color: #EFEFEF; /* Feature color for the website */
+    --surface-color: #ffffff;
+  }
+  
+  .dark-background {
+    --background-color: #060606;
+    --default-color: #ffffff;
+    --heading-color: #ffffff;
+    --surface-color: #252525;
+    --contrast-color: #ffffff;
+  }
+  
+  /* Smooth scroll */
+  :root {
+    scroll-behavior: smooth;
+  }
+
+/*--------------------------------------------------------------
+# Background Container
+--------------------------------------------------------------*/
+
+.frame-home-page1-container {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+.frame-home-page1-frame-home-page1 {
+  width: 100%;
+  height: 100vh; /* Adjust to full viewport height */
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  align-items: flex-start;
+  flex-shrink: 0;
+  background-color: rgba(255, 255, 255, 1);
+}
+.frame-home-page1-bg-home {
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  object-fit: cover; /* Ensure background covers the area */
+}
+
+/*--------------------------------------------------------------
+# Sidebar
+--------------------------------------------------------------*/
+.frame-home-page1-sidebar {
+    top: 0px;
+    left: 0px;
+    width: 72px;
+    height: 100vh; /* Adjust height to full viewport height */
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+    background-color: rgba(255, 255, 255, 1);
+  }
+.frame-home-page1-sidebar div {
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+.frame-home-page1-sidebar div:hover {
+    transform: scale(1.05); /* Sedikit membesar saat hover */
+  }
+.frame-home-page1-sidebar div:active {
+    background-color: rgba(200, 200, 200, 1); /* Warna saat klik */
+    transform: scale(0.95); /* Sedikit mengecil saat klik */
+  }
+.frame-home-page1-history {
+    top: 15%;
+    left: 13px;
+    width: 49px;
+    height: 57px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+    margin-bottom: 20px; /* Add gap */
+  }
+.frame-home-page1-text42 {
+    top: 40px;
+    color: rgba(0, 0, 0, 1);
+    height: auto;
+    position: absolute;
+    font-size: 14px;
+    font-style: SemiBold;
+    text-align: left;
+    font-weight: 600;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+.frame-home-page1-history-vector {
+    top: 0px;
+    left: 5px;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+  }
+.frame-home-page1-logout {
+    top: 40%;
+    left: 14px;
+    width: 47px;
+    height: 60px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+    margin-bottom: 10px; /* Add gap */
+  }
+.frame-home-page1-text44 {
+    top: 43px;
+    color: rgba(0, 0, 0, 1);
+    height: auto;
+    position: absolute;
+    font-size: 14px;
+    font-style: SemiBold;
+    text-align: left;
+    font-weight: 600;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+.frame-home-page1-lock {
+    top: 0px;
+    left: 2px;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+  }
+.frame-home-page1-home {
+    top: 5%;
+    left: 14px;
+    width: 49px;
+    height: 57px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+    margin-bottom: 10px; /* Add gap */
+  }
+.frame-home-page1-text46 {
+    top: 50%;
+    left: 10%;
+    color: rgba(0, 0, 0, 1);
+    width: 40px;
+    height: auto;
+    position: absolute;
+    font-size: 14px;
+    font-style: SemiBold;
+    text-align: left;
+    font-weight: 600;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+.frame-home-page1-home-vector {
+    top: auto;
+    left: 10px;
+    width: 30px;
+    height: 26px;
+    position: absolute;
+  }
+  
+.frame-home-page1-user {
+  top: 27%;
+  left: 12px;
+  width: 49px;
+  height: 57px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+  margin-bottom: 20px; /* Add gap */
+}
+.frame-home-page1-text48 {
+  top: 40px;
+  left: 15%;
+  color: rgba(15, 139, 120, 1);
+  height: auto;
+  position: absolute;
+  font-size: 14px;
+  font-style: SemiBold;
+  text-align: center;
+  font-weight: 600;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.frame-home-page1-user-vector {
+  top: 0px;
+  left: 5px;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+}
+
+.frame-home-page1-text42,
+.frame-home-page1-text44,
+.frame-home-page1-text46,
+.frame-home-page1-text48 {
+    font-family: var(--nav-font); /* Gunakan font Poppins */
+}
+
+/*--------------------------------------------------------------
+# Registrasi
+--------------------------------------------------------------*/
+    .card-header {
+        background-color: var(--accent-color);
+        color: white;
+        font-size: 22px;
+        font-weight: bold;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding: 15px;
+    }
+    .form-control {
+        border-radius: 5px;
+    }
+    .btn-primary {
+        background-color: var(--accent-color);
+        border-color: var(--accent-color);
+        width: 100%;
+        border-radius: 5px;
+        padding: 10px;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+    body {
+      font-family: var(--default-font);
+      background-color: #ffffff; /* Ubah latar belakang menjadi putih */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh; /* Agar elemen tetap berada di tengah */
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+  }
+  
+  .container {
+      width: 100%;
+      max-width: 800px; /* Lebarkan kartu */
+      padding: 0px;
+  }
+  
+  .card {
+    display: flex;
+    flex-direction: row;
+    width: 100%; /* Lebarkan card */
+    max-width: 900px; /* Batasi lebar maksimum */
+    min-height: 400px; /* Tinggi minimum agar tidak terlalu pendek */
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-center {
+    padding-bottom: 15px;
+  }
+
+  .col-md-5 {
+    position: relative;
+    background-color:rgba(255, 255, 255, 0.5);
+    background-size: cover;
+    border-radius: 10px 0 0 10px; /* Opsional: agar tampak lebih smooth */
+    min-height: 100%; /* Pastikan tinggi div mengikuti container */
+  }
+
+  .col-md-5::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.5); /* Warna overlay, bisa diubah */
+      z-index: 1;
+  }
+  .col-md-5 img {
+    position: relative;
+    z-index: 2;
+  }
+
+
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+  .form-label {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600; /* Bold */
+      color: #333; /* Warna teks lebih gelap agar lebih jelas */
+      font-weight: bold;
+  }
+
+  .left-section {
+    flex: 1;
+    background-color: #6c7b8b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.left-section img {
+    max-width: 100%; /* Sesuaikan ukuran gambar */
+    height: auto;
+    border-radius: 10px;
+}
+
+.right-section {
+    flex: 1;
+    padding: 40px;
+    background-color: white;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.user-name {
+  position: absolute; /* Pastikan tetap di dalam sidebar */
+  bottom: 20px; /* Beri jarak dari bawah */
+  left: 50%; /* Pusatkan secara horizontal */
+  transform: translateX(-50%); /* Agar teks benar-benar di tengah */
+  text-align: center; /* Teks rata tengah */
+  width: 100%; /* Sesuaikan lebar */
+  font-weight: bold; /* Buat teks lebih jelas */
+  color: black; /* Sesuaikan warna teks agar kontras */
+  padding: 10px 0; /* Ruang atas dan bawah */
+}
+

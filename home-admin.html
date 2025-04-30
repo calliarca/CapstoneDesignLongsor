@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home Page - <span id="user-name">Guest</span></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+
+    <!-- MQTT.JS -->
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.ico" rel="icon" type="image/x-icon">
+    <link href="assets/img/favicon/apple-touch-icon.png" rel="apple-touch-icon" type="image/png">
+
+    <style data-tag="reset-style-sheet">
+      html { line-height: 1.15; }
+      body { margin: 0; }
+      * { box-sizing: border-box; border-width: 0; border-style: solid; -webkit-font-smoothing: antialiased; }
+      p, li, ul, pre, div, h1, h2, h3, h4, h5, h6, figure, blockquote, figcaption { margin: 0; padding: 0; }
+      button { background-color: transparent; }
+      button, input, optgroup, select, textarea { font-family: inherit; font-size: 100%; line-height: 1.15; margin: 0; }
+      button, select { text-transform: none; }
+      button, [type="button"], [type="reset"], [type="submit"] { -webkit-appearance: button; appearance: button; color: inherit; }
+      button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner { border-style: none; padding: 0; }
+      button:-moz-focus, [type="button"]:-moz-focus, [type="reset"]:-moz-focus, [type="submit"]:-moz-focus { outline: 1px dotted ButtonText; }
+      a { color: inherit; text-decoration: inherit; }
+      input { padding: 2px 4px; }
+      img { display: block; }
+      html { scroll-behavior: smooth; }
+    </style>
+    <style data-tag="default-style-sheet">
+      html {
+        font-family: Inter;
+        font-size: 16px;
+      }
+      body {
+        margin: 10;
+        height: 100%;
+        font-weight: 400;
+        font-style: normal;
+        text-decoration: none;
+        text-transform: none;
+        letter-spacing: normal;
+        line-height: 1.15;
+        color: var(--dl-color-theme-neutral-dark);
+        background: var(--dl-color-theme-neutral-light);
+        overflow: hidden;
+        fill: var(--dl-color-theme-neutral-dark);
+      }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/animate.css@4.1.1/animate.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:wght@400;500;600;700&display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css" />
+  </head>
+  <body>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <div>
+      <link href="assets/css/home.css" rel="stylesheet" />
+
+      <div class="frame-home-page1-container">
+        <div class="frame-home-page1-frame-home-page1">
+          <img
+            src="assets/img/home/bghome3112-hau9-900h.png"
+            alt="bgHome3112"
+            class="frame-home-page1-bg-home"
+          />
+          <img
+            src="assets/img/home/file14915-tr9-500h.png"
+            alt="file14915"
+            class="frame-home-page1-file1"
+          />
+        
+        
+        <!-- Bar Live -->
+        <div class="frame-home-page1barlive">
+            <div class="frame-home-page1-curah-hujan">
+              <span class="frame-home-page1-text25">15</span>
+              <span class="frame-home-page1-text26">m3</span>
+              <span class="frame-home-page1-text27">
+                <span>Curah</span>
+                <br />
+                <span>Hujan</span>
+              </span>
+              <img
+                src="assets/img/home/vector8856-5zq9.svg"
+                alt="Vector8856"
+                class="frame-home-page1-vector4"
+              />
+            </div>
+            <div class="frame-home-page1-humidity1">
+              <span class="frame-home-page1-text31">22</span>
+              <span class="frame-home-page1-text32">
+                <span>Kelembaban</span>
+                <br />
+                <span>Tanah</span>
+              </span>
+              <span class="frame-home-page1-text33">%</span>
+              <img
+                src="assets/img/home/carbonsoilmoisturefield3136-tz.svg"
+                alt="carbonsoilmoisturefield3136"
+                class="frame-home-page1-carbonsoilmoisturefield"
+              />
+            </div>
+            <div class="frame-home-page1-kemiringan">
+              <span class="frame-home-page1-text36" id="nilaiKemiringan">--</span>
+              <span class="frame-home-page1-text37">
+                <span>Derajat</span>
+                <br />
+                <span>Kemiringan</span>
+              </span>
+              <span class="frame-home-page1-text38">°</span>
+              <img
+                src="assets/img/home/vector8840-cmxe.svg"
+                alt="Vector8840"
+                class="frame-home-page1-vector5"
+              />
+            </div>
+            <div class="frame-home-page1-turn-on">
+              <label class="slider-container">
+                <input type="checkbox" id="toggle-simulation">
+                <span class="slider"></span>
+              </label>
+              <span id="simulation-text" class="frame-home-page1-text41">START SIMULATION</span>
+            </div>
+            <!-- Overlay -->
+            <div id="popup-overlay" class="popup-overlay"></div>
+            <!-- Popup untuk input nama simulasi -->
+            <div id="simulation-popup" class="popup" style="display:none;">
+              <div class="popup-content">
+                <h3>Enter Simulation Name</h3>
+                <input type="text" id="simulation-name" placeholder="Enter simulation name" />
+                <button id="save-simulation-btn">Save</button>
+                <button id="close-popup-btn">Cancel</button>
+              </div>
+            </div>
+        </div>
+
+        <!-- Kemiringan Form -->
+        <div class="frame-home-page1barderajatkemiringina">
+          <span class="frame-home-page1-text10">DERAJAT KEMIRINGAN</span>
+          <div class="input-field-kemiringan">
+            <select id="kemiringan-input" class="select-field" required disabled>
+              <option value="" disabled selected>Pilih Derajat</option>
+              <option value="0">0°</option>
+              <option value="5">5°</option>
+              <option value="10">10°</option>
+              <option value="15">15°</option>
+              <option value="20">20°</option>
+              <option value="25">25°</option>
+              <option value="30">30°</option>
+              <option value="35">35°</option>
+              <option value="40">40°</option>
+              <option value="45">45°</option>
+              <option value="50">50°</option>
+            </select>
+          </div>
+          <button class="frame-home-page1-button1" onclick="handleKemiringan()" disabled>INPUT</button>
+        </div>
+
+        <!-- Curah Hujan Form -->
+        <div class="frame-home-page1barcurahhujan">
+          <span class="frame-home-page1-text12">CURAH HUJAN</span>
+          <div class="input-field-curahhujan">
+            <input type="number" id="curah-hujan-input" 
+                  placeholder="Masukan Curah Hujan (mm)" 
+                  min="0" max="30" required disabled>
+          </div>
+          <button class="frame-home-page1-button2" onclick="handleCurahHujan()" disabled>INPUT</button>
+        </div>
+
+        <!-- Keterangan Curah Hujan -->
+        <div class="frame-home-page1-keterangan-curah-hujan">
+          <span class="frame-home-page1-text19">KLASIFIKASI CURAH HUJAN</span>
+                    <div class="frame-home-page1-siaga41">
+                      <div class="frame-home-page1-group1481">
+                        <img
+                          src="assets/img/home/ellipse961255-64tj-200w.png"
+                          alt="Ellipse961255"
+                          class="frame-home-page1-ellipse961"
+                        />
+                      </div>
+                      <span class="frame-home-page1-text14">
+                        Hujan Ringan : 1-5 mm/jam
+                      </span>
+                    </div>
+                    <div class="frame-home-page1-siaga5">
+                      <div class="frame-home-page1-group1482">
+                        <img
+                          src="assets/img/home/ellipse961252-4lf-200w.png"
+                          alt="Ellipse961252"
+                          class="frame-home-page1-ellipse962"
+                        />
+                      </div>
+                      <span class="frame-home-page1-text15">Berawan : 0 mm/hari</span>
+                    </div>
+                    <div class="frame-home-page1-siaga31">
+                      <div class="frame-home-page1-group1471">
+                        <img
+                          src="assets/img/home/ellipse961259-gzen-200w.png"
+                          alt="Ellipse961259"
+                          class="frame-home-page1-ellipse963"
+                        />
+                      </div>
+                      <span class="frame-home-page1-text16">
+                        Hujan Sedang : 5-10 mm/jam
+                      </span>
+                    </div>
+                    <div class="frame-home-page1-siaga21">
+                      <div class="frame-home-page1-group1451">
+                        <img
+                          src="assets/img/home/ellipse961251-ylf-200w.png"
+                          alt="Ellipse961251"
+                          class="frame-home-page1-ellipse964"
+                        />
+                      </div>
+                      <span class="frame-home-page1-text17">
+                        Hujan Lebat : 10-20 mm/jam
+                      </span>
+                    </div>
+                    <div class="frame-home-page1-siaga11">
+                      <div class="frame-home-page1-group1461">
+                        <img
+                          src="assets/img/home/ellipse961251-a3u4-200w.png"
+                          alt="Ellipse961251"
+                          class="frame-home-page1-ellipse965"
+                        />
+                      </div>
+                      <span class="frame-home-page1-text18">
+                        Hujan Sangat Lebat : &gt;20 mm/jam
+                      </span>
+                    </div>
+        </div>
+        
+        <!-- Keterangan Kemiringan -->
+        <div class="frame-home-page1-keterangan-kemiringan">
+          <span class="frame-home-page1-text24">
+            KLASIFIKASI KEMIRINGAN TANAH
+          </span>
+                    <div class="frame-home-page1-siaga42">
+                      <div class="frame-home-page1-group1483">
+                        <img
+                          src="assets/img/home/ellipse961279-1xlo-200w.png"
+                          alt="Ellipse961279"
+                          class="frame-home-page1-ellipse966"
+                        />
+                      </div>
+                      <span class="frame-home-page1-text20">0° - 2° : Tanah Datar</span>
+                    </div>
+                    <div class="frame-home-page1-siaga32">
+                      <div class="frame-home-page1-group1472">
+                        <img
+                          src="assets/img/home/ellipse961279-n7wg-200w.png"
+                          alt="Ellipse961279"
+                          class="frame-home-page1-ellipse967"
+                        />
+                      </div>
+                      <span class="frame-home-page1-text21">
+                        2° - 15° : Wilayah Landai
+                      </span>
+                    </div>
+                    <div class="frame-home-page1-siaga22">
+                      <div class="frame-home-page1-group1452">
+                        <img
+                          src="assets/img/home/ellipse961271-wd99-200w.png"
+                          alt="Ellipse961271"
+                          class="frame-home-page1-ellipse968"
+                        />
+                      </div>
+                      <span class="frame-home-page1-text22">
+                        15° - 40° : Wilayah Miring
+                      </span>
+                    </div>
+                    <div class="frame-home-page1-siaga12">
+                      <div class="frame-home-page1-group1462">
+                        <img
+                          src="assets/img/home/ellipse961271-q6n-200w.png"
+                          alt="Ellipse961271"
+                          class="frame-home-page1-ellipse969"
+                        />
+                      </div>
+                      <span class="frame-home-page1-text23">
+                        &gt; 40° : Wilayah Terjal
+                      </span>
+                    </div>
+                   </div>
+                  </div>
+
+      <!-- Tombol untuk membuka popup kamera-->
+      <button id="open-camera-popup-btn" class="open-camera-btn">📷</button>
+
+      <!-- Overlay untuk popup kamera -->
+      <div class="camera-popup-overlay" style="display:none;"></div>
+
+      <!-- Popup untuk menampilkan tampilan kamera ESP32 -->
+      <div class="camera-popup" style="display:none;">
+        <div class="popup-content">
+          <h3>ESP32 Camera View</h3>
+          <!-- Video Stream from ESP32 -->
+          <video id="esp32-camera-stream" width="100%" height="auto" controls autoplay>
+            <source src="URL_TO_ESP32_STREAM" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <button id="close-camera-popup-btn">Close</button>
+        </div>
+      </div>
+           
+          <!-- Sidebar -->
+          <div class="frame-home-page1-sidebar">
+            <div class="frame-home-page1-home" onclick="window.location.href='#'">
+              <img
+                src="assets/img/home/homevector3118-2ii4.svg"
+                alt="HomeVector3118"
+                class="frame-home-page1-home-vector"
+              />
+              <span class="frame-home-page1-text46">Home</span>
+            </div>
+            <div class="frame-home-page1-history" onclick="window.location.href='history.html'">
+              <img
+                src="assets/img/home/history.svg"
+                alt="History"
+                class="frame-home-page1-history-vector"
+              />
+              <span class="frame-home-page1-text42">History</span>
+            </div>
+            <div class="frame-home-page1-logout" onclick="navigateTo('logout')">
+              <img
+                src="assets/img/home/logout.svg"
+                alt="Lock8838"
+                class="frame-home-page1-lock"
+              />
+              <span class="frame-home-page1-text44">Logout</span>
+            </div>
+            <div class="frame-home-page1-user" onclick="window.location.href='add-user.html'">
+              <img
+                src="assets/img/home/user.svg"
+                alt="UserIcon"
+                class="frame-home-page1-user-vector"
+              />
+              <span class="frame-home-page1-text48">User</span>
+            </div>
+            <span class="user-name" id="user-name">Loading...</span>
+
+
+          </div>          
+        </div>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/home-admin.js"></script>
+  </body>
+</html>

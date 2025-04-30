@@ -1,0 +1,497 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f4f4f4;
+  overflow: hidden; /* Hilangkan scroll di seluruh halaman */
+}
+
+.login-page-container {
+  width: 100%;
+  display: flex;
+  overflow: hidden; /* Hilangkan scroll di container ini */
+  min-height: 100vh; /* Tinggi penuh sesuai viewport */
+  align-items: center;
+  justify-content: center; /* Pusatkan konten */
+  flex-direction: column;
+  position: relative; /* Pastikan layout tetap stabil */
+}
+
+.login-page-login-page {
+  width: 100%;
+  height: 100vh; /* Tinggi penuh sesuai viewport */
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  align-items: flex-start;
+  flex-shrink: 0;
+  background-color: rgba(255, 255, 255, 1);
+}
+.login-page-bgcontact {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+.login-page-logo {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  display: flex;
+  align-items: center; /* Sejajarkan gambar dan teks */
+  gap: 10px; /* Beri jarak antara gambar dan teks */
+}
+
+.login-page-logo img {
+  width: 50px; /* Sesuaikan ukuran gambar */
+  height: auto; /* Biarkan proporsional */
+}
+
+.login-page-text10 {
+  color: var(--dl-color-default-main);
+  font-size: 140%;
+  font-weight: 700;
+  font-family: Poppins, sans-serif;
+  text-align: left;
+}
+.login-page-path2841 {
+  top: 887.4708862304688px;
+  left: 1536.187255859375px;
+  width: 41px;
+  height: 31px;
+  position: absolute;
+}
+.login-page-login-form {
+  width: 50%;
+  height: 53%;
+  display: flex;
+  flex-direction: column; /* Supaya konten diatur secara vertikal */
+  align-items: center; /* Pusatkan konten secara horizontal */
+  justify-content: center; /* Pusatkan konten secara vertikal */
+  position: absolute; /* Gunakan posisi absolut untuk mengatur tata letak */
+  top: 45%; /* Posisikan di tengah layar */
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.login-page-login-card {
+  top: 0%;
+  right: 0%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+  background-color: rgba(255, 255, 255, 1);
+
+  /* ✨ Tambahkan efek lengkungan & bayangan */
+  border-radius: 20px; /* Lengkungan di pojok */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Bayangan lembut */
+  padding: 20px; /* Beri ruang padding agar lebih lega */
+}
+.login-page-group180 {
+  top: 7%;
+  left: 43%;
+  width: 50%;
+  height: 85%;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.login-page-text11 {
+  left: 33%;
+  color: rgba(0, 0, 0, 1);
+  width: 30%;
+  height: auto;
+  position: absolute;
+  font-size: 220%;
+  font-style: ExtraBold;
+  text-align: center;
+  font-family: Poppins;
+  font-weight: 800;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+  
+}
+.login-page-text12 {
+  top: 85%;
+  left: 0%;
+  color: rgba(29, 29, 29, 1);
+  width: auto;
+  height: auto;
+  position: absolute;
+  font-size: 14px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Poppins;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+  transition: color 0.3s ease; /* Animasi transisi */
+}
+
+.login-page-text12:hover {
+  color: rgba(0, 0, 0, 1); /* Warna teks saat hover */
+}
+.login-page-button {
+  top: 70%;
+  left: 0%;
+  width: 35%;
+  height: 12%;
+  display: flex;
+  position: absolute;
+  align-items: center; /* Pusatkan konten secara vertikal */
+  justify-content: center; /* Pusatkan konten secara horizontal */
+  background-color: rgba(87, 120, 131, 1);
+  color: white; /* Warna teks putih */
+  font-size: 16px; /* Ukuran font */
+  font-family: Poppins, sans-serif; /* Font family */
+  font-weight: 600; /* Ketebalan font */
+  border: none; /* Hilangkan border */
+  border-radius: 8px; /* Sudut melengkung */
+  cursor: pointer; /* Ubah kursor menjadi pointer */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Animasi transisi */
+}
+
+.login-page-button:hover {
+  background-color: rgba(67, 100, 111, 1); /* Warna latar belakang saat hover */
+  transform: scale(1.05); /* Perbesar sedikit saat hover */
+}
+.login-page-text13 {
+  top: auto;
+  left: 0%;
+  color: rgba(255, 255, 255, 1);
+  width: 100%;
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: SemiBold;
+  text-align: center;
+  font-family: Poppins;
+  font-weight: 600;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.login-page-email {
+  top: 15%;
+  left: 0%;
+  width: 100%;
+  height: 23%;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.login-page-rectangle11 {
+  top: 20%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+.login-page-text14 {
+  top: 51%;
+  left: 10%;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  font-size: 14px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Poppins;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+  width: 85%;
+  height: 35%;
+}
+.login-page-group341 {
+  top: 60%;
+  left: 4%;
+  width: 5%;
+  height: 15%;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.login-page-group331 {
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.login-page-ellipse271 {
+  top: 0px;
+  left: 0px;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+}
+.login-page-ellipse28 {
+  top: 2.201634645462036px;
+  left: 2.2012250423431396px;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+}
+.login-page-ellipse29 {
+  top: 4.403297424316406px;
+  left: 4.40288782119751px;
+  width: 6px;
+  height: 6px;
+  position: absolute;
+}
+.login-page-line31 {
+  top: 0.00005563674130826257px;
+  left: 24.217517852783203px;
+  width: 15px;
+  height: 1px;
+  position: absolute;
+}
+.login-page-text15 {
+  top: 7%;
+  left: 0%;
+  color: rgba(99, 99, 99, 1);
+  width: 80px;
+  height: auto;
+  position: absolute;
+  font-size: 14px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Poppins;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.login-page-password {
+  top: 40%;
+  left: 0%;
+  width: 100%;
+  height: 23%;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+
+.login-page-text16:hover {
+  color: rgba(128, 128, 128, 1); /* Warna teks saat hover */
+}
+.login-page-rectangle12 {
+  top: 30%;
+  left: 0%;
+  width: 100%;
+  height: 60%;
+  position: absolute;
+  border-color: rgba(212, 212, 212, 1);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+}
+.login-page-group342 {
+  top: 45%;
+  left: 3%;
+  width: 5%;
+  height: 20%;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.login-page-group332 {
+  top: 0px;
+  left: 0px;
+  width: 14.310422897338867px;
+  height: 20.915233612060547px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+.login-page-rectangle27 {
+  top: 6.604809761047363px;
+  left: -0.00010268008190905675px;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  border-radius: 3px;
+}
+.login-page-rectangle28 {
+  top: 0.000016746107576182112px;
+  left: 3.302168130874634px;
+  width: 8px;
+  height: 11px;
+  position: absolute;
+  border-color: rgba(196, 196, 196, 1);
+  border-style: solid;
+  border-width: 1.5px;
+  border-radius: 5px;
+}
+.login-page-ellipse272 {
+  top: 12.108826637268066px;
+  left: 5.503942489624023px;
+  width: 3px;
+  height: 3px;
+  position: absolute;
+}
+.login-page-text17 {
+  top: 35%;
+  left: 10%;
+  color: rgba(0, 0, 0, 1);
+  width: 85%;
+  height: 50%;
+  position: absolute;
+  font-size: 14px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Poppins;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.login-page-text18 {
+  top: 0.00002663402301550377px;
+  left: 0.5172817707061768px;
+  color: rgba(99, 99, 99, 1);
+  width: 103px;
+  height: auto;
+  position: absolute;
+  font-size: 14px;
+  font-style: Regular;
+  text-align: left;
+  font-family: Poppins;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.login-page-vector {
+  top: 0px;
+  left: 0px;
+  width: 40%;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+  background-color: rgba(116, 150, 160, 1);
+
+  /* ✨ Tambahkan efek lengkungan & bayangan */
+  border-radius: 20px; /* Lengkungan di pojok */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Bayangan lembut */
+  padding: 20px; /* Beri ruang padding agar lebih lega */
+}
+.login-page-file2 {
+  top: 22%;
+  left: 0%;
+  width: 90%;
+  height: 55%;
+  position: absolute;
+}
+/* Atur login page collab agar mengikuti posisi login form */
+.login-page-collab {
+  width: 50%;
+  height: 15%;
+  display: flex;
+  align-items: center; /* Pusatkan konten secara vertikal */
+  justify-content: center; /* Pusatkan konten secara horizontal */
+  position: absolute;
+  left: 50%; /* Tempatkan di tengah layar */
+  transform: translateX(-50%);
+  bottom: 10%; /* Tempatkan di bagian bawah layar */
+  margin-top: 20px; /* Beri jarak dari tulisan di atasnya */
+}
+.login-page-images2removebgpreview1,
+.login-page-logotelkomuniversity1 {
+  width: auto;
+  height: 62px;
+  position: relative;
+  display: inline-block; /* Pastikan elemen tampil inline */
+  margin: 0 10px; /* Beri jarak antar gambar */
+  margin-top: 50%;
+}
+
+.login-page-logotelkomuniversity1 {
+  height: 50px;
+}
+.login-page-text19 {
+  top: 0%;
+  left: auto;
+  color: rgba(0, 0, 0, 1);
+  width: auto;
+  height: auto;
+  position: absolute;
+  font-size: 24px;
+  font-style: Bold;
+  text-align: center;
+  font-family: Poppins;
+  font-weight: 700;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .login-page-vector {
+    display: none; /* Sembunyikan elemen */
+  }
+  .login-page-group180 {
+    width: 90%;
+    max-width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+  }
+  .login-page-text19 {
+    font-size: 18px; /* Perkecil ukuran font */
+}
+}
+
+@media (max-width: 600px) {
+  .login-page-group180 {
+      width: 95%; /* Supaya lebih responsif di layar kecil */
+      max-width: 350px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px; /* Tambahkan ruang padding */
+  }
+
+  .login-page-login-card {
+      border-radius: 10px; /* Kurangi lengkungan agar lebih proporsional */
+      box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.08); /* Buat bayangan lebih soft */
+      padding: 15px; /* Tambahkan padding agar nyaman */
+  }
+  .login-page-text19 {
+      font-size: 18px; /* Perkecil ukuran font */
+  }
+  .login-page-collab {
+      height: 10%; /* Turunkan posisi tulisan */
+      bottom: 15%; /* Turunkan posisi tulisan */
+      width: 90%; /* Perbesar lebar tulisan */
+  }
+  .login-page-text11 {
+    font-size: 180%;
+    left: auto;
+    width: 75%;
+    top: 0%;
+  }
+  .a {
+    width: 50%;
+  }
+}
