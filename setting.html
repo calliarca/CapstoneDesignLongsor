@@ -76,11 +76,36 @@
             <span class="user-name" id="user-name">Loading...</span>
           </div>
 
-        <!-- MAIN SETTING -->
-         
+          <!-- Form Pengaturan Channel ID -->
+          <div class="container mt-5" id="form-channel">
+            <h4>Pengaturan Channel ID</h4>
+            <form id="channelForm" onsubmit="submitForm(event)">
+                <div class="mb-3">
+                    <label for="channelIDMoisture" class="form-label">Channel ID - Kelembapan Tanah</label>
+                    <input type="text" class="form-control" id="channelIDMoisture" name="humidity_channel" placeholder="Masukkan Channel ID untuk kelembapan tanah" maxlength="6" required>
+                </div>
+                <div class="mb-3">
+                    <label for="channelIDSlope" class="form-label">Channel ID - Kemiringan</label>
+                    <input type="text" class="form-control" id="channelIDSlope" name="slope_channel" placeholder="Masukkan Channel ID untuk kemiringan" maxlength="6" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </form>
+
+            <!-- Notifikasi -->
+            <div id="notification" style="display: none; background-color: #4CAF50; color: white; padding: 15px; margin-top: 10px; border-radius: 5px;">
+              <span id="notificationMessage"></span>
+            </div>
+          </div>
+
+              <!-- Notifikasi -->
+              <div id="notification">
+                <span id="notificationMessage"></span>
+            </div>        
+          </div>
         </div>
       </div>
+
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
       <script src="assets/js/setting.js"></script>
     </body>
-  </html>
+    </html>

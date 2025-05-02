@@ -95,6 +95,7 @@
     align-items: flex-start;
     flex-shrink: 1;
     background-color: rgba(255, 255, 255, 1);
+    z-index: 5; /* Membuat sidebar berada di bawah form */
   }
   .frame-home-page1-sidebar div {
     cursor: pointer;
@@ -285,3 +286,137 @@
     color: black; /* Sesuaikan warna teks agar kontras */
     padding: 10px 0; /* Ruang atas dan bawah */
   }
+
+/*--------------------------------------------------------------
+# Setting Form
+--------------------------------------------------------------*/
+
+/* Menambahkan margin atau padding pada form agar tidak tertutup sidebar */
+#form-channel {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  padding: 30px;
+  background-color: var(--surface-color);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 600px;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+  margin-left: 36px; /* Setengah lebar sidebar untuk kompensasi */
+}
+
+#form-channel:hover {
+  transform: translateY(-5px); /* Efek hover pada form */
+}
+
+#form-channel label {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--heading-color); /* Warna teks label */
+  margin-bottom: 10px;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+#form-channel input,
+#form-channel select {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  color: var(--default-color);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+#form-channel input:focus,
+#form-channel select:focus {
+  border-color: var(--accent-color);
+  background-color: #fff;
+  outline: none; /* Menghilangkan outline default */
+}
+
+#form-channel input[type="submit"] {
+  background-color: var(--accent-color);
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 20px;
+  transition: background-color 0.3s ease;
+}
+
+#form-channel input[type="submit"]:hover {
+  background-color: #007bb5; /* Efek hover pada tombol submit */
+}
+
+#form-channel .form-group {
+  margin-bottom: 20px;
+}
+
+/* Menambahkan ikon di dalam input */
+#form-channel .input-container {
+  position: relative;
+}
+
+#form-channel .input-container input {
+  padding-left: 40px; /* Memberikan ruang untuk ikon */
+}
+
+#form-channel .input-container i {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: var(--default-color);
+  font-size: 16px;
+}
+#form-channel h4 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--heading-color);
+  font-size: 24px;
+  font-weight: 600;
+}
+
+
+/* Animasi tambahan untuk form */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+#form-channel {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+#notification {
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  display: none; /* Awalnya disembunyikan */
+}
+
+.alert-success {
+  background-color: #4CAF50; /* Hijau untuk sukses */
+  color: white;
+}
+
+.alert-danger {
+  background-color: #f44336; /* Merah untuk error */
+  color: white;
+}

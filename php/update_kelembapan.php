@@ -12,6 +12,28 @@ if ($koneksi->connect_error) {
     die("Koneksi gagal: " . $koneksi->connect_error);
 }
 
+// --- Load Channel Configuration ---
+$configFile = '/channel_config.json';
+
+// Cek apakah file konfigurasi ada
+if (!file_exists($configFile)) {
+    // Buat file konfigurasi default jika tidak ada
+    $defaultConfig = [
+        'humidity_channel_id' => '2843704', // ID channel default kelembaban
+        'slope_channel_id' => '2843705'    // ID channel default kemiringan
+    ];
+    file_put_contents($configFile, json_encode($defaultConfig, JSON_PRETTY_PRINT));
+    echo "⚠️ File konfigurasi tidak ditemukan. File default telah dibuat.\n";
+}
+
+// Baca konfigurasi
+$config = json_decode(file_get_contents($configFile), true);
+if (json_last_error() !== JSON_ERROR_NONE) {
+    die("❌ Gagal membaca file konfigurasi: " . json_last_error_msg());
+}
+
+$humidityChannelId = $config['humidity_channel_id'] ?? '2843704'; // Fallback ke default jika tidak ada
+
 // Ambil simulation_name aktif
 $getSimName = $koneksi->query("SELECT simulation_name FROM simulations 
                                WHERE is_active = 1 
@@ -25,10 +47,20 @@ if (empty($simulationName)) {
 }
 
 // --- Ambil data kelembaban ---
-$humidityChannelId = "2843704"; // Ganti dengan ID channel kelembaban kamu
 $kelembabanURL = "https://api.thingspeak.com/channels/$humidityChannelId/feeds.json?results=1";
 $kelembabanResponse = @file_get_contents($kelembabanURL);
+
+if ($kelembabanResponse === false) {
+    echo "❌ Gagal mengambil data dari ThingSpeak. Channel ID: $humidityChannelId\n";
+    exit;
+}
+
 $kelembabanData = json_decode($kelembabanResponse, true);
+if (json_last_error() !== JSON_ERROR_NONE) {
+    echo "❌ Gagal memparsing data JSON dari ThingSpeak: " . json_last_error_msg() . "\n";
+    exit;
+}
+
 $kelembabanFeed = $kelembabanData['feeds'][0] ?? null;
 
 if ($kelembabanFeed) {
@@ -63,7 +95,7 @@ if ($created_at_kelembaban) {
             )
         ";
         if ($koneksi->query($queryKelembaban)) {
-            echo "✅ Data kelembaban berhasil disimpan: $created_at_kelembaban\n";
+            echo "✅ Data kelembaban berhasil disimpan: $created_at_kelembaban (Channel ID: $humidityChannelId)\n";
         } else {
             echo "❌ Gagal menyimpan data kelembaban: " . $koneksi->error . "\n";
         }
@@ -73,4 +105,7 @@ if ($created_at_kelembaban) {
 } else {
     echo "⚠️ Data kelembaban tidak tersedia. Tidak ada data yang disimpan.\n";
 }
+
+// Tutup koneksi database
+$koneksi->close();
 ?>

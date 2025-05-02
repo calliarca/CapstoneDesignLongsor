@@ -87,3 +87,85 @@ function navigateTo(page) {
               }
           });
     });
+
+        // Function to validate the form
+        function validateForm() {
+            // Get the values of the input fields
+            const channelIDMoisture = document.getElementById('channelIDMoisture').value;
+            const channelIDSlope = document.getElementById('channelIDSlope').value;
+  
+            // Regular expression to allow only 6 digits
+            const regex = /^[0-9]{6}$/;
+  
+            // Validate Channel ID - Kelembapan Tanah
+            if (!regex.test(channelIDMoisture)) {
+              showNotification('Channel ID - Kelembapan Tanah harus berupa 6 digit angka.', 'error');
+              return false; // Prevent form submission
+            }
+  
+            // Validate Channel ID - Kemiringan
+            if (!regex.test(channelIDSlope)) {
+              showNotification('Channel ID - Kemiringan harus berupa 6 digit angka.', 'error');
+              return false; // Prevent form submission
+            }
+  
+            // If validation is successful, show success message
+            showNotification('Pengaturan berhasil disimpan!', 'success');
+            return false; // Prevent form submission for demonstration purposes
+          }
+  
+    // Function to show notification
+    function showNotification(message, type) {
+    const notification = document.getElementById('notification');
+    const notificationMessage = document.getElementById('notificationMessage');
+    
+    // Set the message and type
+    notificationMessage.textContent = message;
+    
+    // Change the style based on type
+    if (type === 'success') {
+        notification.classList.add('alert-success');
+        notification.classList.remove('alert-danger');
+    } else {
+        notification.classList.add('alert-danger');
+        notification.classList.remove('alert-success');
+    }
+    
+    // Display the notification
+    notification.style.display = 'block';
+
+    // Hide the notification after 3 seconds
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 3000);
+}
+
+
+   // Fungsi untuk mengirim form via AJAX
+   function submitForm(event) {
+    event.preventDefault();  // Mencegah form dari submit biasa
+
+    // Ambil nilai input dari form
+    let humidityChannel = document.getElementById('channelIDMoisture').value;
+    let slopeChannel = document.getElementById('channelIDSlope').value;
+
+    // Siapkan AJAX request
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'php/update_channel.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhr.onload = function() {
+        if (xhr.status == 200) {
+            // Tampilkan notifikasi jika sukses
+            document.getElementById('notification').style.display = 'block';
+            document.getElementById('notificationMessage').textContent = xhr.responseText;
+        } else {
+            // Tampilkan notifikasi jika gagal
+            document.getElementById('notification').style.display = 'block';
+            document.getElementById('notificationMessage').textContent = 'Terjadi kesalahan saat mengupdate konfigurasi';
+        }
+    };
+
+    // Kirimkan data ke server
+    xhr.send('humidity_channel=' + encodeURIComponent(humidityChannel) + '&slope_channel=' + encodeURIComponent(slopeChannel));
+}

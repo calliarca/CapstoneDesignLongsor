@@ -12,6 +12,28 @@ if ($koneksi->connect_error) {
     die("❌ Koneksi gagal: " . $koneksi->connect_error);
 }
 
+// --- Load Channel Configuration ---
+$configFile = 'channel_config.json';
+
+// Cek apakah file konfigurasi ada
+if (!file_exists($configFile)) {
+    // Buat file konfigurasi default jika tidak ada
+    $defaultConfig = [
+        'humidity_channel_id' => '2843704', // ID channel default kelembaban
+        'slope_channel_id' => '2889619'    // ID channel default kemiringan
+    ];
+    file_put_contents($configFile, json_encode($defaultConfig, JSON_PRETTY_PRINT));
+    echo "⚠️ File konfigurasi tidak ditemukan. File default telah dibuat.\n";
+}
+
+// Baca konfigurasi
+$config = json_decode(file_get_contents($configFile), true);
+if (json_last_error() !== JSON_ERROR_NONE) {
+    die("❌ Gagal membaca file konfigurasi: " . json_last_error_msg());
+}
+
+$slopeChannelId = $config['slope_channel_id'] ?? '2889619'; // Fallback ke default jika tidak ada
+
 // Ambil simulation_name terakhir yang aktif
 $getSimName = $koneksi->query("SELECT simulation_name FROM simulations 
                                WHERE is_active = 1 
@@ -25,14 +47,18 @@ if (empty($simulationName)) {
 }
 
 // Ambil data terbaru dari ThingSpeak
-$url = "https://api.thingspeak.com/channels/2889619/feeds.json?results=1";
+$url = "https://api.thingspeak.com/channels/$slopeChannelId/feeds.json?results=1";
 $response = @file_get_contents($url);
 
 if ($response === false) {
-    die("❌ Gagal mengambil data dari ThingSpeak.");
+    die("❌ Gagal mengambil data dari ThingSpeak (Channel ID: $slopeChannelId).");
 }
 
 $data = json_decode($response, true);
+if (json_last_error() !== JSON_ERROR_NONE) {
+    die("❌ Gagal memparsing data JSON dari ThingSpeak: " . json_last_error_msg());
+}
+
 $feed = $data['feeds'][0] ?? null;
 
 if ($feed) {
@@ -89,7 +115,7 @@ if ($feed) {
                   VALUES ('$simulationName', $derajat_kemiringan, $output_kemiringan, '$created_at')";
 
         if ($koneksi->query($query)) {
-            echo "✅ Data berhasil disimpan: derajat = $derajat_kemiringan, output = $output_kemiringan, waktu = $created_at\n";
+            echo "✅ Data berhasil disimpan (Channel ID: $slopeChannelId): derajat = $derajat_kemiringan, output = $output_kemiringan, waktu = $created_at\n";
         } else {
             echo "❌ Gagal menyimpan data: " . $koneksi->error . "\n";
         }
@@ -99,4 +125,7 @@ if ($feed) {
 } else {
     echo "❌ Data dari ThingSpeak tidak tersedia. Tidak disimpan.\n";
 }
+
+// Tutup koneksi database
+$koneksi->close();
 ?>
