@@ -138,7 +138,7 @@
     position: absolute;
   }
 .frame-home-page1-logout {
-    top: 40%;
+    top: 50%;
     left: 14px;
     width: 47px;
     height: 60px;
@@ -242,6 +242,38 @@
     font-family: var(--nav-font); /* Gunakan font Poppins */
 }
 
+.frame-home-page1-setting {
+  top: 39%;
+  left: 13px;
+  width: 49px;
+  height: 57px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+  margin-bottom: 20px; /* Add gap */
+}
+.frame-home-page1-text50 {
+  top: 40px;
+  color: rgba(0, 0, 0, 1);
+  height: auto;
+  position: absolute;
+  font-size: 14px;
+  font-style: SemiBold;
+  text-align: left;
+  font-family: Rubik;
+  font-weight: 600;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.frame-home-page1-setting-vector {
+  top: 0px;
+  left: 5px;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+}
 /*--------------------------------------------------------------
 # Registrasi
 --------------------------------------------------------------*/

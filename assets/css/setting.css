@@ -84,6 +84,7 @@
 /*--------------------------------------------------------------
 # Sidebar
 --------------------------------------------------------------*/
+
 .frame-home-page1-sidebar {
     top: 0px;
     left: 0px;
@@ -95,18 +96,20 @@
     flex-shrink: 1;
     background-color: rgba(255, 255, 255, 1);
   }
-.frame-home-page1-sidebar div {
+  .frame-home-page1-sidebar div {
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
   }
-.frame-home-page1-sidebar div:hover {
+  
+  .frame-home-page1-sidebar div:hover {
     transform: scale(1.05); /* Sedikit membesar saat hover */
   }
-.frame-home-page1-sidebar div:active {
+  
+  .frame-home-page1-sidebar div:active {
     background-color: rgba(200, 200, 200, 1); /* Warna saat klik */
     transform: scale(0.95); /* Sedikit mengecil saat klik */
   }
-.frame-home-page1-history {
+  .frame-home-page1-history {
     top: 15%;
     left: 13px;
     width: 49px;
@@ -117,27 +120,28 @@
     flex-shrink: 1;
     margin-bottom: 20px; /* Add gap */
   }
-.frame-home-page1-text42 {
+  .frame-home-page1-text42 {
     top: 40px;
-    color: rgba(15, 139, 120, 1);
+    color: rgba(0, 0, 0, 1);
     height: auto;
     position: absolute;
     font-size: 14px;
     font-style: SemiBold;
     text-align: left;
+    font-family: Rubik;
     font-weight: 600;
     line-height: normal;
     font-stretch: normal;
     text-decoration: none;
   }
-.frame-home-page1-history-vector {
+  .frame-home-page1-history-vector {
     top: 0px;
     left: 5px;
     width: 40px;
     height: 40px;
     position: absolute;
   }
-.frame-home-page1-logout {
+  .frame-home-page1-logout {
     top: 50%;
     left: 14px;
     width: 47px;
@@ -148,7 +152,7 @@
     flex-shrink: 1;
     margin-bottom: 10px; /* Add gap */
   }
-.frame-home-page1-text44 {
+  .frame-home-page1-text44 {
     top: 43px;
     color: rgba(0, 0, 0, 1);
     height: auto;
@@ -156,19 +160,20 @@
     font-size: 14px;
     font-style: SemiBold;
     text-align: left;
+    font-family: Rubik;
     font-weight: 600;
     line-height: normal;
     font-stretch: normal;
     text-decoration: none;
   }
-.frame-home-page1-lock {
+  .frame-home-page1-lock {
     top: 0px;
     left: 2px;
     width: 40px;
     height: 40px;
     position: absolute;
   }
-.frame-home-page1-home {
+  .frame-home-page1-home {
     top: 5%;
     left: 14px;
     width: 49px;
@@ -179,7 +184,7 @@
     flex-shrink: 1;
     margin-bottom: 10px; /* Add gap */
   }
-.frame-home-page1-text46 {
+  .frame-home-page1-text46 {
     top: 50%;
     left: 10%;
     color: rgba(0, 0, 0, 1);
@@ -189,12 +194,13 @@
     font-size: 14px;
     font-style: SemiBold;
     text-align: left;
+    font-family: Rubik;
     font-weight: 600;
     line-height: normal;
     font-stretch: normal;
     text-decoration: none;
   }
-.frame-home-page1-home-vector {
+  .frame-home-page1-home-vector {
     top: auto;
     left: 10px;
     width: 30px;
@@ -202,212 +208,73 @@
     position: absolute;
   }
   
-.frame-home-page1-user {
-  top: 27%;
-  left: 12px;
-  width: 49px;
-  height: 57px;
-  display: flex;
-  position: absolute;
-  align-items: flex-start;
-  flex-shrink: 1;
-  margin-bottom: 20px; /* Add gap */
-}
-.frame-home-page1-text48 {
-  top: 40px;
-  left: 15%;
-  color: rgba(0, 0, 0, 1);
-  height: auto;
-  position: absolute;
-  font-size: 14px;
-  font-style: SemiBold;
-  text-align: center;
-  font-weight: 600;
-  line-height: normal;
-  font-stretch: normal;
-  text-decoration: none;
-}
-.frame-home-page1-user-vector {
-  top: 0px;
-  left: 5px;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-}
-
-.frame-home-page1-text42,
-.frame-home-page1-text44,
-.frame-home-page1-text46,
-.frame-home-page1-text48 {
-    font-family: var(--nav-font); /* Gunakan font Poppins */
-}
-.frame-home-page1-setting {
-  top: 39%;
-  left: 13px;
-  width: 49px;
-  height: 57px;
-  display: flex;
-  position: absolute;
-  align-items: flex-start;
-  flex-shrink: 1;
-  margin-bottom: 20px; /* Add gap */
-}
-.frame-home-page1-text50 {
-  top: 40px;
-  color: rgba(0, 0, 0, 1);
-  height: auto;
-  position: absolute;
-  font-size: 14px;
-  font-style: SemiBold;
-  text-align: left;
-  font-family: Rubik;
-  font-weight: 600;
-  line-height: normal;
-  font-stretch: normal;
-  text-decoration: none;
-}
-.frame-home-page1-setting-vector {
-  top: 0px;
-  left: 5px;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-}
-
-/*--------------------------------------------------------------
-# History Table on Background
---------------------------------------------------------------*/
-
-  .frame-home-page1-history-table {
+  .frame-home-page1-user {
+    top: 27%;
+    left: 12px;
+    width: 49px;
+    height: 57px;
+    display: flex;
     position: absolute;
-    top: 20px;
-    left: 100px;
-    right: 20px;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1;
-
-    /* Tambahan scroll */
-    max-height: 90vh; /* Tinggi maksimum 80% dari tinggi layar */
-    overflow-y: auto; /* Scroll vertikal jika konten melebihi tinggi */
+    align-items: flex-start;
+    flex-shrink: 1;
+    margin-bottom: 20px; /* Add gap */
   }
-
-  .frame-home-page1-history-table::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .frame-home-page1-history-table::-webkit-scrollbar-thumb {
-    background-color: var(--accent-color);
-    border-radius: 10px;
-  }
-  
-  .frame-home-page1-history-table::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  .frame-home-page1-history-table h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-family: var(--heading-font);
-    color: var(--heading-color);
-    font-weight: 600;
-  }
-  
-  .frame-home-page1-history-table table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: var(--default-font);
-  }
-  
-  .frame-home-page1-history-table th,
-  .frame-home-page1-history-table td {
-    padding: 12px 15px;
+  .frame-home-page1-text48 {
+    top: 40px;
+    left: 15%;
+    color: rgba(0, 0, 0, 1);
+    height: auto;
+    position: absolute;
+    font-size: 14px;
+    font-style: SemiBold;
     text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .frame-home-page1-history-table th {
-    background-color: var(--accent-color);
-    color: var(--contrast-color);
+    font-family: Rubik;
     font-weight: 600;
-    text-transform: uppercase;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .frame-home-page1-user-vector {
+    top: 0px;
+    left: 5px;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+  }
+  .frame-home-page1-setting {
+    top: 39%;
+    left: 13px;
+    width: 49px;
+    height: 57px;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-shrink: 1;
+    margin-bottom: 20px; /* Add gap */
+  }
+  .frame-home-page1-text50 {
+    top: 40px;
+    color: rgba(15, 139, 120, 1);
+    height: auto;
+    position: absolute;
     font-size: 14px;
+    font-style: SemiBold;
+    text-align: left;
+    font-family: Rubik;
+    font-weight: 600;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
   }
-  
-  .frame-home-page1-history-table td {
-    color: var(--default-color);
-    font-size: 14px;
-  }
-  
-  .frame-home-page1-history-table tr:hover {
-    background-color: rgba(0, 156, 234, 0.05);
-  }
-  
-  .detail-button {
-    background-color: #007bff; /* Warna biru */
-    border: none;
-    color: white;
-    padding: 8px 12px;
-    margin: 4px;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .detail-button:hover {
-    background-color: #0056b3; /* Warna biru lebih gelap saat hover */
-  }
-  
-  .detail-button:nth-child(2) {
-    background-color: #28a745; /* Warna hijau untuk "Lihat Valid Data" */
-  }
-  
-  .detail-button:nth-child(2):hover {
-    background-color: #1e7e34;
-  }
-  
-  .detail-button:nth-child(3) {
-    background-color: #ffc107; /* Warna kuning untuk "Tambahkan User" */
-    color: black;
-  }
-  
-  .detail-button:nth-child(3):hover {
-    background-color: #e0a800;
-  }
-  
-  /* Responsive Table */
-  @media (max-width: 768px) {
-    .frame-home-page1-history-table {
-      left: 80px;
-      right: 10px;
-      padding: 10px;
-    }
-  
-    .frame-home-page1-history-table table {
-      display: block;
-      overflow-x: auto;
-    }
-  
-    .frame-home-page1-history-table th,
-    .frame-home-page1-history-table td {
-      padding: 8px 10px;
-      font-size: 12px;
-    }
-  
-    .frame-home-page1-history-table h2 {
-      font-size: 20px;
-    }
-  
-    .detail-button {
-      padding: 6px 12px;
-      font-size: 12px;
-    }
+  .frame-home-page1-setting-vector {
+    top: 0px;
+    left: 5px;
+    width: 40px;
+    height: 40px;
+    position: absolute;
   }
 
-  .user-name {
+.user-name {
     position: absolute; /* Pastikan tetap di dalam sidebar */
     bottom: 20px; /* Beri jarak dari bawah */
     left: 50%; /* Pusatkan secara horizontal */
@@ -418,23 +285,3 @@
     color: black; /* Sesuaikan warna teks agar kontras */
     padding: 10px 0; /* Ruang atas dan bawah */
   }
-
-  #overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Latar belakang semi-transparan */
-    display: none; /* Awalnya disembunyikan */
-    justify-content: center;
-    align-items: center;
-}
-
-.overlay-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 300px;
-    text-align: center;
-}
