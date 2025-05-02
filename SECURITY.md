@@ -31,7 +31,3 @@ If you discover a security vulnerability in the Landslide Simulator, we encourag
 4. **Security Updates**:
 
    * We will release security patches for the supported versions promptly to ensure that the system remains secure.
-
----
-
-Let me know if you want any adjustments or more specific details based on your project!
