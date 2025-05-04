@@ -88,84 +88,112 @@ function navigateTo(page) {
           });
     });
 
-        // Function to validate the form
-        function validateForm() {
-            // Get the values of the input fields
-            const channelIDMoisture = document.getElementById('channelIDMoisture').value;
-            const channelIDSlope = document.getElementById('channelIDSlope').value;
-  
-            // Regular expression to allow only 6 digits
-            const regex = /^[0-9]{6}$/;
-  
-            // Validate Channel ID - Kelembapan Tanah
-            if (!regex.test(channelIDMoisture)) {
-              showNotification('Channel ID - Kelembapan Tanah harus berupa 6 digit angka.', 'error');
-              return false; // Prevent form submission
+
+function submitForm(event) {
+        event.preventDefault();  // Cegah form dari submit default
+    
+        // Ambil nilai input
+        const humidityChannel = document.getElementById('channelIDMoisture').value.trim();
+        const slopeChannel = document.getElementById('channelIDSlope').value.trim();
+    
+        // Validasi: 6 digit angka
+        const regex = /^[0-9]{6}$/;
+    
+        if (!regex.test(humidityChannel)) {
+            showNotification('Channel ID - Kelembapan Tanah harus berupa 6 digit angka.', 'error');
+            return;
+        }
+    
+        if (!regex.test(slopeChannel)) {
+            showNotification('Channel ID - Kemiringan harus berupa 6 digit angka.', 'error');
+            return;
+        }
+    
+        // Kirim via AJAX
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'php/update_channel.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    
+        xhr.onload = function () {
+            try {
+                const response = JSON.parse(xhr.responseText);
+                if (xhr.status === 200 && response.status === 'success') {
+                    showNotification(response.message, 'success');
+                } else {
+                    showNotification(response.message || 'Terjadi kesalahan saat mengupdate konfigurasi.', 'error');
+                }
+            } catch (e) {
+                showNotification('Gagal memproses respons dari server.', 'error');
             }
-  
-            // Validate Channel ID - Kemiringan
-            if (!regex.test(channelIDSlope)) {
-              showNotification('Channel ID - Kemiringan harus berupa 6 digit angka.', 'error');
-              return false; // Prevent form submission
-            }
-  
-            // If validation is successful, show success message
-            showNotification('Pengaturan berhasil disimpan!', 'success');
-            return false; // Prevent form submission for demonstration purposes
-          }
-  
-    // Function to show notification
+        };
+    
+        xhr.onerror = function () {
+            showNotification('Gagal mengirim data ke server.', 'error');
+        };
+    
+        xhr.send(
+            'humidity_channel=' + encodeURIComponent(humidityChannel) +
+            '&slope_channel=' + encodeURIComponent(slopeChannel)
+        );
+    }
+
     function showNotification(message, type) {
-    const notification = document.getElementById('notification');
-    const notificationMessage = document.getElementById('notificationMessage');
+        const notification = document.getElementById('notification');
+        const notificationMessage = document.getElementById('notificationMessage');
     
-    // Set the message and type
-    notificationMessage.textContent = message;
+        if (!notification || !notificationMessage) {
+            console.warn('Elemen notifikasi tidak ditemukan!');
+            return;
+        }
     
-    // Change the style based on type
-    if (type === 'success') {
-        notification.classList.add('alert-success');
-        notification.classList.remove('alert-danger');
-    } else {
-        notification.classList.add('alert-danger');
-        notification.classList.remove('alert-success');
+        notificationMessage.textContent = message;
+    
+        // Set kelas berdasarkan tipe notifikasi
+        notification.classList.remove('alert-success', 'alert-danger');
+        notification.classList.add(type === 'success' ? 'alert-success' : 'alert-danger');
+        notification.style.display = 'block';
+    
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
     }
     
-    // Display the notification
-    notification.style.display = 'block';
-
-    // Hide the notification after 3 seconds
-    setTimeout(() => {
-        notification.style.display = 'none';
-    }, 3000);
-}
-
-
-   // Fungsi untuk mengirim form via AJAX
-   function submitForm(event) {
-    event.preventDefault();  // Mencegah form dari submit biasa
-
-    // Ambil nilai input dari form
-    let humidityChannel = document.getElementById('channelIDMoisture').value;
-    let slopeChannel = document.getElementById('channelIDSlope').value;
-
-    // Siapkan AJAX request
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', 'php/update_channel.php', true);
+    
+function submitStreamURL(event) {
+    event.preventDefault();
+  
+    const cameraStreamUrl = document.getElementById('cameraStreamUrl').value.trim();
+    const urlRegex = /^(http|https):\/\/[^ "]+$/;
+  
+    if (!urlRegex.test(cameraStreamUrl)) {
+      showNotification('URL Stream Kamera tidak valid.', 'error');
+      return;
+    }
+  
+    // Simpan ke localStorage
+    localStorage.setItem('cameraStreamUrl', cameraStreamUrl);
+  
+    // Kirim ke backend
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'php/update_camera_url.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-    xhr.onload = function() {
-        if (xhr.status == 200) {
-            // Tampilkan notifikasi jika sukses
-            document.getElementById('notification').style.display = 'block';
-            document.getElementById('notificationMessage').textContent = xhr.responseText;
-        } else {
-            // Tampilkan notifikasi jika gagal
-            document.getElementById('notification').style.display = 'block';
-            document.getElementById('notificationMessage').textContent = 'Terjadi kesalahan saat mengupdate konfigurasi';
-        }
+  
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        showNotification('URL Kamera berhasil disimpan.', 'success');
+      } else {
+        showNotification('Gagal menyimpan URL Kamera.', 'error');
+      }
     };
-
-    // Kirimkan data ke server
-    xhr.send('humidity_channel=' + encodeURIComponent(humidityChannel) + '&slope_channel=' + encodeURIComponent(slopeChannel));
-}
+  
+    xhr.send('camera_stream_url=' + encodeURIComponent(cameraStreamUrl));
+  }
+  
+  // Auto-isi saat load
+  document.addEventListener("DOMContentLoaded", function () {
+    const savedUrl = localStorage.getItem('cameraStreamUrl');
+    if (savedUrl) {
+      document.getElementById('cameraStreamUrl').value = savedUrl;
+    }
+  });
+  

@@ -177,18 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
     simulationOverlay.style.display = 'none'; // Sembunyikan overlay
     toggleSimulation.checked = false; // Reset slider ke OFF
   });
-  
-  // Menampilkan popup ketika tombol Open Camera diklik
-  document.getElementById('open-camera-popup-btn').addEventListener('click', function () {
-    document.querySelector('.camera-popup-overlay').style.display = 'block';
-    document.querySelector('.camera-popup').style.display = 'block';
-  });
-  
-  // Menutup popup ketika tombol Close diklik
-  document.getElementById('close-camera-popup-btn').addEventListener('click', function () {
-    document.querySelector('.camera-popup-overlay').style.display = 'none';
-    document.querySelector('.camera-popup').style.display = 'none';
-  });  
 });
 
 // Disable zooming with scroll
@@ -445,4 +433,51 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+});
+
+// Fungsi untuk membuka popup kamera dan mengambil URL stream dari camera_config.json
+// Fungsi untuk membuka popup kamera dan mengambil URL stream dari camera_config.json
+function openCameraPopup() {
+  fetch('assets/js/camera_config.json')
+    .then(response => response.json())
+    .then(data => {
+      const cameraStreamUrl = data.camera_stream_url;
+      const iframeElement = document.getElementById('esp32-camera-stream');
+      const errorMessage = document.getElementById('camera-error-message');
+
+      errorMessage.style.display = 'none';
+
+      // Deteksi apakah URL adalah YouTube
+      if (cameraStreamUrl.includes("youtube.com") || cameraStreamUrl.includes("youtu.be")) {
+        // Menggunakan regex untuk mengekstrak video ID dari URL YouTube
+        const videoIdMatch = cameraStreamUrl.match(/(?:youtube\.com\/(?:[^/]+\/.*\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+        if (videoIdMatch && videoIdMatch[1]) {
+          const videoId = videoIdMatch[1];
+          iframeElement.src = `https://www.youtube.com/embed/${videoId}`;
+        } else {
+          errorMessage.textContent = 'URL YouTube tidak valid.';
+          errorMessage.style.display = 'block';
+          return;
+        }
+      } else {
+        iframeElement.src = cameraStreamUrl;
+      }
+
+      document.querySelector('.camera-popup-overlay').style.display = 'block';
+      document.querySelector('.camera-popup').style.display = 'block';
+    })
+    .catch(error => {
+      console.error('Error fetching camera config:', error);
+      alert('Gagal mengambil konfigurasi kamera dari file JSON.');
+    });
+}
+
+
+// Ketika tombol 📷 diklik, panggil fungsi openCameraPopup
+document.getElementById('open-camera-popup-btn').addEventListener('click', openCameraPopup);
+
+// Menutup popup kamera
+document.getElementById('close-camera-popup-btn').addEventListener('click', function () {
+  document.querySelector('.camera-popup-overlay').style.display = 'none';
+  document.querySelector('.camera-popup').style.display = 'none';
 });

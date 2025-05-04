@@ -289,26 +289,25 @@
                     </div>
                    </div>
                   </div>
+            <!-- Tombol untuk membuka popup kamera -->
+            <button id="open-camera-popup-btn" class="open-camera-btn">
+              <span>📷</span>
+              <span>Camera</span>
+            </button>
 
-      <!-- Tombol untuk membuka popup kamera-->
-      <button id="open-camera-popup-btn" class="open-camera-btn">📷</button>
+            <!-- Overlay untuk popup kamera -->
+            <div class="camera-popup-overlay" style="display:none;"></div>
 
-      <!-- Overlay untuk popup kamera -->
-      <div class="camera-popup-overlay" style="display:none;"></div>
-
-      <!-- Popup untuk menampilkan tampilan kamera ESP32 -->
-      <div class="camera-popup" style="display:none;">
-        <div class="popup-content">
-          <h3>ESP32 Camera View</h3>
-          <!-- Video Stream from ESP32 -->
-          <video id="esp32-camera-stream" width="100%" height="auto" controls autoplay>
-            <source src="URL_TO_ESP32_STREAM" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-          <button id="close-camera-popup-btn">Close</button>
-        </div>
-      </div>
-           
+            <!-- Popup untuk menampilkan tampilan kamera ESP32 -->
+            <div class="camera-popup" style="display:none;">
+              <div class="popup-content">
+                <button id="close-camera-popup-btn">×</button>
+                <h3>ESP32 Camera View</h3>
+                <!-- Video Stream from ESP32 -->
+                <iframe id="esp32-camera-stream" frameborder="0" allowfullscreen></iframe>
+                <p id="camera-error-message" style="color: red; display: none;"></p>
+              </div>
+            </div>     
           <!-- Sidebar -->
           <div class="frame-home-page1-sidebar">
             <div class="frame-home-page1-home" onclick="window.location.href='#'">

@@ -78,7 +78,7 @@
 
           <!-- Form Pengaturan Channel ID -->
           <div class="container mt-5" id="form-channel">
-            <h4>Pengaturan Channel ID</h4>
+            <h4>Pengaturan Channel ID & URL STREAM</h4>
             <form id="channelForm" onsubmit="submitForm(event)">
                 <div class="mb-3">
                     <label for="channelIDMoisture" class="form-label">Channel ID - Kelembapan Tanah</label>
@@ -91,16 +91,19 @@
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </form>
 
+            <!-- Form Pengaturan URL Stream Kamera -->
+            <form id="streamForm" class="mt-4" onsubmit="submitStreamURL(event)">
+              <div class="mb-3">
+                <label for="cameraStreamUrl" class="form-label">URL Stream Kamera ESP32</label>
+                <input type="text" class="form-control" id="cameraStreamUrl" name="camera_stream_url" placeholder="Contoh: http://192.168.1.100:81/stream" required>
+              </div>
+              <button type="submit" class="btn btn-info text-white">Simpan URL Kamera</button>
+            </form>
+
             <!-- Notifikasi -->
             <div id="notification" style="display: none; background-color: #4CAF50; color: white; padding: 15px; margin-top: 10px; border-radius: 5px;">
               <span id="notificationMessage"></span>
             </div>
-          </div>
-
-              <!-- Notifikasi -->
-              <div id="notification">
-                <span id="notificationMessage"></span>
-            </div>        
           </div>
         </div>
       </div>

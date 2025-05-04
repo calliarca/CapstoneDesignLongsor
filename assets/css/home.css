@@ -656,48 +656,69 @@ input[type="checkbox"]:checked + .slider:before {
   background-color: #e53935;
 }
 
-/* Tombol untuk membuka popup di pojok kanan atas */
-.open-camera-btn {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  padding: 10px 15px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  z-index: 1001; /* Pastikan tombol berada di atas elemen lain */
-}
-
-.open-camera-btn:hover {
-  background-color: #45a049;
-}
-
 /* Popup untuk tampilan kamera */
 .camera-popup {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 600px;
+  width: 85%;
+  max-width: 800px;
+  height: auto;
   background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  display: none; /* Disembunyikan secara default */
+  display: none;
+}
+
+/* Konten dalam popup */
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 /* Video dalam popup */
 #esp32-camera-stream {
-  max-width: 100%;
+  width: 100%;
   height: auto;
+  min-height: 300px;
+  max-height: 60vh;
+  aspect-ratio: 16/9;
+  border: none;
+  background-color: #f0f0f0;
 }
 
-/* Styling untuk overlay popup */
+/* Header popup */
+.popup-content h3 {
+  margin: 0;
+  padding: 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+/* Tombol close di pojok kanan atas */
+#close-camera-popup-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+/* Overlay popup */
 .camera-popup-overlay {
   position: fixed;
   top: 0;
@@ -706,9 +727,27 @@ input[type="checkbox"]:checked + .slider:before {
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
-  display: none; /* Disembunyikan secara default */
+  display: none;
 }
 
+/* Tombol buka kamera */
+.open-camera-btn {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  padding: 8px 12px;
+  font-size: 14px;
+  z-index: 100;
+  cursor: pointer;
+  border-radius: 4px;
+  border: none;
+  background: #4CAF50;
+  color: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
 
 .frame-home-page1-sidebar {
   top: 0px;
