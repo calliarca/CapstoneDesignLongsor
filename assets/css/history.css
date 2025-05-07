@@ -360,23 +360,56 @@
   .detail-button:hover {
     background-color: #0056b3; /* Warna biru lebih gelap saat hover */
   }
-  
-  .detail-button:nth-child(2) {
-    background-color: #28a745; /* Warna hijau untuk "Lihat Valid Data" */
-  }
-  
-  .detail-button:nth-child(2):hover {
-    background-color: #1e7e34;
-  }
-  
-  .detail-button:nth-child(3) {
-    background-color: #ffc107; /* Warna kuning untuk "Tambahkan User" */
-    color: black;
-  }
-  
-  .detail-button:nth-child(3):hover {
-    background-color: #e0a800;
-  }
+
+  /* Styling dropdown menu */
+  .dropdown-menu {
+    border-radius: 12px;
+    padding: 0;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    min-width: 180px;
+    }
+
+    /* Umum untuk item */
+    .dropdown-item {
+        padding: 12px 16px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Warna item individual */
+    .dropdown-item.LihatDataButton {
+        background-color: #e3f2fd; /* biru muda */
+        color: #0d6efd;
+    }
+
+    .dropdown-item.LihatDataButton:hover {
+        background-color: #bbdefb;
+        color: #0b5ed7;
+    }
+
+    .dropdown-item.openOverlayButton {
+        background-color: #e8f5e9; /* hijau muda */
+        color: #2e7d32;
+    }
+
+    .dropdown-item.openOverlayButton:hover {
+        background-color: #c8e6c9;
+        color: #1b5e20;
+    }
+
+    .dropdown-item.deleteSimulationButton {
+        background-color: #ffebee; /* merah muda */
+        color: #c62828;
+    }
+
+    .dropdown-item.deleteSimulationButton:hover {
+        background-color: #ffcdd2;
+        color: #b71c1c;
+    }
   
   /* Responsive Table */
   @media (max-width: 768px) {

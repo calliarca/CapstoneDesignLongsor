@@ -42,8 +42,7 @@ function loadSimulationHistory() {
                                 Actions
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item rawDataButton" href="#" data-simulation-name="${row.nama_simulasi}">Raw Data</a></li>
-                                <li><a class="dropdown-item validDataButton" href="#">Valid Data</a></li>
+                                <li><a class="dropdown-item LihatDataButton" href="#" data-simulation-name="${row.nama_simulasi}">Lihat Data</a></li>
                                 <li><a class="dropdown-item openOverlayButton" href="#" data-simulation-id="${row.id}">Add User</a></li>
                                 <li><a class="dropdown-item deleteSimulationButton" href="#" data-simulation-name="${row.nama_simulasi}">Delete</a></li>
                             </ul>
@@ -148,7 +147,7 @@ function navigateTo(page) {
         });
   });
 
-// Event delegation untuk menangani klik tombol "Add User" dan "Raw Data"
+// Event delegation untuk menangani klik tombol "Add User" dan "Lihat Data"
 document.addEventListener("click", function (event) {
     // --- Tombol Add User ---
     if (event.target.classList.contains("openOverlayButton")) {
@@ -172,11 +171,11 @@ document.addEventListener("click", function (event) {
         loadUserList();
     }
 
-    if (event.target.classList.contains("rawDataButton")) {
+    if (event.target.classList.contains("LihatDataButton")) {
         let simulationName = event.target.getAttribute("data-simulation-name");
         if (simulationName) {
             let encodedName = encodeURIComponent(simulationName);
-            window.location.href = `raw-data.html?name=${encodedName}`;
+            window.location.href = `lihat-data.html?name=${encodedName}`;
         } else {
             alert("Nama simulasi tidak ditemukan.");
         }

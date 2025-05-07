@@ -107,7 +107,7 @@ function fetchRawData(simulationName) {
     return;
   }
 
-  const url = `php/get_raw_data.php?simulation_name=${encodeURIComponent(simulationName)}`;
+  const url = `php/get_data.php?simulation_name=${encodeURIComponent(simulationName)}`;
 
   showLoadingIndicator(true);
 
@@ -331,10 +331,10 @@ function downloadExcel() {
   // Membuat worksheet dari data
   const ws = XLSX.utils.aoa_to_sheet(data);
   const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Raw Data");
+  XLSX.utils.book_append_sheet(wb, ws, "Data Simulasi");
 
   // Menulis dan mengunduh file Excel
-  XLSX.writeFile(wb, "raw_data_simulasi.xlsx");
+  XLSX.writeFile(wb, "data_simulasi.xlsx");
 }
 
 
