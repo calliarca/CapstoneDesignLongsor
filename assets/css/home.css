@@ -948,3 +948,77 @@ input[type="checkbox"]:checked + .slider:before {
   color: black; /* Sesuaikan warna teks agar kontras */
   padding: 10px 0; /* Ruang atas dan bawah */
 }
+
+/* Kotak Sensor Kelembaban */
+.soil-sensors-container {
+  position: absolute;
+  top: 20px;
+  left: 100px; /* Diubah dari right ke left */
+  width: 180px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.sensors-header {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #333;
+  text-align: center;
+}
+
+.sensors-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.sensor-point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 5px;
+  border-radius: 6px;
+}
+
+.sensor-point:hover {
+  background: #f0f0f0;
+}
+
+.sensor-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ccc;
+  margin-bottom: 4px;
+  transition: all 0.3s ease;
+}
+
+.sensor-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+}
+
+.sensor-label {
+  font-size: 10px;
+  color: #777;
+}
+
+/* Warna berdasarkan nilai kelembaban */
+.sensor-dot.dry {
+  background: #FF5252; /* Merah untuk tanah kering */
+}
+
+.sensor-dot.moderate {
+  background: #FFC107; /* Kuning untuk kelembaban sedang */
+}
+
+.sensor-dot.wet {
+  background: #4CAF50; /* Hijau untuk tanah basah */
+}

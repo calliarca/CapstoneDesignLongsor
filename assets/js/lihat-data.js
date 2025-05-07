@@ -172,13 +172,38 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Grafik dan Unduh Excel
+// Fungsi untuk mengurangi data ke jumlah titik tertentu dengan merata
+function reduceDataToPoints(data, maxPoints) {
+  if (data.length <= maxPoints) {
+    return data; // Tidak perlu dikurangi jika sudah cukup
+  }
+  
+  const reducedData = [];
+  const step = data.length / maxPoints;
+  
+  for (let i = 0; i < maxPoints; i++) {
+    const index = Math.floor(i * step);
+    reducedData.push(data[index]);
+  }
+  
+  return reducedData;
+}
+
+// Fungsi untuk membuat grafik kelembaban tanah
 function createHumidityChart(id, labels, humidityData) {
   const ctx = document.getElementById(id).getContext('2d');
   
-  // Ambil hanya 20 data terakhir sesuai interval
-  const interval = 20; // Ganti ini dengan logika interval sesuai keinginan Anda
-  const limitedLabels = labels.slice(-interval);  // Gunakan nomor ID untuk sumbu X
-  const limitedHumidityData = humidityData.map(data => data.slice(-interval));
+  // Ambil data sesuai interval yang dipilih
+  const interval = document.getElementById('intervalSelector').value;
+  const filteredLabels = filterDataByInterval(labels, interval);
+  const filteredHumidityData = humidityData.map(data => filterDataByInterval(data, interval));
+  
+  // Kurangi menjadi maksimal 20 titik
+  const maxPoints = 20;
+  const reducedLabels = reduceDataToPoints(filteredLabels, maxPoints);
+  const reducedHumidityData = filteredHumidityData.map(data => 
+    reduceDataToPoints(data, maxPoints)
+  );
 
   // Destroy chart lama jika ada
   if (humidityChartInstance) {
@@ -188,8 +213,8 @@ function createHumidityChart(id, labels, humidityData) {
   humidityChartInstance = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: limitedLabels,  // Sumbu X menggunakan nomor ID
-      datasets: limitedHumidityData.map((data, index) => ({
+      labels: reducedLabels,
+      datasets: reducedHumidityData.map((data, index) => ({
         label: `Kelembaban Tanah ${index + 1}`,
         data: data,
         fill: false,
@@ -204,24 +229,40 @@ function createHumidityChart(id, labels, humidityData) {
         title: {
           display: true,
           text: 'Grafik Kelembaban Tanah'
+        },
+        tooltip: {
+          mode: 'index',
+          intersect: false
         }
       },
       scales: {
-        x: { title: { display: true, text: 'Nomor Simulasi' } }, // Ganti judul sumbu X
+        x: { 
+          title: { display: true, text: 'Nomor Simulasi' },
+          ticks: {
+            autoSkip: false
+          }
+        },
         y: { title: { display: true, text: 'Kelembaban (%)' } }
       }
     }
   });
 }
 
+// Fungsi untuk membuat grafik kemiringan
 function createSlopeChart(id, labels, slopeData, outputSlopeData) {
   const ctx = document.getElementById(id).getContext('2d');
-
-  // Ambil hanya 20 data terakhir sesuai interval
-  const interval = 20; // Ganti ini dengan logika interval sesuai keinginan Anda
-  const limitedLabels = labels.slice(-interval);  // Gunakan nomor ID untuk sumbu X
-  const limitedSlopeData = slopeData.slice(-interval);
-  const limitedOutputSlopeData = outputSlopeData.slice(-interval);
+  
+  // Ambil data sesuai interval yang dipilih
+  const interval = document.getElementById('intervalSelector').value;
+  const filteredLabels = filterDataByInterval(labels, interval);
+  const filteredSlopeData = filterDataByInterval(slopeData, interval);
+  const filteredOutputSlopeData = filterDataByInterval(outputSlopeData, interval);
+  
+  // Kurangi menjadi maksimal 15 titik
+  const maxPoints = 15;
+  const reducedLabels = reduceDataToPoints(filteredLabels, maxPoints);
+  const reducedSlopeData = reduceDataToPoints(filteredSlopeData, maxPoints);
+  const reducedOutputSlopeData = reduceDataToPoints(filteredOutputSlopeData, maxPoints);
 
   if (slopeChartInstance) {
     slopeChartInstance.destroy();
@@ -230,18 +271,18 @@ function createSlopeChart(id, labels, slopeData, outputSlopeData) {
   slopeChartInstance = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: limitedLabels,  // Sumbu X menggunakan nomor ID
+      labels: reducedLabels,
       datasets: [
         {
           label: 'Input Kemiringan',
-          data: limitedSlopeData,
+          data: reducedSlopeData,
           borderColor: 'rgba(153, 102, 255, 1)',
           fill: false,
           tension: 0.1
         },
         {
           label: 'Output Kemiringan',
-          data: limitedOutputSlopeData,
+          data: reducedOutputSlopeData,
           borderColor: 'rgba(255, 99, 132, 1)',
           fill: false,
           tension: 0.1
@@ -255,24 +296,40 @@ function createSlopeChart(id, labels, slopeData, outputSlopeData) {
         title: {
           display: true,
           text: 'Grafik Kemiringan'
+        },
+        tooltip: {
+          mode: 'index',
+          intersect: false
         }
       },
       scales: {
-        x: { title: { display: true, text: 'Nomor Simulasi' } }, // Ganti judul sumbu X
+        x: { 
+          title: { display: true, text: 'Nomor Simulasi' },
+          ticks: {
+            autoSkip: false
+          }
+        },
         y: { title: { display: true, text: 'Derajat' } }
       }
     }
   });
 }
 
+// Fungsi untuk membuat grafik curah hujan
 function createRainfallChart(id, labels, rainfallData, outputRainfallData) {
   const ctx = document.getElementById(id).getContext('2d');
-
-  // Ambil hanya 20 data terakhir sesuai interval
-  const interval = 20; // Ganti ini dengan logika interval sesuai keinginan Anda
-  const limitedLabels = labels.slice(-interval);  // Gunakan nomor ID untuk sumbu X
-  const limitedRainfallData = rainfallData.slice(-interval);
-  const limitedOutputRainfallData = outputRainfallData.slice(-interval);
+  
+  // Ambil data sesuai interval yang dipilih
+  const interval = document.getElementById('intervalSelector').value;
+  const filteredLabels = filterDataByInterval(labels, interval);
+  const filteredRainfallData = filterDataByInterval(rainfallData, interval);
+  const filteredOutputRainfallData = filterDataByInterval(outputRainfallData, interval);
+  
+  // Kurangi menjadi maksimal 15 titik
+  const maxPoints = 15;
+  const reducedLabels = reduceDataToPoints(filteredLabels, maxPoints);
+  const reducedRainfallData = reduceDataToPoints(filteredRainfallData, maxPoints);
+  const reducedOutputRainfallData = reduceDataToPoints(filteredOutputRainfallData, maxPoints);
 
   if (rainfallChartInstance) {
     rainfallChartInstance.destroy();
@@ -281,18 +338,18 @@ function createRainfallChart(id, labels, rainfallData, outputRainfallData) {
   rainfallChartInstance = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: limitedLabels,  // Sumbu X menggunakan nomor ID
+      labels: reducedLabels,
       datasets: [
         {
           label: 'Input Curah Hujan',
-          data: limitedRainfallData,
+          data: reducedRainfallData,
           borderColor: 'rgba(255, 159, 64, 1)',
           fill: false,
           tension: 0.1
         },
         {
           label: 'Output Curah Hujan',
-          data: limitedOutputRainfallData,
+          data: reducedOutputRainfallData,
           borderColor: 'rgba(255, 206, 86, 1)',
           fill: false,
           tension: 0.1
@@ -306,10 +363,19 @@ function createRainfallChart(id, labels, rainfallData, outputRainfallData) {
         title: {
           display: true,
           text: 'Grafik Curah Hujan'
+        },
+        tooltip: {
+          mode: 'index',
+          intersect: false
         }
       },
       scales: {
-        x: { title: { display: true, text: 'Nomor Simulasi' } }, // Ganti judul sumbu X
+        x: { 
+          title: { display: true, text: 'Nomor Simulasi' },
+          ticks: {
+            autoSkip: false
+          }
+        },
         y: { title: { display: true, text: 'Curah Hujan (mm)' } }
       }
     }
@@ -321,11 +387,18 @@ function downloadExcel() {
   const header = ['No', 'Waktu', 'Kelembaban Tanah 1', 'Kelembaban Tanah 2', 'Kelembaban Tanah 3', 'Kelembaban Tanah 4', 'Kelembaban Tanah 5', 'Kelembaban Tanah 6', 'Input Kemiringan', 'Output Kemiringan', 'Curah Hujan'];
   const rows = Array.from(table.rows);
 
+  // Mendapatkan nama simulasi dari URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const simulationName = urlParams.get('simulation_name') || 'simulasi';
+  
+  // Membersihkan nama simulasi untuk nama file (menghilangkan karakter tidak valid)
+  const cleanSimulationName = simulationName.replace(/[\\/*?:[\]]/g, '').substring(0, 50); // Batasi panjang nama
+
   // Menambahkan header ke data
-  const data = [header]; // Menambahkan header pada array data
+  const data = [header];
   rows.forEach(row => {
     const cells = Array.from(row.cells);
-    data.push(cells.map(cell => cell.textContent)); // Mengambil konten dari setiap cell di setiap baris
+    data.push(cells.map(cell => cell.textContent));
   });
 
   // Membuat worksheet dari data
@@ -333,10 +406,9 @@ function downloadExcel() {
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Data Simulasi");
 
-  // Menulis dan mengunduh file Excel
-  XLSX.writeFile(wb, "data_simulasi.xlsx");
+  // Menulis dan mengunduh file Excel dengan nama yang disesuaikan
+  XLSX.writeFile(wb, `data_simulasi_${cleanSimulationName}.xlsx`);
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
   const loadingPage = document.getElementById('loadingPage');
@@ -352,6 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// Fungsi untuk memperbarui interval berdasarkan pilihan pengguna
 function updateInterval() {
   const interval = document.getElementById('intervalSelector').value;
   if (!window.originalRows || window.originalRows.length === 0) {
@@ -361,7 +434,7 @@ function updateInterval() {
 
   // Ambil waktu akhir simulasi dari baris terakhir
   const lastRow = window.originalRows[window.originalRows.length - 1];
-  const endTime = new Date(lastRow.timestamp || lastRow.created_at);
+  const endTime = new Date(lastRow.created_at || lastRow.timestamp);
 
   let filteredRows;
 
@@ -377,40 +450,50 @@ function updateInterval() {
     const startTime = new Date(endTime.getTime() - durationMs);
 
     filteredRows = window.originalRows.filter(row => {
-      const rowTime = new Date(row.timestamp || row.created_at);
-      return rowTime >= startTime && rowTime <= endTime;
+      const rowTime = new Date(row.created_at || row.timestamp);
+      return rowTime >= startTime;
     });
   }
 
-  displayRawData(filteredRows); // Gantikan renderTable dan renderChart
+  // Panggil fungsi displayRawData dengan data yang sudah difilter
+  displayRawData(filteredRows);
 }
 
-// Fungsi untuk memfilter data berdasarkan interval
-function filterDataByInterval(rows, interval) {
-  if (interval === 'all') {
-    return rows; // tampilkan semua data tanpa filter
+// Fungsi untuk memfilter data berdasarkan interval (versi yang diperbaiki)
+function filterDataByInterval(data, interval) {
+  if (interval === 'all' || !data || data.length === 0) {
+    return data; // tampilkan semua data tanpa filter
   }
 
-  const result = [];
-  const now = new Date();
-  let gapMinutes = 0;
+  // Jika data bukan array timestamp, kembalikan data asli
+  if (typeof data[0] !== 'number' && typeof data[0] !== 'string') {
+    return data;
+  }
 
+  // Untuk data numerik (misalnya IDs)
+  const now = Date.now();
+  let durationMs = 0;
+  
   switch (interval) {
-    case '5min': gapMinutes = 5; break;
-    case '15min': gapMinutes = 15; break;
-    case '30min': gapMinutes = 30; break;
-    case '1h': gapMinutes = 60; break;
-    default: return rows; // fallback ke semua data
+    case '5min': durationMs = 5 * 60 * 1000; break;
+    case '15min': durationMs = 15 * 60 * 1000; break;
+    case '30min': durationMs = 30 * 60 * 1000; break;
+    case '1h': durationMs = 60 * 60 * 1000; break;
+    default: return data;
   }
 
-  // Filter berdasarkan waktu dari sekarang ke belakang
-  for (const row of rows) {
-    const timestamp = new Date(row.created_at);
-    const diffMinutes = (now - timestamp) / (1000 * 60); // selisih dalam menit
-    if (diffMinutes <= gapMinutes) {
-      result.push(row);
+  // Hitung berapa banyak data yang harus ditampilkan berdasarkan interval
+  const totalDataPoints = data.length;
+  const intervalMs = durationMs;
+  const dataIntervalMs = intervalMs / totalDataPoints;
+  
+  // Ambil data dengan interval yang sesuai
+  const result = [];
+  for (let i = 0; i < totalDataPoints; i++) {
+    if (i % Math.ceil(totalDataPoints / 20) === 0 || i === totalDataPoints - 1) {
+      result.push(data[i]);
     }
   }
 
-  return result;
+  return result.length > 0 ? result : data.slice(-1);
 }
