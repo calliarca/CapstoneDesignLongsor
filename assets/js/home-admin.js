@@ -481,3 +481,78 @@ document.getElementById('close-camera-popup-btn').addEventListener('click', func
   document.querySelector('.camera-popup-overlay').style.display = 'none';
   document.querySelector('.camera-popup').style.display = 'none';
 });
+
+// Fungsi utama update kelembaban
+async function updateSoilMoisture() {
+  try {
+    const response = await fetch('php/get_kelembaban.php');
+    const data = await response.json();
+
+    if (data.status === 'success' || data.status === 'empty') {
+      // Update nilai rata-rata
+      document.getElementById('average-moisture').textContent = data.average;
+      
+      // Update indikator warna utama
+      updateMainIndicator(data.average);
+      
+      // Update masing-masing sensor
+      updateIndividualSensors(data.sensors);
+      
+      // Update timestamp jika diperlukan
+      console.log('Data terakhir diperbarui:', data.timestamp);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    document.getElementById('average-moisture').textContent = 'ERR';
+  }
+}
+
+// Update indikator utama
+function updateMainIndicator(average) {
+  const element = document.querySelector('.frame-home-page1-humidity1');
+  element.classList.remove('dry', 'moderate', 'wet');
+  
+  if (average < 30) {
+    element.classList.add('dry');
+  } else if (average >= 30 && average < 70) {
+    element.classList.add('moderate');
+  } else {
+    element.classList.add('wet');
+  }
+}
+
+// Update sensor individual
+function updateIndividualSensors(sensors) {
+  for (let i = 1; i <= 6; i++) {
+    const sensorElement = document.getElementById(`sensor-${i}`);
+    if (sensorElement) {
+      const value = sensors[`sensor${i}`];
+      const dotElement = sensorElement.querySelector('.sensor-dot');
+      const valueElement = sensorElement.querySelector('.sensor-value');
+      
+      valueElement.textContent = `${value}%`;
+      dotElement.className = 'sensor-dot';
+      
+      if (value < 30) {
+        dotElement.classList.add('dry');
+      } else if (value >= 30 && value < 70) {
+        dotElement.classList.add('moderate');
+      } else {
+        dotElement.classList.add('wet');
+      }
+    }
+  }
+}
+
+// Event listener untuk klik sensor
+document.querySelectorAll('.sensor-point').forEach(sensor => {
+  sensor.addEventListener('click', function() {
+    const sensorId = this.id.split('-')[1];
+    const value = this.querySelector('.sensor-value').textContent;
+    alert(`Detail Sensor ${sensorId}\nNilai: ${value}`);
+  });
+});
+
+// Jalankan update setiap 3 detik
+setInterval(updateSoilMoisture, 3000);
+updateSoilMoisture(); // Inisialisasi pertama
