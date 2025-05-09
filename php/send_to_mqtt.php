@@ -14,18 +14,36 @@ if (!isset($data['derajatKemiringan'])) {
     exit;
 }
 
-// Konfigurasi ThingSpeak MQTT
-$thingSpeakChannel = "2889619"; // Ganti dengan ID channel Anda
-$thingSpeakWriteKey = "HAZMHVHWLFMGUMRV"; // Ganti dengan API key Anda
+// Konfigurasi ThingSpeak API
+$thingSpeakWriteKey = "MZIYNX5I6XWCACCA"; // Ganti dengan API key Anda
 
-// Kirim data ke ThingSpeak menggunakan HTTP GET
-$url = "https://api.thingspeak.com/update?api_key={$thingSpeakWriteKey}&field1=" . $data['derajatKemiringan'];
-
-$response = file_get_contents($url);
-
-if ($response) {
-    echo json_encode(["status" => "success", "message" => "Data sent to MQTT successfully"]);
-} else {
-    echo json_encode(["status" => "error", "message" => "Failed to send data"]);
+// Validasi nilai derajatKemiringan (pastikan berupa angka)
+if (!is_numeric($data['derajatKemiringan'])) {
+    echo json_encode(["status" => "error", "message" => "Invalid value for derajatKemiringan"]);
+    exit;
 }
+
+// Kirim data ke ThingSpeak menggunakan cURL
+$url = "https://api.thingspeak.com/update?api_key={$thingSpeakWriteKey}&field1=" . urlencode($data['derajatKemiringan']);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+// Eksekusi cURL
+$response = curl_exec($ch);
+
+// Periksa status HTTP
+$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+if ($http_code != 200) {
+    echo json_encode(["status" => "error", "message" => "ThingSpeak returned HTTP code: $http_code"]);
+} else {
+    if ($response == 0) {
+        echo json_encode(["status" => "error", "message" => "Data not saved. Check the field format or API key."]);
+    } else {
+        echo json_encode(["status" => "success", "message" => "Data sent to ThingSpeak successfully"]);
+    }
+}
+
+curl_close($ch);
 ?>

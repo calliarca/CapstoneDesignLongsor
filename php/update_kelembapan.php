@@ -13,7 +13,7 @@ if ($koneksi->connect_error) {
 }
 
 // --- Load Channel Configuration ---
-$configFile = 'assets/js/channel_config.json';
+$configFile = __DIR__ . '/../assets/js/channel_config.json';
 
 // Cek apakah file konfigurasi ada
 if (!file_exists($configFile)) {
