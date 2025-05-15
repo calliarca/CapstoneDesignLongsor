@@ -265,7 +265,7 @@ function handleKemiringan() {
   });
 
   // Kirim ke MQTT (ESP32 via ThingSpeak)
-  fetch("php/send_to_mqtt.php", {
+  fetch("php/send_to_thingspeak.php", {
       method: "POST",
       headers: {
           "Content-Type": "application/json"
@@ -277,7 +277,7 @@ function handleKemiringan() {
       if (result.status === "success") {
           alert("Dongkrak bergerak ke " + selectedValue + "°");
       } else {
-          alert("Gagal mengirim ke MQTT.");
+          alert("Gagal mengirim ke ThingSpeak.");
       }
   })
   .catch(error => {

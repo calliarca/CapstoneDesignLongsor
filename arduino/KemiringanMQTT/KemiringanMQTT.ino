@@ -5,20 +5,23 @@
 #include "MPU6050_6Axis_MotionApps20.h"
 
 // WiFi Credentials
-const char ssid[] = "ASUS";
-const char pass[] = "123456789";
+const char ssid[] = "Xiaomi MiA1";
+const char pass[] = "1234qwer";
 
 // ThingSpeak MQTT Credentials
-#define channelID 2889619
 const char mqttUserName[] = "HAsgGCchGyodFT00OiYTEyE";
 const char clientID[] = "HAsgGCchGyodFT00OiYTEyE";
-const char mqttPass[] = "ALDiptg5dojkgh9AuT95VEbm";
+const char mqttPass[] = "dB8MF0XlZWyQoHoTJwT2r677";
+
+// Channel IDs
+#define channelIDData 2889619        // Channel untuk publish data (field2 - Pitch)
+#define channelIDKontrol 2963900     // GANTI dengan Channel ID untuk kontrol (field1 - setpoint)
 
 // MQTT Server (ThingSpeak)
 const char* mqttServer = "mqtt3.thingspeak.com";
 const int mqttPort = 1883;
-String mqttSubscribeTopic = "channels/" + String(channelID) + "/subscribe/fields/field1";
-String mqttPublishTopic = "channels/" + String(channelID) + "/publish";
+String mqttSubscribeTopic = "channels/" + String(channelIDKontrol) + "/subscribe/fields/field1";
+String mqttPublishTopic = "channels/" + String(channelIDData) + "/publish";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -28,11 +31,6 @@ const int RPWM = 16;
 const int LPWM = 17;
 const int R_EN = 18;
 const int L_EN = 19;
-
-// MPU6050 PINOUT
-// PIN 21 - SDA
-// PIN 22 - SCL
-
 
 // MPU6050
 MPU6050 mpu;
@@ -53,6 +51,9 @@ const long interval = 2000;
 void setup() {
     Serial.begin(115200);
     setupWiFi();
+    Serial.print("ESP32 IP Address: ");
+    Serial.println(WiFi.localIP());
+
     client.setServer(mqttServer, mqttPort);
     client.setCallback(callback);
     reconnectMQTT();
@@ -65,7 +66,7 @@ void setup() {
     digitalWrite(L_EN, HIGH);
     stopMotor();
 
-    Wire.begin();
+    Wire.begin(21, 22);  // SDA, SCL
     Wire.setClock(400000);
     MPU6050Connect();
 }
@@ -74,6 +75,8 @@ void loop() {
     if (WiFi.status() != WL_CONNECTED) {
         Serial.println("WiFi disconnected, reconnecting...");
         setupWiFi();
+        Serial.print("ESP32 IP Address: ");
+        Serial.println(WiFi.localIP());
     }
 
     if (!client.connected()) {
@@ -85,13 +88,13 @@ void loop() {
     if (currentMillis - previousMillis >= interval) {
         previousMillis = currentMillis;
         GetDMP();
-        
+
         Serial.print("Yaw: "); Serial.print(Yaw);
         Serial.print(", Pitch: "); Serial.print(Pitch);
         Serial.print(", Roll: "); Serial.println(Roll);
         Serial.print("Setpoint: "); Serial.print(setpoint);
         Serial.print(", Motor Active: "); Serial.println(motorActive);
-        
+
         kontrolMotor();
         publishMQTT(Pitch);
     }
@@ -131,18 +134,21 @@ void callback(char* topic, byte* payload, unsigned int length) {
         setpoint = input;
         motorActive = true;
         Serial.print("Setpoint diterima: "); Serial.println(setpoint);
+    } else {
+        Serial.print("Setpoint tidak valid diterima: "); Serial.println(input);
     }
 }
 
 void publishMQTT(float pitchValue) {
-    if (pitchValue <= 0 || pitchValue > 90) {
+    if (pitchValue < 0 || pitchValue > 90) {
         Serial.println("Pitch negatif atau tidak valid, tidak dikirim!");
         return;
     }
 
     String payload = "field2=" + String(pitchValue, 2);
+
     if (client.publish(mqttPublishTopic.c_str(), payload.c_str())) {
-        Serial.print("Data terkirim: ");
+        Serial.print("Data terkirim (Pitch): ");
         Serial.println(payload);
     } else {
         Serial.println("Gagal mengirim data MQTT!");
