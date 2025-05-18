@@ -13,14 +13,14 @@ if ($koneksi->connect_error) {
 }
 
 // Cek file pause_fetch.lock
-$lockFile = __DIR__ . '/../cron/pause_fetch.lock';
+$lockFile = __DIR__ . '../cron/pause_fetch.lock';
 if (file_exists($lockFile)) {
     echo "⏸️ Proses ditunda karena pengiriman manual sedang berlangsung.\n";
     exit;
 }
 
 // Load konfigurasi channel
-$configFile = __DIR__ . '/../assets/js/channel_config.json';
+$configFile = __DIR__ . '../../assets/js/channel_config.json';
 if (!file_exists($configFile)) {
     $defaultConfig = [
         'humidity_channel_id' => '2843704',

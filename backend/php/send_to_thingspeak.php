@@ -34,7 +34,7 @@ $lockFile = __DIR__ . '/../cron/pause_fetch.lock';
 file_put_contents($lockFile, "manual_send_by_php|" . date("Y-m-d H:i:s"));
 
 // Cek rate limit 15 detik
-$logFile = __DIR__ . '/../cron/last_sent.log';
+$logFile = __DIR__ . '../cron/last_sent.log';
 $lastSent = file_exists($logFile) ? (int)file_get_contents($logFile) : 0;
 $now = time();
 $diff = $now - $lastSent;

@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function loadSimulationHistory() {
-    fetch("./php/getSimulations.php")
+    fetch("../backend/php/getSimulations.php")
         .then(response => response.json())
         .then(responseData => {
             console.log("Data dari server:", responseData); // Debugging
@@ -61,10 +61,10 @@ function loadSimulationHistory() {
 function navigateTo(page) {
   switch (page) {
     case 'home':
-      window.location.href = 'index.html'; // Ganti dengan URL tujuan
+      window.location.href = 'index'; // Ganti dengan URL tujuan (public/index.html)
       break;
     case 'logout':
-      fetch('./php/logout.php', {  // Pastikan path sesuai dengan struktur proyek
+      fetch('../backend/php/logout.php', {  // Pastikan path sesuai dengan struktur proyek
           method: 'POST',
           credentials: 'include'  // Agar session cookie dikirim ke server
       })
@@ -75,7 +75,7 @@ function navigateTo(page) {
               alert('You have logged out.');
               sessionStorage.clear(); // Hapus sessionStorage
               localStorage.clear();  // Hapus localStorage jika ada
-              window.location.href = 'login.html'; // Redirect ke halaman login
+              window.location.href = 'login'; // Redirect ke halaman login
           } else {
               alert('Logout failed. Please try again.');
           }
@@ -87,8 +87,8 @@ function navigateTo(page) {
   }
 }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    fetch("./php/check_session.php")
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("../backend/php/check_session.php")
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -101,13 +101,13 @@ function navigateTo(page) {
         })
         .then(data => {
             console.log("Check Session Response:", data);
-  
+
             if (data.status !== "success") {
                 console.error("Session tidak valid, kembali ke login.");
-                window.location.href = "./login.html";
+                window.location.href = "login";
             } else {
                 console.log("Session valid:", data);
-  
+
                 let userNameElement = document.getElementById("user-name");
                 if (userNameElement) {
                     userNameElement.innerText = data.session_data.name;
@@ -118,11 +118,11 @@ function navigateTo(page) {
         })
         .catch(error => {
             console.error("Gagal memeriksa session:", error);
-            window.location.href = "./login.html";
+            window.location.href = "login";
         });
-  
+
     // Set nama user di title
-    fetch("./php/get_name.php")
+    fetch("../backend/php/get_name.php")
         .then(response => response.json())
         .then(data => {
             let userNameElement = document.getElementById("user-name");
@@ -145,7 +145,7 @@ function navigateTo(page) {
                 userNameElement.innerText = "Guest";
             }
         });
-  });
+});
 
 // Event delegation untuk menangani klik tombol "Add User" dan "Lihat Data"
 document.addEventListener("click", function (event) {
@@ -175,7 +175,7 @@ document.addEventListener("click", function (event) {
         let simulationName = event.target.getAttribute("data-simulation-name");
         if (simulationName) {
             let encodedName = encodeURIComponent(simulationName);
-            window.location.href = `lihat-data.html?name=${encodedName}`;
+            window.location.href = `lihat-data?name=${encodedName}`;
         } else {
             alert("Nama simulasi tidak ditemukan.");
         }
@@ -185,7 +185,7 @@ document.addEventListener("click", function (event) {
 
 // Fungsi untuk memuat daftar user dari database
 function loadUserList() {
-    fetch("./php/getUsers.php")
+    fetch("../backend/php/getUsers.php")
         .then(response => response.json())
         .then(data => {
             let userEmailInput = document.getElementById("userEmailInput");
@@ -240,7 +240,7 @@ function setupAddUserButton() {
                 return;
             }
             
-           fetch("./php/grantAccess.php", {
+           fetch("../backend/php/grantAccess.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email: selectedUser, simulation_id: simulationId })
@@ -271,7 +271,7 @@ document.addEventListener("click", function (event) {
         }
 
         if (confirm("Yakin ingin menghapus simulasi ini?")) {
-            fetch("./php/hapus_simulasi.php", {
+            fetch("../backend/php/hapus_simulasi.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",

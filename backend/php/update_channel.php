@@ -31,7 +31,7 @@ if (!ctype_digit($slope) || strlen($slope) !== 6) {
     exit;
 }
 
-$configFile = __DIR__ . '/../assets/js/channel_config.json';
+$configFile = __DIR__ . '../../assets/js/channel_config.json';
 
 if (!is_writable(dirname($configFile))) {
     http_response_code(500);

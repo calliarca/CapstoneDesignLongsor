@@ -33,7 +33,7 @@ if (empty($simulationName)) {
 }
 
 // Ambil channel ID untuk output_kemiringan dari config
-$configFile = __DIR__ . '/../assets/js/channel_config.json';
+$configFile = __DIR__ . '../../assets/js/channel_config.json';
 if (!file_exists($configFile)) {
     echo json_encode(["status" => "error", "message" => "File konfigurasi tidak ditemukan."]);
     exit;

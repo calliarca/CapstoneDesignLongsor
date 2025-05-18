@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Path ke file konfigurasi URL kamera
-    $cameraConfigFilePath = __DIR__ . '/../assets/js/camera_config.json';
+    $cameraConfigFilePath = __DIR__ . '../../assets/js/camera_config.json';
 
 
     // Debug: pastikan path benar

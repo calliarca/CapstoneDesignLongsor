@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    fetch("php/getSimulations.php")
+    fetch("../backend/php/getSimulations.php")
         .then(response => response.json())
         .then(responseData => {
             console.log("Data dari server:", responseData); // Debugging
@@ -57,7 +57,7 @@ function navigateTo(page) {
       window.location.href = 'index.html'; // Ganti dengan URL tujuan
       break;
     case 'logout':
-      fetch('./php/logout.php', {  // Pastikan path sesuai dengan struktur proyek
+      fetch('../backend/php/logout.php', {  // Pastikan path sesuai dengan struktur proyek
           method: 'POST',
           credentials: 'include'  // Agar session cookie dikirim ke server
       })
@@ -82,7 +82,7 @@ function navigateTo(page) {
 
 function logoutUser() {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "./php/logout.php", true);
+    xhr.open("POST", "../backend/php/logout.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     
     xhr.onreadystatechange = function () {
@@ -95,7 +95,7 @@ function logoutUser() {
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    fetch("./php/check_session.php")
+    fetch("../backend/php/check_session.php")
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -129,7 +129,7 @@ function logoutUser() {
         });
   
     // Set nama user di title
-    fetch("./php/get_name.php")
+    fetch("../backend/php/get_name.php")
         .then(response => response.json())
         .then(data => {
             let userNameElement = document.getElementById("user-name");

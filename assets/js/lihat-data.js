@@ -107,7 +107,7 @@ function fetchRawData(simulationName) {
     return;
   }
 
-  const url = `php/get_data.php?simulation_name=${encodeURIComponent(simulationName)}`;
+  const url = `../backend/php/get_data.php?simulation_name=${encodeURIComponent(simulationName)}`;
 
   showLoadingIndicator(true);
 

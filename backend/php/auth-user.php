@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Jika user belum login atau bukan user biasa, redirect ke login
 if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] !== 'user') {
-    header("Location: login.html");
+    header("Location: ../../public/login.html");
     exit;
 }
 

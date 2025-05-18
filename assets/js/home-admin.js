@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (curahHujanInput) curahHujanInput.value = currentCurahHujan;
   
       // Panggil stop_simulation.php
-      fetch('php/stop_simulation.php', {
+      fetch('../backend/php/stop_simulation.php', {
         method: 'POST'
       })
       .then(response => response.json())
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
       console.log("Data yang dikirim ke backend:", data); // Debugging
   
-      fetch('php/save_simulation.php', {
+      fetch('../backend/php/save_simulation.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -193,7 +193,7 @@ function navigateTo(page) {
       window.location.href = 'index.html'; // Ganti dengan URL tujuan
       break;
     case 'logout':
-      fetch('./php/logout.php', {  // Pastikan path sesuai dengan struktur proyek
+      fetch('../backend/php/logout.php', {  // Pastikan path sesuai dengan struktur proyek
           method: 'POST',
           credentials: 'include'  // Agar session cookie dikirim ke server
       })
@@ -248,7 +248,7 @@ function handleKemiringan() {
   };
 
   // Kirim ke database MySQL
-  fetch("php/save_simulation.php", {
+  fetch("../backend/php/save_simulation.php", {
       method: "POST",
       headers: {
           "Content-Type": "application/json"
@@ -265,7 +265,7 @@ function handleKemiringan() {
   });
 
   // Kirim ke MQTT (ESP32 via ThingSpeak)
-  fetch("php/send_to_thingspeak.php", {
+  fetch("../backend/php/send_to_thingspeak.php", {
       method: "POST",
       headers: {
           "Content-Type": "application/json"
@@ -318,7 +318,7 @@ function handleCurahHujan() {
 }
 
 function sendDataToBackend(data, type) {
-  fetch('php/save_simulation.php', {
+  fetch('../backend/php/save_simulation.php', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -347,7 +347,7 @@ function sendDataToBackend(data, type) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-      fetch("./php/check_session.php")
+      fetch("../backend/php/check_session.php")
       .then(response => response.text()) // Ambil teks mentah sebelum parsing JSON
       .then(text => {
           console.log("Raw response:", text); // Lihat output asli
@@ -357,7 +357,7 @@ document.addEventListener("DOMContentLoaded", function () {
           console.log("Check Session Response:", data);
           if (data.status !== "success") {
               console.error("Session tidak valid, kembali ke login.");
-              window.location.href = "./login.html";
+              window.location.href = "login.html";
           } else {
               console.log("Session valid:", data);
               let userNameElement = document.getElementById("user-name");
@@ -370,11 +370,11 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch(error => {
           console.error("Gagal memeriksa session:", error);
-          window.location.href = "./login.html";
+          window.location.href = "login.html";
       });
 
   // Set nama user di title
-  fetch("./php/get_name.php")
+  fetch("../backend/php/get_name.php")
       .then(response => response.json())
       .then(data => {
           let userNameElement = document.getElementById("user-name");
@@ -400,7 +400,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function updateKemiringan() {
-  fetch('php/get_kemiringan.php')
+  fetch('../backend/php/get_kemiringan.php')
     .then(response => response.text())
     .then(data => {
       document.getElementById('nilaiKemiringan').textContent = data;
@@ -485,7 +485,7 @@ document.getElementById('close-camera-popup-btn').addEventListener('click', func
 // Fungsi utama update kelembaban
 async function updateSoilMoisture() {
   try {
-    const response = await fetch('php/get_kelembaban.php');
+    const response = await fetch('../backend/php/get_kelembaban.php');
     const data = await response.json();
 
     if (data.status === 'success' || data.status === 'empty') {

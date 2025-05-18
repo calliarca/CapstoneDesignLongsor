@@ -9,21 +9,6 @@ document.getElementById("registerForm").addEventListener("submit", function(even
     alert("Registrasi berhasil!");
 });
 
-function togglePassword(inputId, iconId) {
-    let input = document.getElementById(inputId);
-    let icon = document.getElementById(iconId);
-
-    if (input.type === "password") {
-        input.type = "text";
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash");
-    } else {
-        input.type = "password";
-        icon.classList.remove("fa-eye-slash");
-        icon.classList.add("fa-eye");
-    }
-}
-
 // AJAX untuk mengirim data ke register.php
 document.getElementById("registerForm").addEventListener("submit", function(event) {
     event.preventDefault();
@@ -45,7 +30,8 @@ document.getElementById("registerForm").addEventListener("submit", function(even
     formData.append("password", password);
     formData.append("accountType", accountType);
 
-    fetch("php/register.php", {
+    // Path ke backend/php/register.php
+    fetch("../backend/php/register.php", {
         method: "POST",
         body: formData
     })
@@ -54,25 +40,40 @@ document.getElementById("registerForm").addEventListener("submit", function(even
     .catch(error => console.error("Error:", error));
 });
 
+function togglePassword(inputId, iconId) {
+    let input = document.getElementById(inputId);
+    let icon = document.getElementById(iconId);
+
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    } else {
+        input.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    }
+}
+
 // Fungsi untuk navigasi
 function navigateTo(page) {
     switch (page) {
       case 'home':
-        window.location.href = 'index.html'; // Ganti dengan URL tujuan
+        window.location.href = 'home-admin.html';
         break;
       case 'logout':
-        fetch('./php/logout.php', {  // Pastikan path sesuai dengan struktur proyek
+        fetch('../backend/php/logout.php', {
             method: 'POST',
-            credentials: 'include'  // Agar session cookie dikirim ke server
+            credentials: 'include'
         })
         .then(response => response.json())
         .then(data => {
-            console.log("Logout Response:", data); // Debugging
+            console.log("Logout Response:", data);
             if (data.status === "success") {
                 alert('You have logged out.');
-                sessionStorage.clear(); // Hapus sessionStorage
-                localStorage.clear();  // Hapus localStorage jika ada
-                window.location.href = 'login.html'; // Redirect ke halaman login
+                sessionStorage.clear();
+                localStorage.clear();
+                window.location.href = 'login.html';
             } else {
                 alert('Logout failed. Please try again.');
             }
@@ -82,64 +83,32 @@ function navigateTo(page) {
       default:
         console.error('Unknown section: ' + page);
     }
-  }
-  
-    document.addEventListener("DOMContentLoaded", function () {
-      fetch("./php/check_session.php")
-          .then(response => {
-              if (!response.ok) {
-                  throw new Error(`HTTP error! Status: ${response.status}`);
-              }
-              return response.text(); // Baca sebagai teks dulu
-          })
-          .then(text => {
-              console.log("Raw Response:", text); // Debugging
-              return JSON.parse(text); // Parse JSON manual
-          })
-          .then(data => {
-              console.log("Check Session Response:", data);
-    
-              if (data.status !== "success") {
-                  console.error("Session tidak valid, kembali ke login.");
-                  window.location.href = "./login.html";
-              } else {
-                  console.log("Session valid:", data);
-    
-                  let userNameElement = document.getElementById("user-name");
-                  if (userNameElement) {
-                      userNameElement.innerText = data.session_data.name;
-                  } else {
-                      console.warn("Elemen #user-name tidak ditemukan!");
-                  }
-              }
-          })
-          .catch(error => {
-              console.error("Gagal memeriksa session:", error);
-              window.location.href = "./login.html";
-          });
-    
-      // Set nama user di title
-      fetch("./php/get_name.php")
-          .then(response => response.json())
-          .then(data => {
-              let userNameElement = document.getElementById("user-name");
-              if (data.name) {
-                  document.title = `Home Page - ${data.name}`;
-                  if (userNameElement) {
-                      userNameElement.innerText = data.name;
-                  }
-              } else {
-                  document.title = "Home Page - Guest";
-                  if (userNameElement) {
-                      userNameElement.innerText = "Guest";
-                  }
-              }
-          })
-          .catch(() => {
-              document.title = "Home Page - Guest";
-              let userNameElement = document.getElementById("user-name");
-              if (userNameElement) {
-                  userNameElement.innerText = "Guest";
-              }
-          });
-    });
+}
+
+// Cek session dan redirect jika tidak valid
+document.addEventListener("DOMContentLoaded", function () {
+    // Set nama user di title
+    fetch("../backend/php/get_name.php")
+        .then(response => response.json())
+        .then(data => {
+            let userNameElement = document.getElementById("user-name");
+            if (data.name) {
+                document.title = `Home Page - ${data.name}`;
+                if (userNameElement) {
+                    userNameElement.innerText = data.name;
+                }
+            } else {
+                document.title = "Home Page - Guest";
+                if (userNameElement) {
+                    userNameElement.innerText = "Guest";
+                }
+            }
+        })
+        .catch(() => {
+            document.title = "Home Page - Guest";
+            let userNameElement = document.getElementById("user-name");
+            if (userNameElement) {
+                userNameElement.innerText = "Guest";
+            }
+        });
+});

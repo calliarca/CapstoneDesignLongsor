@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let formData = new FormData(this);
 
-        fetch("php/submit-login.php", {
+        fetch("../backend/php/submit-login.php", { // Ubah path ke backend/php
             method: "POST",
             body: formData,
         })
@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     sessionStorage.setItem("account_type", data.account_type); // Simpan account_type
 
                     if (data.account_type === "admin") {
-                        window.location.href = "home-admin.html";
+                        window.location.href = "home-admin";
                     } else if (data.account_type === "user") {
-                        window.location.href = "home-user.html";
+                        window.location.href = "home-user";
                     } else {
                         console.error("Unknown account_type:", data.account_type);
                         alert("Tipe akun tidak dikenali!");
