@@ -27,15 +27,36 @@
   object-fit: cover;
 }
 
-.frame-home-page1-file1 {
-  top: 5%;
-  left: 50%;
-  width: 35%;
-  height: 50%;
-  position: absolute;
-  transform: translateX(-50%);
-  max-width: 100%;
-}
+        .frame-home-page1-file1 {
+            top: 5%;
+            left: 50%;
+            width: 35%; /* Lebar kontainer 3D */
+            height: 50%; /* Tinggi kontainer 3D */
+            position: absolute;
+            transform: translateX(-50%);
+            max-width: 100%;
+            /* background-color: #f0f0f0; */ /* Opsional: untuk debugging posisi */
+            overflow: hidden; /* Penting agar canvas tidak meluber jika ada masalah ukuran */
+        }
+
+        .frame-home-page1-file1 canvas { /* Canvas Three.js mengisi kontainer */
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        #threejs-gyro-info { /* Styling untuk info data giro di atas canvas */
+            position: absolute;
+            top: 10px; /* Sesuaikan posisi */
+            left: 10px; /* Sesuaikan posisi */
+            padding: 5px 8px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            border-radius: 3px;
+            z-index: 100; /* Di atas canvas */
+        }
 
 .frame-home-page1barderajatkemiringina {
   top: 55%;

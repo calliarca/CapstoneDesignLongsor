@@ -1,7 +1,7 @@
 // Deklarasikan variabel di global scope
 let toggleSimulation;
 let currentKemiringan = 0; // Simpan nilai derajat kemiringan
-let currentCurahHujan = 0; // Simpan nilai curah huja
+let currentCurahHujan = 0; // Simpan nilai curah hujan
 let currentKelembabanTanah = 0;// Simpan nilai kelembaban tanah
 let currentKelembabanTanah1 = 0;
 let currentKelembabanTanah2 = 0;
@@ -11,10 +11,21 @@ let currentKelembabanTanah5 = 0;
 let currentKelembabanTanah6 = 0;
 let currentOutputKemiringan = 0;
 let currentOutputCurahHujan = 0;
+let currentActiveSimulationName = null;
+let dataBuffer = []; // Untuk menampung data sensor sebelum dikirim batch
+let collectDataIntervalId = null; // ID interval untuk mengumpulkan data ke buffer
+let batchSaveIntervalId = null;   // ID interval untuk mengirim batch data
 
 
-setInterval(updateKemiringan, 1000); // Update setiap 1 detik
-updateKemiringan(); // Panggil pertama kali langsung
+let pollingInterval; // Variabel untuk menyimpan interval ID
+
+// === UNTUK GIRO THREE.JS ===
+// Pastikan window.globalGyroData diinisialisasi.
+// three_scene.js akan membaca dari sini.
+if (typeof window.globalGyroData === 'undefined') {
+    window.globalGyroData = { x: 0, y: 0, z: 0, updated: false };
+}
+// === AKHIR UNTUK GIRO ===
 
 document.addEventListener('DOMContentLoaded', () => {
   toggleSimulation = document.querySelector('#toggle-simulation'); // Inisialisasi variabel
@@ -29,9 +40,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const kemiringanButton = document.querySelector('.frame-home-page1-button1');
   const curahHujanButton = document.querySelector('.frame-home-page1-button2'); // Pastikan selector ini sesuai
 
+  const COLLECT_INTERVAL_MS = 1000;    // Kumpulkan data setiap 1 detik
+  const BATCH_SAVE_INTERVAL_MS = 30000; // Kirim batch ke server setiap 30 detik (sesuaikan)
+
   // Nonaktifkan input kemiringan dan curah hujan secara default
   if (kemiringanInput) kemiringanInput.disabled = true;
   if (curahHujanInput) curahHujanInput.disabled = true;
+
+    // Panggil MQTT atau polling
+  if (typeof mqtt !== 'undefined') {
+    connectToThingSpeakMQTT(); // Prioritaskan MQTT
+  } else {
+    console.log("MQTT.js tidak tersedia, menggunakan fallback polling PHP.");
+    pollingInterval = setInterval(updateData, 10000); // Mulai polling
+    updateData(); // Panggil sekali di awal
+  }
 
   // Event listener untuk input nama simulasi
   simulationNameInput.addEventListener('input', () => {
@@ -63,13 +86,26 @@ document.addEventListener('DOMContentLoaded', () => {
       simulationOverlay.style.display = 'none'; // Sembunyikan overlay
       simulationText.textContent = 'START SIMULATION'; // Reset teks
   
-      // Reset nilai derajat kemiringan dan curah hujan ke 0
-      currentKemiringan = 0;
-      currentCurahHujan = 0;
-  
-      // Reset nilai input
-      if (kemiringanInput) kemiringanInput.value = currentKemiringan;
-      if (curahHujanInput) curahHujanInput.value = currentCurahHujan;
+
+      if (collectDataIntervalId) {
+          clearInterval(collectDataIntervalId);
+          collectDataIntervalId = null;
+      }
+      if (batchSaveIntervalId) {
+          clearInterval(batchSaveIntervalId);
+          batchSaveIntervalId = null;
+      }
+
+      // Kirim sisa data di buffer SEBELUM mereset currentActiveSimulationName
+      if (dataBuffer.length > 0 && currentActiveSimulationName) {
+          console.log("Simulation stopped. Sending final batch of buffered data...");
+          sendBufferedDataToServer(true); // Kirim dengan flag isFinalSend = true
+      } else {
+          dataBuffer = []; // Pastikan buffer kosong
+      }
+
+      currentActiveSimulationName = null; // Reset nama simulasi aktif setelah potensi pengiriman terakhir
+
   
       // Panggil stop_simulation.php
       fetch('../backend/php/stop_simulation.php', {
@@ -112,30 +148,28 @@ document.addEventListener('DOMContentLoaded', () => {
   
     const simulationName = simulationNameInput.value.trim();
   
-    if (simulationName) {
-      const data = {
+if (simulationName) {
+    const data = {
         simulationName: simulationName,
-        kelembabanTanah1: currentKelembabanTanah1 || 0, // Pastikan nilai default
+        client_timestamp: new Date().toISOString(), // <-- TAMBAHKAN INI
+        kelembabanTanah1: currentKelembabanTanah1 || 0,
         kelembabanTanah2: currentKelembabanTanah2 || 0,
         kelembabanTanah3: currentKelembabanTanah3 || 0,
         kelembabanTanah4: currentKelembabanTanah4 || 0,
         kelembabanTanah5: currentKelembabanTanah5 || 0,
         kelembabanTanah6: currentKelembabanTanah6 || 0,
-        derajatKemiringan: currentKemiringan || 0,
-        outputKemiringan: currentOutputKemiringan || 0,
-        curahHujan: currentCurahHujan || 0,
-        outputCurahHujan: currentOutputCurahHujan || 0
-      };
-  
-      console.log("Data yang dikirim ke backend:", data); // Debugging
-  
-      fetch('../backend/php/save_simulation.php', {
+        derajatKemiringan: currentKemiringan || 0,      // Input pengguna saat ini
+        outputKemiringan: currentOutputKemiringan || 0, // Sensor saat ini
+        curahHujan: currentCurahHujan || 0,            // Input pengguna saat ini
+        outputCurahHujan: currentOutputCurahHujan || 0 // Sensor saat ini
+    };
+
+    console.log(`[${new Date().toLocaleString()}] Mengirim data awal (dengan client_timestamp) untuk simulasi:`, data);
+    fetch('../backend/php/save_simulation.php', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
-      })
+    })
         .then((response) => {
           if (!response.ok) {
             throw new Error('Failed to save simulation data.');
@@ -146,7 +180,19 @@ document.addEventListener('DOMContentLoaded', () => {
           if (result.status === "success") {
             alert(`Simulation "${simulationName}" saved successfully!`);
             simulationText.textContent = simulationName;
+            currentActiveSimulationName = simulationName; // Set nama simulasi aktif
   
+            // Hentikan interval lama jika ada (untuk kebersihan)
+            if (collectDataIntervalId) clearInterval(collectDataIntervalId);
+            if (batchSaveIntervalId) clearInterval(batchSaveIntervalId);
+            dataBuffer = []; // Kosongkan buffer dari sesi sebelumnya
+
+            // Mulai kumpulkan data ke buffer
+            collectDataIntervalId = setInterval(collectDataPoint, COLLECT_INTERVAL_MS);
+
+            // Mulai kirim batch data secara periodik
+            batchSaveIntervalId = setInterval(sendBufferedDataToServer, BATCH_SAVE_INTERVAL_MS);
+
             // Hanya menutup popup jika penyimpanan berhasil
             simulationPopup.style.display = 'none';
             simulationOverlay.style.display = 'none';
@@ -190,7 +236,7 @@ document.addEventListener('wheel', function (event) {
 function navigateTo(page) {
   switch (page) {
     case 'home':
-      window.location.href = 'index.html'; // Ganti dengan URL tujuan
+      window.location.href = 'index'; // Ganti dengan URL tujuan
       break;
     case 'logout':
       fetch('../backend/php/logout.php', {  // Pastikan path sesuai dengan struktur proyek
@@ -204,7 +250,7 @@ function navigateTo(page) {
               alert('You have logged out.');
               sessionStorage.clear(); // Hapus sessionStorage
               localStorage.clear();  // Hapus localStorage jika ada
-              window.location.href = 'login.html'; // Redirect ke halaman login
+              window.location.href = 'login'; // Redirect ke halaman login
           } else {
               alert('Logout failed. Please try again.');
           }
@@ -216,105 +262,167 @@ function navigateTo(page) {
   }
 }
 
-
 function handleKemiringan() {
-  const kemiringanInput = document.querySelector("#kemiringan-input");
-  const simulationNameInput = document.querySelector("#simulation-name");
-  const simulationName = simulationNameInput.value.trim();
+    // Pastikan toggleSimulation sudah diinisialisasi di DOMContentLoaded
+    if (!toggleSimulation || !toggleSimulation.checked || !currentActiveSimulationName) {
+        alert("Simulasi belum aktif atau nama simulasi belum diatur. Silakan mulai simulasi terlebih dahulu.");
+        return;
+    }
 
-  if (!simulationName) {
-      alert("Silakan isi nama simulasi terlebih dahulu.");
-      return;
-  }
+    const kemiringanInputElement = document.querySelector("#kemiringan-input");
+    const selectedValue = kemiringanInputElement.value;
 
-  const selectedValue = kemiringanInput.value;
-  if (!selectedValue) {
-      alert("Silakan pilih derajat kemiringan.");
-      return;
-  }
+    if (selectedValue === "" || selectedValue === null) {
+        alert("Silakan pilih derajat kemiringan.");
+        return;
+    }
 
-  const data = {
-    simulationName: simulationName,
-    kelembabanTanah1: currentKelembabanTanah1, // Gunakan nilai kelembaban tanah 1
-    kelembabanTanah2: currentKelembabanTanah2, // Gunakan nilai kelembaban tanah 2
-    kelembabanTanah3: currentKelembabanTanah3, // Gunakan nilai kelembaban tanah 3
-    kelembabanTanah4: currentKelembabanTanah4, // Gunakan nilai kelembaban tanah 4
-    kelembabanTanah5: currentKelembabanTanah5, // Gunakan nilai kelembaban tanah 5
-    kelembabanTanah6: currentKelembabanTanah6, // Gunakan nilai kelembaban tanah 6
-    derajatKemiringan: currentKemiringan, // Gunakan nilai derajat kemiringan
-    outputKemiringan: currentOutputKemiringan, // Gunakan nilai output kemiringan
-    curahHujan: currentCurahHujan, // Gunakan nilai curah hujan
-    outputCurahHujan: currentOutputCurahHujan // Gunakan nilai output curah hujan
-  };
+    const newKemiringanValue = parseFloat(selectedValue);
+    const tombolKirimKemiringan = document.querySelector('.frame-home-page1-button1'); // Atau ID tombol yang sesuai
+    if (tombolKirimKemiringan) tombolKirimKemiringan.disabled = true;
 
-  // Kirim ke database MySQL
-  fetch("../backend/php/save_simulation.php", {
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-  })
-  .then(response => response.json())
-  .then(result => {
-      if (result.status === "success") {
-          console.log("Data berhasil disimpan ke database.");
-      } else {
-          console.error("Gagal menyimpan data:", result.message);
-      }
-  });
+    // 1. Kirim perintah ke ThingSpeak
+    console.log(`Mengirim perintah kemiringan ${newKemiringanValue}° ke ThingSpeak...`);
+    fetch("../backend/php/send_to_thingspeak.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ derajatKemiringan: newKemiringanValue })
+    })
+    .then(response => response.json())
+    .then(resultSend => {
+        if (resultSend.status === "success") {
+            alert("Perintah kemiringan berhasil dikirim ke ThingSpeak: " + newKemiringanValue + "°");
+            console.log("Respon dari send_to_thingspeak.php:", resultSend);
 
-  // Kirim ke MQTT (ESP32 via ThingSpeak)
-  fetch("../backend/php/send_to_thingspeak.php", {
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ derajatKemiringan: parseFloat(selectedValue) })
-  })
-  .then(response => response.json())
-  .then(result => {
-      if (result.status === "success") {
-          alert("Dongkrak bergerak ke " + selectedValue + "°");
-      } else {
-          alert("Gagal mengirim ke ThingSpeak.");
-      }
-  })
-  .catch(error => {
-      console.error("Error:", error);
-      alert("Terjadi kesalahan saat mengirim data.");
-  });
+            // 2. Setelah perintah berhasil dikirim, catat event perubahan ini ke database
+            // currentKemiringan (global) seharusnya sudah diupdate oleh event listener inputnya
+            // Jika tidak, Anda bisa set di sini: currentKemiringan = newKemiringanValue;
+            // Namun, lebih baik jika event listener input yang mengelolanya.
+
+            const eventData = {
+                simulationName: currentActiveSimulationName,
+                client_timestamp: new Date().toISOString(), // <-- TAMBAHKAN INI
+                kelembabanTanah1: currentKelembabanTanah1,
+                kelembabanTanah2: currentKelembabanTanah2,
+                kelembabanTanah3: currentKelembabanTanah3,
+                kelembabanTanah4: currentKelembabanTanah4,
+                kelembabanTanah5: currentKelembabanTanah5,
+                kelembabanTanah6: currentKelembabanTanah6,
+                derajatKemiringan: newKemiringanValue, // Input pengguna yang BARU di-set
+                outputKemiringan: currentOutputKemiringan, // Output sensor TERKINI sebelum efek perintah
+                curahHujan: currentCurahHujan, // Curah hujan input saat ini (tidak berubah oleh aksi ini)
+                outputCurahHujan: currentOutputCurahHujan // Output sensor TERKINI
+                // save_simulation.php akan menggunakan NOW() untuk created_at untuk event ini
+            };
+
+            console.log("Mencatat event perubahan kemiringan ke database:", eventData);
+            fetch("../backend/php/save_simulation.php", { // Menggunakan skrip simpan tunggal
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(eventData)
+            })
+            .then(resSave => resSave.json())
+            .then(resultSave => {
+                if (resultSave.status === "success") {
+                    console.log("Event perubahan kemiringan berhasil dicatat di database.");
+                } else {
+                        // Tangani error dari PHP, yang mungkin sekarang termasuk error rate limit dari ThingSpeak
+                        alert("Gagal mengirim perintah: " + (resultSend.message || "Error tidak diketahui"));
+                        if (resultSend.http_code && resultSend.response === '0') {
+                            console.warn("ThingSpeak mungkin menolak update karena rate limit. Respons: 0");
+                        }
+                    }
+            })
+            .catch(errorSave => {
+                console.error("Error saat mencatat event perubahan kemiringan:", errorSave);
+                alert("Terjadi kesalahan saat mencatat perubahan setting kemiringan.");
+            });
+
+        } else {
+            alert("Gagal mengirim perintah kemiringan ke ThingSpeak: " + resultSend.message);
+            console.error("Respon error dari send_to_thingspeak.php:", resultSend);
+        }
+    })
+    .catch(errorSend => {
+        console.error("Error fetch saat mengirim perintah kemiringan ke ThingSpeak:", errorSend);
+        alert("Terjadi kesalahan jaringan saat mengirim perintah kemiringan.");
+    })
+    .finally(() => {
+    // Aktifkan kembali tombol setelah beberapa saat atau setelah selesai,
+    // untuk memberi waktu ThingSpeak memproses atau untuk mencegah spam.
+    // Anda bisa menggunakan setTimeout jika ingin jeda tertentu.
+    if (tombolKirimKemiringan) {
+        setTimeout(() => {
+            tombolKirimKemiringan.disabled = false;
+        }, 2000); // Contoh: aktifkan kembali setelah 2 detik
+                   // Atau Anda bisa menunggu 15 detik jika ingin mengikuti rate limit ThingSpeak
+                   // setTimeout(() => { tombolKirimKemiringan.disabled = false; }, 15000);
+    }
+});
 }
 
 function handleCurahHujan() {
-  if (!toggleSimulation.checked) {
-    alert('Simulation is turned off. Please turn on the simulation to input data.');
-    return; // Hentikan proses jika toggle slider dimatikan
-  }
-
-  const curahHujanInput = document.querySelector('#curah-hujan-input');
-  const simulationNameInput = document.querySelector('#simulation-name');
-  const simulationName = simulationNameInput.value.trim();
-
-  if (curahHujanInput && simulationName) {
-    const curahHujanValue = curahHujanInput.value;
-    if (curahHujanValue) {
-      // Kirim data ke backend
-      sendDataToBackend(
-        {
-          simulationName: simulationName,
-          kelembabanTanah: currentKelembabanTanah, // Gunakan nilai yang sudah disimpan
-          derajatKemiringan: currentKemiringan, // Gunakan nilai yang sudah disimpan
-          curahHujan: parseFloat(curahHujanValue),
-        },
-        'curahHujan' // Tentukan jenis data
-      );
-    } else {
-      alert('Silakan masukkan curah hujan.');
+    // Pastikan toggleSimulation sudah diinisialisasi di DOMContentLoaded
+    if (!toggleSimulation || !toggleSimulation.checked || !currentActiveSimulationName) {
+        alert('Simulasi belum aktif atau nama simulasi belum diatur. Silakan mulai simulasi terlebih dahulu.');
+        return;
     }
-  } else {
-    alert('Silakan isi nama simulasi terlebih dahulu.');
-  }
+
+    const curahHujanInputElement = document.querySelector('#curah-hujan-input');
+    const curahHujanValue = curahHujanInputElement.value;
+
+    if (curahHujanValue === "" || curahHujanValue === null) {
+        alert('Silakan masukkan nilai curah hujan.');
+        return;
+    }
+
+    const newCurahHujanValue = parseFloat(curahHujanValue);
+    if (isNaN(newCurahHujanValue)) {
+        alert('Nilai curah hujan tidak valid.');
+        return;
+    }
+
+    // currentCurahHujan (global) seharusnya sudah diupdate oleh event listener inputnya.
+    // Jika tidak, Anda bisa set di sini: currentCurahHujan = newCurahHujanValue;
+
+    const eventData = {
+        simulationName: currentActiveSimulationName,
+        client_timestamp: new Date().toISOString(), // <-- TAMBAHKAN INI
+        kelembabanTanah1: currentKelembabanTanah1,
+        kelembabanTanah2: currentKelembabanTanah2,
+        kelembabanTanah3: currentKelembabanTanah3,
+        kelembabanTanah4: currentKelembabanTanah4,
+        kelembabanTanah5: currentKelembabanTanah5,
+        kelembabanTanah6: currentKelembabanTanah6,
+        derajatKemiringan: currentKemiringan, // Derajat kemiringan input saat ini (tidak berubah oleh aksi ini)
+        outputKemiringan: currentOutputKemiringan, // Output sensor TERKINI
+        curahHujan: newCurahHujanValue,       // Input pengguna yang BARU di-set
+        outputCurahHujan: currentOutputCurahHujan // Output sensor TERKINI
+        // save_simulation.php akan menggunakan NOW() untuk created_at untuk event ini
+    };
+
+    console.log("Mencatat event perubahan curah hujan ke database:", eventData);
+    fetch("../backend/php/save_simulation.php", { // Menggunakan skrip simpan tunggal
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(eventData)
+    })
+    .then(response => response.json())
+    .then(resultSave => {
+        if (resultSave.status === "success") {
+            console.log("Event perubahan curah hujan berhasil dicatat di database.");
+            alert("Perubahan curah hujan berhasil dicatat.");
+        } else {
+            console.error("Gagal mencatat event perubahan curah hujan:", resultSave.message);
+            alert("Gagal mencatat perubahan setting curah hujan ke database: " + resultSave.message);
+        }
+    })
+    .catch(errorSave => {
+        console.error("Error saat mencatat event perubahan curah hujan:", errorSave);
+        alert("Terjadi kesalahan saat mencatat perubahan setting curah hujan.");
+    });
 }
 
 function sendDataToBackend(data, type) {
@@ -357,7 +465,7 @@ document.addEventListener("DOMContentLoaded", function () {
           console.log("Check Session Response:", data);
           if (data.status !== "success") {
               console.error("Session tidak valid, kembali ke login.");
-              window.location.href = "login.html";
+              window.location.href = "login";
           } else {
               console.log("Session valid:", data);
               let userNameElement = document.getElementById("user-name");
@@ -370,7 +478,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch(error => {
           console.error("Gagal memeriksa session:", error);
-          window.location.href = "login.html";
+          window.location.href = "login";
       });
 
   // Set nama user di title
@@ -399,18 +507,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 });
 
-function updateKemiringan() {
-  fetch('../backend/php/get_kemiringan.php')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('nilaiKemiringan').textContent = data;
-    })
-    .catch(error => {
-      console.error('Gagal mengambil data:', error);
-    });
-}
-
-
 document.addEventListener('DOMContentLoaded', () => {
   // Pastikan toggleSimulation ada dan berfungsi
   toggleSimulation = document.querySelector('#toggle-simulation');
@@ -435,10 +531,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Fungsi untuk membuka popup kamera dan mengambil URL stream dari camera_config.json
+
 // Fungsi untuk membuka popup kamera dan mengambil URL stream dari camera_config.json
 function openCameraPopup() {
-  fetch('assets/js/camera_config.json')
+  fetch('../assets/js/camera_config.json')
     .then(response => response.json())
     .then(data => {
       const cameraStreamUrl = data.camera_stream_url;
@@ -482,46 +578,153 @@ document.getElementById('close-camera-popup-btn').addEventListener('click', func
   document.querySelector('.camera-popup').style.display = 'none';
 });
 
-// Fungsi utama update kelembaban
-async function updateSoilMoisture() {
+// Fungsi untuk subscribe MQTT ThingSpeak (WebSocket)
+function connectToThingSpeakMQTT() {
+  const client = mqtt.connect("wss://mqtt3.thingspeak.com:443/mqtt", {
+    username: "FzYrCCo6MSE0OBMFJBgYDSw",  // Ganti dengan Client ID tetap (bukan random)
+    password: "MNCqAvaN5e7r6inbx9oHX+0N",    // Ganti dengan MQTT API Key ThingSpeak
+    clientId: "FzYrCCo6MSE0OBMFJBgYDSw"   // Gunakan Client ID yang sama
+  });
+
+  client.on("connect", () => {
+    console.log("MQTT Connected! Polling PHP dinonaktifkan.");
+    clearInterval(pollingInterval); // Hentikan polling
+    // Subscribe ke channel kelembaban (ID channel kelembaban)
+    client.subscribe("channels/2843704/subscribe/json");
+    // Subscribe ke channel kemiringan (ID channel kemiringan)
+    client.subscribe("channels/2889619/subscribe/json");
+  });
+
+  
+  client.on("message", (topic, message) => {
+    try {
+      const dataMQTT = JSON.parse(message.toString());
+      const isKelembaban = topic.includes("2843704");
+      const isKemiringanGiroChannel = topic.includes("2889619");
+
+      let dataForUI = {
+        status: 'success',
+        kelembaban: {
+          sensor1: currentKelembabanTanah1, sensor2: currentKelembabanTanah2,
+          sensor3: currentKelembabanTanah3, sensor4: currentKelembabanTanah4,
+          sensor5: currentKelembabanTanah5, sensor6: currentKelembabanTanah6
+        },
+        kemiringan: currentKemiringan,
+        timestamp: new Date().toISOString()
+      };
+
+      if (isKelembaban) {
+        // console.log("Data Kelembaban (2843704) diterima:", dataMQTT);
+        dataForUI.kelembaban = {
+          sensor1: parseFloat(dataMQTT.field1) || 0,
+          sensor2: parseFloat(dataMQTT.field2) || 0,
+          sensor3: parseFloat(dataMQTT.field3) || 0,
+          sensor4: parseFloat(dataMQTT.field4) || 0,
+          sensor5: parseFloat(dataMQTT.field5) || 0,
+          sensor6: parseFloat(dataMQTT.field6) || 0
+        };
+        currentKelembabanTanah1 = dataForUI.kelembaban.sensor1;
+        currentKelembabanTanah2 = dataForUI.kelembaban.sensor2;
+        currentKelembabanTanah3 = dataForUI.kelembaban.sensor3;
+        currentKelembabanTanah4 = dataForUI.kelembaban.sensor4;
+        currentKelembabanTanah5 = dataForUI.kelembaban.sensor5;
+        currentKelembabanTanah6 = dataForUI.kelembaban.sensor6;
+      }
+
+      if (isKemiringanGiroChannel) {
+        // console.log(`Data dari Channel Kemiringan/Giro (2889619) diterima:`, dataMQTT);
+
+        // 1. Update UI Kemiringan (dari field2)
+        const kemiringanNilaiUntukUI = parseFloat(dataMQTT.field2) || 0;
+        dataForUI.kemiringan = kemiringanNilaiUntukUI;
+        currentKemiringan = kemiringanNilaiUntukUI;
+
+        // 2. Update Data Giro untuk Three.js (dari field3, field4, field5)
+        //    Asumsi: field3 = X, field4 = Y, field5 = Z
+        //    <<<< PASTIKAN INI SESUAI DENGAN DATA ANDA DI THINGSPEAK >>>>
+        const gyroDataX = dataMQTT.field3;
+        const gyroDataY = dataMQTT.field4;
+        const gyroDataZ = dataMQTT.field5;
+
+        if (typeof gyroDataX !== 'undefined' && typeof gyroDataY !== 'undefined' && typeof gyroDataZ !== 'undefined') {
+            window.globalGyroData.x = parseFloat(gyroDataX) || 0;
+            window.globalGyroData.y = parseFloat(gyroDataY) || 0;
+            window.globalGyroData.z = parseFloat(gyroDataZ) || 0;
+            window.globalGyroData.updated = true;
+            // console.log("window.globalGyroData diupdate dari channel 2889619:", window.globalGyroData);
+        } else {
+            console.warn("Data field giro (field3,4,5) dari MQTT channel 2889619 tidak lengkap:", dataMQTT);
+        }
+      }
+
+      updateUIFromData(dataForUI); // Update UI kelembaban dan kemiringan
+
+    } catch (e) {
+        console.error("Error memproses pesan MQTT:", e, message.toString());
+    }
+  });
+
+  client.on("error", (err) => {
+    console.error("Error MQTT:", err);
+    // Fallback ke polling PHP jika MQTT gagal
+    setInterval(updateData, 10000);
+  });
+}
+
+window.addEventListener("beforeunload", () => {
+  clearInterval(pollingInterval);
+});
+
+// Fungsi utama update data kelembaban & kemiringan
+async function updateData() {
   try {
-    const response = await fetch('../backend/php/get_kelembaban.php');
+    const response = await fetch('../backend/php/ambil_data_home.php');
     const data = await response.json();
 
     if (data.status === 'success' || data.status === 'empty') {
-      // Update nilai rata-rata
-      document.getElementById('average-moisture').textContent = data.average;
-      
-      // Update indikator warna utama
-      updateMainIndicator(data.average);
-      
-      // Update masing-masing sensor
-      updateIndividualSensors(data.sensors);
-      
-      // Update timestamp jika diperlukan
+      // Update rata-rata kelembaban
+      const sensors = data.kelembaban;
+      const values = Object.values(sensors);
+      const average = values.length > 0 ? Math.round(values.reduce((a,b) => a + b, 0) / values.length * 10) / 10 : 0;
+      document.getElementById('average-moisture').textContent = average;
+
+      // Update indikator warna utama kelembaban
+      updateMainIndicator(average);
+
+      // Update sensor kelembaban individual
+      updateIndividualSensors(sensors);
+
+      // Update nilai kemiringan
+      document.getElementById('nilaiKemiringan').textContent = data.kemiringan + '°';
+
+      // Log waktu update data terakhir
       console.log('Data terakhir diperbarui:', data.timestamp);
+    } else {
+      document.getElementById('average-moisture').textContent = 'ERR';
+      document.getElementById('nilaiKemiringan').textContent = 'ERR';
     }
   } catch (error) {
     console.error('Error:', error);
     document.getElementById('average-moisture').textContent = 'ERR';
+    document.getElementById('nilaiKemiringan').textContent = 'ERR';
   }
 }
 
-// Update indikator utama
+// Update indikator utama kelembaban
 function updateMainIndicator(average) {
   const element = document.querySelector('.frame-home-page1-humidity1');
   element.classList.remove('dry', 'moderate', 'wet');
-  
+
   if (average < 30) {
     element.classList.add('dry');
-  } else if (average >= 30 && average < 70) {
+  } else if (average < 70) {
     element.classList.add('moderate');
   } else {
     element.classList.add('wet');
   }
 }
 
-// Update sensor individual
+// Update sensor kelembaban individual
 function updateIndividualSensors(sensors) {
   for (let i = 1; i <= 6; i++) {
     const sensorElement = document.getElementById(`sensor-${i}`);
@@ -529,13 +732,13 @@ function updateIndividualSensors(sensors) {
       const value = sensors[`sensor${i}`];
       const dotElement = sensorElement.querySelector('.sensor-dot');
       const valueElement = sensorElement.querySelector('.sensor-value');
-      
+
       valueElement.textContent = `${value}%`;
       dotElement.className = 'sensor-dot';
-      
+
       if (value < 30) {
         dotElement.classList.add('dry');
-      } else if (value >= 30 && value < 70) {
+      } else if (value < 70) {
         dotElement.classList.add('moderate');
       } else {
         dotElement.classList.add('wet');
@@ -553,6 +756,73 @@ document.querySelectorAll('.sensor-point').forEach(sensor => {
   });
 });
 
-// Jalankan update setiap 3 detik
-setInterval(updateSoilMoisture, 3000);
-updateSoilMoisture(); // Inisialisasi pertama
+function collectDataPoint() {
+    if (document.getElementById('toggle-simulation').checked && currentActiveSimulationName) {
+        const dataPoint = {
+            client_timestamp: new Date().toISOString(), // Timestamp dari klien
+            kelembabanTanah1: currentKelembabanTanah1,
+            kelembabanTanah2: currentKelembabanTanah2,
+            kelembabanTanah3: currentKelembabanTanah3,
+            kelembabanTanah4: currentKelembabanTanah4,
+            kelembabanTanah5: currentKelembabanTanah5,
+            kelembabanTanah6: currentKelembabanTanah6,
+            outputKemiringan: currentOutputKemiringan,
+            outputCurahHujan: currentOutputCurahHujan
+            // Perhatikan: derajatKemiringan (input) dan curahHujan (input) akan dikirim bersama batch
+        };
+        dataBuffer.push(dataPoint);
+        // console.log(`Data point added. Buffer size: ${dataBuffer.length}`);
+    }
+}
+
+function sendBufferedDataToServer(isFinalSend = false) {
+    const toggleIsChecked = document.getElementById('toggle-simulation').checked;
+
+    // Hanya kirim jika ada data dan (simulasi aktif atau ini pengiriman terakhir)
+    if (dataBuffer.length > 0 && (toggleIsChecked || isFinalSend) && currentActiveSimulationName) {
+        const dataToSend = {
+            simulationName: currentActiveSimulationName,
+            derajatKemiringanInput: currentKemiringan, // Input pengguna saat ini
+            curahHujanInput: currentCurahHujan,       // Input pengguna saat ini
+            dataPoints: [...dataBuffer] // Salin isi buffer
+        };
+
+        dataBuffer = []; // Kosongkan buffer SEGERA setelah disalin
+
+        console.log(`Sending batch of <span class="math-inline">\{dataToSend\.dataPoints\.length\} data points for "</span>{dataToSend.simulationName}"...`);
+
+        fetch('../backend/php/save_simulation_batch.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dataToSend)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.status === "success") {
+                console.log("Batch data successfully sent and saved.");
+            } else {
+                console.error("Failed to send/save batch data:", result.message);
+                // Pertimbangkan untuk memasukkan kembali dataToSend.dataPoints ke dataBuffer jika gagal,
+                // tapi hati-hati bisa menyebabkan data duplikat jika errornya sementara.
+                // Atau simpan ke localStorage sebagai fallback (lebih kompleks).
+            }
+        })
+        .catch(error => {
+            console.error("Fetch error sending batch data:", error);
+            // Sama, pertimbangkan error handling yang lebih canggih.
+        });
+    } else if (dataBuffer.length > 0 && !currentActiveSimulationName && isFinalSend) {
+         console.warn("Buffer had data but no active simulation name for final send. Discarding buffer.");
+         dataBuffer = []; // Kosongkan buffer jika tidak ada nama simulasi aktif
+    }
+
+
+    // Jika bukan pengiriman final dan toggle sudah mati, pastikan interval dihentikan.
+    if (!toggleIsChecked && !isFinalSend) {
+        if (batchSaveIntervalId) clearInterval(batchSaveIntervalId);
+        batchSaveIntervalId = null;
+        if (collectDataIntervalId) clearInterval(collectDataIntervalId);
+        collectDataIntervalId = null;
+        currentActiveSimulationName = null; // Pastikan direset
+    }
+}

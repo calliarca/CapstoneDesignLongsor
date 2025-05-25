@@ -69,11 +69,11 @@
             alt="bgHome3112"
             class="frame-home-page1-bg-home"
           />
-          <img
-            src="../assets/img/home/file14915-tr9-500h.png"
-            alt="file14915"
-            class="frame-home-page1-file1"
-          />
+      <div class="frame-home-page1-frame14915">
+        <div id="threejs-container-gyro" class="frame-home-page1-file1">
+            <div id="threejs-gyro-info">Menunggu data giro...</div>
+        </div>
+      </div>
         
         
         <!-- Bar Live -->
@@ -349,7 +349,7 @@
               />
               <span class="frame-home-page1-text46">Home</span>
             </div>
-            <div class="frame-home-page1-history" onclick="window.location.href='history.html'">
+            <div class="frame-home-page1-history" onclick="window.location.href='history'">
               <img
                 src="../assets/img/home/history.svg"
                 alt="History"
@@ -365,7 +365,7 @@
               />
               <span class="frame-home-page1-text44">Logout</span>
             </div>
-            <div class="frame-home-page1-user" onclick="window.location.href='add-user.html'">
+            <div class="frame-home-page1-user" onclick="window.location.href='add-user'">
               <img
                 src="../assets/img/home/user.svg"
                 alt="UserIcon"
@@ -373,7 +373,7 @@
               />
               <span class="frame-home-page1-text48">User</span>
             </div>
-            <div class="frame-home-page1-setting" onclick="window.location.href='setting.html'">
+            <div class="frame-home-page1-setting" onclick="window.location.href='setting'">
               <img
                 src="../assets/img/home/setting-default.svg"
                 alt="SettingIcon"
@@ -384,8 +384,11 @@
           <span class="user-name" id="user-name">Loading...</span>          
         </div>
       </div>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="../assets/js/home-admin.js"></script>
+    <script type="module" src="../assets/threejs_assets/three_scene.js"></script>
   </body>
 </html>
 ``` 

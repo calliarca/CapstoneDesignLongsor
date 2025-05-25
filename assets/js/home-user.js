@@ -17,22 +17,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let tableBody = document.getElementById("simulationTableBody");
             tableBody.innerHTML = ""; // Kosongkan tabel sebelum diisi
-            
+
             data.forEach((row, index) => {
                 console.log("Nama Simulasi:", row.nama_simulasi); // Debugging
-                
+
                 let tr = document.createElement("tr");
                 tr.innerHTML = `
                     <td>${index + 1}</td>
                     <td>${row.tanggal}</td>
-                    <td>${row.timestamp}</td>
                     <td>${row.waktu_simulasi}</td>
                     <td>${row.nama_simulasi}</td>
                     <td>
-                        <button class="detail-button" onclick="lihatRawData('${encodeURIComponent(row.nama_simulasi)}')">Raw Data</button>
-                        <button class="detail-button" onclick="lihatValidData('${encodeURIComponent(row.nama_simulasi)}')">Valid Data</button>
+                        <button class="detail-button" onclick="lihatData('${encodeURIComponent(row.nama_simulasi)}')">Lihat Data</button>
                     </td>
-
                 `;
                 tableBody.appendChild(tr);
             });
@@ -40,12 +37,8 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.error("Error fetching data:", error));
 });
 
-function lihatRawData(namaSimulasi) {
-    window.location.href = `raw-data.html?simulation_name=${namaSimulasi}`;
-}
-
-function lihatValidData(namaSimulasi) {
-    window.location.href = `valid-data.html?simulation_name=${namaSimulasi}`;
+function lihatData(namaSimulasi) {
+    window.location.href = `lihat-data.html?simulation_name=${namaSimulasi}`;
 }
 
 
@@ -54,7 +47,7 @@ function lihatValidData(namaSimulasi) {
 function navigateTo(page) {
   switch (page) {
     case 'home':
-      window.location.href = 'index.html'; // Ganti dengan URL tujuan
+      window.location.href = 'index'; // Ganti dengan URL tujuan
       break;
     case 'logout':
       fetch('../backend/php/logout.php', {  // Pastikan path sesuai dengan struktur proyek
