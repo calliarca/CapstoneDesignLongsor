@@ -8,10 +8,10 @@
 const char ssid[] = "Xiaomi MiA1";
 const char pass[] = "1234qwer";
 
-// ThingSpeak MQTT Credentials
-const char mqttUserName[] = "HAsgGCchGyodFT00OiYTEyE";
-const char clientID[] = "HAsgGCchGyodFT00OiYTEyE";
-const char mqttPass[] = "dB8MF0XlZWyQoHoTJwT2r677";
+// ===== ThingSpeak MQTT Credentials =====
+const char mqttUserName[] = "FzYrCCo6MSE0OBMFJBgYDSw";
+const char clientID[] = "FzYrCCo6MSE0OBMFJBgYDSw";
+const char mqttPass[] = "7lOfdFz+hqyVUSzEhsevqgg/";
 
 // Channel IDs
 #define channelIDData 2889619        // Channel untuk publish data (field2 - Pitch)

@@ -582,133 +582,277 @@ document.getElementById('close-camera-popup-btn').addEventListener('click', func
 function connectToThingSpeakMQTT() {
   const client = mqtt.connect("wss://mqtt3.thingspeak.com:443/mqtt", {
     username: "FzYrCCo6MSE0OBMFJBgYDSw",  // Ganti dengan Client ID tetap (bukan random)
-    password: "MNCqAvaN5e7r6inbx9oHX+0N",    // Ganti dengan MQTT API Key ThingSpeak
+    password: "7lOfdFz+hqyVUSzEhsevqgg/",    // Ganti dengan MQTT API Key ThingSpeak
     clientId: "FzYrCCo6MSE0OBMFJBgYDSw"   // Gunakan Client ID yang sama
   });
 
   client.on("connect", () => {
     console.log("MQTT Connected! Polling PHP dinonaktifkan.");
-    clearInterval(pollingInterval); // Hentikan polling
-    // Subscribe ke channel kelembaban (ID channel kelembaban)
-    client.subscribe("channels/2843704/subscribe/json");
-    // Subscribe ke channel kemiringan (ID channel kemiringan)
-    client.subscribe("channels/2889619/subscribe/json");
-  });
+    if (typeof pollingInterval !== 'undefined' && pollingInterval !== null) {
+        clearInterval(pollingInterval);
+        pollingInterval = null;
+    }
+    
+    // VERIFIKASI CHANNEL ID DI SINI!
+    const channelKelembaban = "2843704";
+    const channelKemiringanGiro = "2889619";
+    const channelCurahHujanOutput = "2972562";
+
+    const topicKelembaban = `channels/${channelKelembaban}/subscribe/json`;
+    const topicKemiringanGiro = `channels/${channelKemiringanGiro}/subscribe/json`;
+    const topicCurahHujanOutput = `channels/${channelCurahHujanOutput}/subscribe/json`;
+
+    console.log(`Attempting to subscribe to: ${topicKelembaban}`);
+    client.subscribe(topicKelembaban, (err) => {
+        if (err) {
+            console.error(`Failed to subscribe to ${topicKelembaban}:`, err);
+        } else {
+            console.log(`Successfully subscribed to ${topicKelembaban}`);
+        }
+    });
+
+    console.log(`Attempting to subscribe to: ${topicKemiringanGiro}`);
+    client.subscribe(topicKemiringanGiro, (err) => {
+        if (err) {
+            console.error(`Failed to subscribe to ${topicKemiringanGiro}:`, err);
+        } else {
+            console.log(`Successfully subscribed to ${topicKemiringanGiro}`);
+        }
+    });
+
+    console.log(`Attempting to subscribe to: ${topicCurahHujanOutput}`);
+    client.subscribe(topicCurahHujanOutput, (err) => {
+        if (err) {
+            console.error(`Failed to subscribe to ${topicCurahHujanOutput}:`, err);
+        } else {
+            console.log(`Successfully subscribed to ${topicCurahHujanOutput}`);
+        }
+    });
+});
 
   
-  client.on("message", (topic, message) => {
+client.on("message", (topic, message) => {
+    console.log(`[RAW MQTT MESSAGE RECEIVED] Topic: ${topic.toString()}`);
+    console.log(`[RAW MQTT MESSAGE RECEIVED] Payload: ${message.toString()}`); // SANGAT PENTING!
+
     try {
       const dataMQTT = JSON.parse(message.toString());
-      const isKelembaban = topic.includes("2843704");
-      const isKemiringanGiroChannel = topic.includes("2889619");
+      const topicStr = topic.toString();
+      console.log(`[PARSED MQTT DATA] Topic: ${topicStr}, Parsed Payload:`, dataMQTT);
 
-      let dataForUI = {
-        status: 'success',
-        kelembaban: {
-          sensor1: currentKelembabanTanah1, sensor2: currentKelembabanTanah2,
-          sensor3: currentKelembabanTanah3, sensor4: currentKelembabanTanah4,
-          sensor5: currentKelembabanTanah5, sensor6: currentKelembabanTanah6
-        },
-        kemiringan: currentKemiringan,
-        timestamp: new Date().toISOString()
-      };
+      const isKelembabanChannel = topicStr.includes("2843704"); //
+      const isKemiringanGiroChannel = topicStr.includes("2889619"); //
+      const rainfallOutputChannelID = "2972562"; //
+      const isCurahHujanOutputChannel = topicStr.includes(rainfallOutputChannelID); //
 
-      if (isKelembaban) {
-        // console.log("Data Kelembaban (2843704) diterima:", dataMQTT);
-        dataForUI.kelembaban = {
-          sensor1: parseFloat(dataMQTT.field1) || 0,
-          sensor2: parseFloat(dataMQTT.field2) || 0,
-          sensor3: parseFloat(dataMQTT.field3) || 0,
-          sensor4: parseFloat(dataMQTT.field4) || 0,
-          sensor5: parseFloat(dataMQTT.field5) || 0,
-          sensor6: parseFloat(dataMQTT.field6) || 0
-        };
-        currentKelembabanTanah1 = dataForUI.kelembaban.sensor1;
-        currentKelembabanTanah2 = dataForUI.kelembaban.sensor2;
-        currentKelembabanTanah3 = dataForUI.kelembaban.sensor3;
-        currentKelembabanTanah4 = dataForUI.kelembaban.sensor4;
-        currentKelembabanTanah5 = dataForUI.kelembaban.sensor5;
-        currentKelembabanTanah6 = dataForUI.kelembaban.sensor6;
+      let UINeedsUpdate = false; //
+
+      if (isKelembabanChannel) {
+        console.log("Processing Kelembaban (2843704):", dataMQTT);
+        // PASTIKAN dataMQTT.field1 s/d field6 SESUAI DENGAN KONFIGURASI THINGSPEAK ANDA
+        currentKelembabanTanah1 = parseFloat(dataMQTT.field1) || 0; //
+        currentKelembabanTanah2 = parseFloat(dataMQTT.field2) || 0; //
+        currentKelembabanTanah3 = parseFloat(dataMQTT.field3) || 0; //
+        currentKelembabanTanah4 = parseFloat(dataMQTT.field4) || 0; //
+        currentKelembabanTanah5 = parseFloat(dataMQTT.field5) || 0; //
+        currentKelembabanTanah6 = parseFloat(dataMQTT.field6) || 0; //
+        UINeedsUpdate = true; //
       }
 
       if (isKemiringanGiroChannel) {
-        // console.log(`Data dari Channel Kemiringan/Giro (2889619) diterima:`, dataMQTT);
+        console.log("Processing Kemiringan/Giro (2889619):", dataMQTT);
+        // PASTIKAN dataMQTT.field2 ADALAH OUTPUT KEMIRINGAN SENSOR DARI THINGSPEAK
+        const outputKemiringanFromMQTT = parseFloat(dataMQTT.field2) || 0;  //
+        currentOutputKemiringan = outputKemiringanFromMQTT; // Update global OUTPUT kemiringan
 
-        // 1. Update UI Kemiringan (dari field2)
-        const kemiringanNilaiUntukUI = parseFloat(dataMQTT.field2) || 0;
-        dataForUI.kemiringan = kemiringanNilaiUntukUI;
-        currentKemiringan = kemiringanNilaiUntukUI;
-
-        // 2. Update Data Giro untuk Three.js (dari field3, field4, field5)
-        //    Asumsi: field3 = X, field4 = Y, field5 = Z
-        //    <<<< PASTIKAN INI SESUAI DENGAN DATA ANDA DI THINGSPEAK >>>>
-        const gyroDataX = dataMQTT.field3;
-        const gyroDataY = dataMQTT.field4;
-        const gyroDataZ = dataMQTT.field5;
-
-        if (typeof gyroDataX !== 'undefined' && typeof gyroDataY !== 'undefined' && typeof gyroDataZ !== 'undefined') {
-            window.globalGyroData.x = parseFloat(gyroDataX) || 0;
-            window.globalGyroData.y = parseFloat(gyroDataY) || 0;
-            window.globalGyroData.z = parseFloat(gyroDataZ) || 0;
-            window.globalGyroData.updated = true;
-            // console.log("window.globalGyroData diupdate dari channel 2889619:", window.globalGyroData);
-        } else {
-            console.warn("Data field giro (field3,4,5) dari MQTT channel 2889619 tidak lengkap:", dataMQTT);
+        // Bagian untuk update data Giro Three.js
+        const gyroDataX = dataMQTT.field3; //
+        const gyroDataY = dataMQTT.field4; //
+        const gyroDataZ = dataMQTT.field5; //
+        if (typeof gyroDataX !== 'undefined' && typeof gyroDataY !== 'undefined' && typeof gyroDataZ !== 'undefined') { //
+            window.globalGyroData.x = parseFloat(gyroDataX) || 0; //
+            window.globalGyroData.y = parseFloat(gyroDataY) || 0; //
+            window.globalGyroData.z = parseFloat(gyroDataZ) || 0; //
+            window.globalGyroData.updated = true; //
         }
+        UINeedsUpdate = true; //
+      }
+      
+      if (isCurahHujanOutputChannel) {
+        console.log(`Processing Output Curah Hujan (${rainfallOutputChannelID}):`, dataMQTT);
+        // !!! PENTING: GANTI 'field1' DI BAWAH INI JIKA DATA OUTPUT CURAH HUJAN DARI THINGSPEAK
+        // BERADA DI FIELD YANG BERBEDA (MISALNYA, dataMQTT.field2, dataMQTT.field3, DST.) !!!
+        const rainfallValueFromMQTT = parseFloat(dataMQTT.field1) || 0; //
+        
+        currentOutputCurahHujan = rainfallValueFromMQTT; // Update variabel global SENSOR/OUTPUT curah hujan
+        UINeedsUpdate = true; //
       }
 
-      updateUIFromData(dataForUI); // Update UI kelembaban dan kemiringan
+      if (UINeedsUpdate) {
+        // Siapkan data yang AKAN dikirim ke UI
+        let dataForUI = {
+          status: 'success', //
+          kelembaban: { //
+            sensor1: currentKelembabanTanah1, sensor2: currentKelembabanTanah2, //
+            sensor3: currentKelembabanTanah3, sensor4: currentKelembabanTanah4, //
+            sensor5: currentKelembabanTanah5, sensor6: currentKelembabanTanah6 //
+          },
+          outputKemiringan: currentOutputKemiringan, //
+          outputCurahHujan: currentOutputCurahHujan, //
+          timestamp: dataMQTT.created_at || new Date().toISOString() // Gunakan timestamp dari ThingSpeak jika ada
+        };
+        console.log("Data for UI update:", dataForUI);
+        updateUIDisplays(dataForUI); //
+      }
 
     } catch (e) {
-        console.error("Error memproses pesan MQTT:", e, message.toString());
+        console.error("Error memproses pesan MQTT:", e, message.toString()); //
+    }
+  }); // Akhir dari client.on("message", ...)
+
+client.on("error", (err) => {
+    console.error("MQTT Connection Error:", err); // Lebih spesifik
+    if (typeof pollingInterval === 'undefined' || pollingInterval === null) {
+        console.log("MQTT error, fallback ke polling PHP.");
+        pollingInterval = setInterval(updateData, 10000); // Ganti updateData dengan nama fungsi polling Anda
+        updateData(); // Panggil sekali
     }
   });
-
-  client.on("error", (err) => {
-    console.error("Error MQTT:", err);
-    // Fallback ke polling PHP jika MQTT gagal
-    setInterval(updateData, 10000);
-  });
+// } // Ini adalah akhir dari fungsi connectToThingSpeakMQTT()
 }
 
 window.addEventListener("beforeunload", () => {
   clearInterval(pollingInterval);
 });
 
-// Fungsi utama update data kelembaban & kemiringan
-async function updateData() {
-  try {
-    const response = await fetch('../backend/php/ambil_data_home.php');
-    const data = await response.json();
+// Fungsi TERPUSAT untuk update semua tampilan data sensor di UI
+function updateUIDisplays(data) {
+    // Tambahkan log untuk melihat data yang diterima fungsi ini
+    console.log("updateUIDisplays called with data:", data);
+    if (!data || (data.status !== 'success' && data.status !== 'empty')) {
+        console.warn("updateUIDisplays dipanggil dengan data tidak valid atau status error:", data);
+        const averageMoistureElement = document.getElementById('average-moisture');
+        if (averageMoistureElement) averageMoistureElement.textContent = 'ERR';
+        
+        if (typeof updateMainIndicator === "function") updateMainIndicator(0, true); 
+        if (typeof updateIndividualSensors === "function") { // Gunakan nama fungsi yang ada di kode Anda
+            for (let i = 1; i <= 6; i++) {
+                updateIndividualSensors({[`sensor${i}`]: 0}, true); // Kirim objek sensor untuk konsistensi
+            }
+        }
 
-    if (data.status === 'success' || data.status === 'empty') {
-      // Update rata-rata kelembaban
-      const sensors = data.kelembaban;
-      const values = Object.values(sensors);
-      const average = values.length > 0 ? Math.round(values.reduce((a,b) => a + b, 0) / values.length * 10) / 10 : 0;
-      document.getElementById('average-moisture').textContent = average;
-
-      // Update indikator warna utama kelembaban
-      updateMainIndicator(average);
-
-      // Update sensor kelembaban individual
-      updateIndividualSensors(sensors);
-
-      // Update nilai kemiringan
-      document.getElementById('nilaiKemiringan').textContent = data.kemiringan + '°';
-
-      // Log waktu update data terakhir
-      console.log('Data terakhir diperbarui:', data.timestamp);
-    } else {
-      document.getElementById('average-moisture').textContent = 'ERR';
-      document.getElementById('nilaiKemiringan').textContent = 'ERR';
+        const nilaiKemiringanElement = document.getElementById('nilaiKemiringan'); 
+        if (nilaiKemiringanElement) nilaiKemiringanElement.textContent = 'ERR°';
+        
+        const nilaiCurahHujanElement = document.getElementById('nilaiOutputCurahHujan'); 
+        if (nilaiCurahHujanElement) nilaiCurahHujanElement.textContent = 'ERR';
+        const unitCurahHujanElement = document.getElementById('unitOutputCurahHujan'); 
+        if (unitCurahHujanElement) unitCurahHujanElement.textContent = "-"; 
+        return;
     }
+
+ // Update Kelembaban
+    if (data.kelembaban && typeof updateMainIndicator === "function" && typeof updateIndividualSensors === "function") { //
+        const sensors = data.kelembaban; //
+        const values = Object.values(sensors).map(val => parseFloat(val) || 0); //
+        const average = values.length > 0 ? Math.round(values.reduce((a, b) => a + b, 0) / values.length * 10) / 10 : 0; //
+        
+        const averageMoistureElement = document.getElementById('average-moisture'); //
+        if (averageMoistureElement) averageMoistureElement.textContent = average.toFixed(1); //
+        
+        updateMainIndicator(average);  //
+        updateIndividualSensors(sensors); //
+    } else {
+        console.warn("Data kelembaban tidak ada atau fungsi update tidak ditemukan untuk kelembaban.");
+    }
+
+    // Update Output Kemiringan (dari sensor)
+    const nilaiKemiringanElement = document.getElementById('nilaiKemiringan');  //
+    if (nilaiKemiringanElement) {
+        nilaiKemiringanElement.textContent = (typeof data.outputKemiringan !== 'undefined' ? data.outputKemiringan.toFixed(1) : '--') + '°'; //
+    } else {
+        console.warn("Elemen #nilaiKemiringan tidak ditemukan.");
+    }
+
+    // Update Output Curah Hujan
+    const nilaiCurahHujanElement = document.getElementById('nilaiOutputCurahHujan'); //
+    const unitCurahHujanElement = document.getElementById('unitOutputCurahHujan'); //
+
+    if (nilaiCurahHujanElement) {
+        nilaiCurahHujanElement.textContent = typeof data.outputCurahHujan !== 'undefined' ? data.outputCurahHujan.toFixed(1) : '--'; //
+    } else {
+        console.warn("Elemen #nilaiOutputCurahHujan tidak ditemukan.");
+    }
+    if (unitCurahHujanElement) { //
+        // PASTIKAN UNIT INI SESUAI DENGAN DATA ANDA
+        unitCurahHujanElement.textContent = "m³"; // Ganti jika unitnya berbeda (misal "mm", "L/min")
+    } else {
+        console.warn("Elemen #unitOutputCurahHujan tidak ditemukan.");
+    }
+    // Tambahkan log timestamp jika ada
+    if (data.timestamp) {
+        console.log("UI updated with data from timestamp:", data.timestamp);
+    }
+}
+
+// Fungsi utama update data melalui polling PHP
+async function updateData() { // Anda bisa tetap menggunakan nama updateData
+  try {
+    const response = await fetch('../backend/php/ambil_data_home.php'); //
+    const dataFromServer = await response.json(); // dataFromServer dari PHP
+    console.log("Data from polling (ambil_data_home.php):", dataFromServer);
+
+    // Pastikan dataFromServer memiliki struktur yang diharapkan
+    if (!dataFromServer || (dataFromServer.status !== 'success' && dataFromServer.status !== 'empty')) {
+        console.warn('Polling gagal atau data kosong dengan status error:', dataFromServer ? dataFromServer.status : 'No data');
+        updateUIDisplays({ status: 'error', message: dataFromServer ? dataFromServer.message : 'Failed to fetch data via polling' });
+        return;
+    }
+    
+    // Siapkan objek data untuk diproses oleh updateUIDisplays
+    let dataForUIProcessing = {
+        status: dataFromServer.status,  //
+        kelembaban: dataFromServer.kelembaban || {sensor1:0,sensor2:0,sensor3:0,sensor4:0,sensor5:0,sensor6:0}, //
+        outputKemiringan: parseFloat(dataFromServer.kemiringan) || 0,  // Asumsi 'kemiringan' dari PHP adalah output sensor
+        
+        // !!! PENTING: SESUAIKAN 'curah_hujan_output_sensor' JIKA NAMA FIELD DARI PHP BERBEDA !!!
+        outputCurahHujan: parseFloat(dataFromServer.curah_hujan_output_sensor) || 0,  //
+        
+        timestamp: dataFromServer.timestamp || new Date().toISOString() //
+    };
+    
+    // Update variabel global DARI DATA POLLING
+    // Ini penting jika MQTT gagal dan polling mengambil alih,
+    // agar data yang dikirim ke database saat simulasi aktif tetap up-to-date.
+    if (dataForUIProcessing.status === 'success' || dataForUIProcessing.status === 'empty') { //
+        if (dataForUIProcessing.kelembaban) {
+            currentKelembabanTanah1 = dataForUIProcessing.kelembaban.sensor1 || 0; //
+            currentKelembabanTanah2 = dataForUIProcessing.kelembaban.sensor2 || 0; //
+            currentKelembabanTanah3 = dataForUIProcessing.kelembaban.sensor3 || 0; //
+            currentKelembabanTanah4 = dataForUIProcessing.kelembaban.sensor4 || 0; //
+            currentKelembabanTanah5 = dataForUIProcessing.kelembaban.sensor5 || 0; //
+            currentKelembabanTanah6 = dataForUIProcessing.kelembaban.sensor6 || 0; //
+        }
+        currentOutputKemiringan = dataForUIProcessing.outputKemiringan || 0; //
+        currentOutputCurahHujan = dataForUIProcessing.outputCurahHujan || 0; //
+
+        console.log("Global variables updated from polling:", {
+            kt1: currentKelembabanTanah1,
+            outKem: currentOutputKemiringan,
+            outCH: currentOutputCurahHujan
+        });
+
+        updateUIDisplays(dataForUIProcessing); //
+    } else {
+      // Sudah ditangani oleh pengecekan di awal fungsi
+    }
+
   } catch (error) {
-    console.error('Error:', error);
-    document.getElementById('average-moisture').textContent = 'ERR';
-    document.getElementById('nilaiKemiringan').textContent = 'ERR';
+    console.error('Error dalam fungsi updateData (polling):', error); //
+    updateUIDisplays({ status: 'error' }); // Tampilkan 'ERR' di UI jika polling gagal total
   }
 }
+
 
 // Update indikator utama kelembaban
 function updateMainIndicator(average) {

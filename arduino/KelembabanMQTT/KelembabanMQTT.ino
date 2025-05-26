@@ -7,9 +7,10 @@ const char pass[] = "123456789";
 
 // ThingSpeak MQTT Credentials
 #define channelID 2843704
-const char mqttUserName[] = "NjUSADEdNjg8CBUjDCAuBDc";
-const char clientID[] = "NjUSADEdNjg8CBUjDCAuBDc";
-const char mqttPass[] = "M8jZfJ0gGlo10ayuTioey9hm";
+// ===== ThingSpeak MQTT Credentials =====
+const char mqttUserName[] = "FzYrCCo6MSE0OBMFJBgYDSw";
+const char clientID[] = "FzYrCCo6MSE0OBMFJBgYDSw";
+const char mqttPass[] = "7lOfdFz+hqyVUSzEhsevqgg/";
 
 // MQTT Server (ThingSpeak)
 const char* mqttServer = "mqtt3.thingspeak.com";
