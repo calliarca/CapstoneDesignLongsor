@@ -22,7 +22,7 @@ const int mqttPort = 1883;
 
 // MQTT Topics
 // Subscribe ke field1 dari Channel Input untuk SP_Rainfall
-String mqttSubscribeTopic = "channels/" + String(CHANNEL_ID_INPUT_SP_RAINFALL) + "/subscribe/fields/field1";
+String mqttSubscribeTopic = "channels/" + String(CHANNEL_ID_INPUT_SP_RAINFALL) + "/subscribe/fields/field2";
 // Publish ke Channel Output (payload akan menentukan field1)
 String mqttPublishTopic = "channels/" + String(CHANNEL_ID_OUTPUT_RAINFALL_ACTUAL) + "/publish";
 
@@ -53,7 +53,6 @@ const float luasArea = 1.001; // luas area dalam meter persegi
 // Nilai PID (Perlu di Tuning)
 float Kp = 1.5, Ki = 0.5, Kd = 0.1;
 float integral = 0, lastError = 0;
-int pwmPercent = 0; // Dibuat global untuk kemudahan akses
 
 // ===== Simulasi Siklus =====
 const unsigned long interval_off = 60000; // interval OFF = 1 menit (nama variabel diubah)
@@ -125,8 +124,7 @@ void callback_mqtt(char* topic, byte* payload, unsigned int length) {
     Serial.print(SP_Rainfall);
     Serial.println(" mm/jam");
 
-    if (maxCycle > 0) {
-        volumeTarget = (SP_Rainfall * luasArea) / maxCycle; // liter
+    volumeTarget = (SP_Rainfall * luasArea) / maxCycle; // liter
     } else { // Jika maxCycle tidak valid, anggap 1 siklus besar
         volumeTarget = SP_Rainfall * luasArea;
     }
@@ -209,7 +207,7 @@ void setup() {
   digitalWrite(R_EN_PIN, HIGH);
   digitalWrite(L_EN_PIN, HIGH); // Pastikan ini sesuai dengan cara kerja driver motor Anda
 
-  attachInterrupt(digitalPinToInterrupt(sensorPin), countPulse, FALLING);
+  attachInterrupt(digitalPinToInterrupt(sensorPin), countPulse, FALLING); //Baca pulsa flowmeter
 
   analogWrite(RPWM_PIN, 0); // Pompa mati
   analogWrite(LPWM_PIN, 0);
@@ -221,7 +219,7 @@ void setup() {
     // reconnectMQTT(); // Panggil reconnectMQTT di loop jika koneksi terputus
   }
 
-  Serial.println("Waiting for SP_Rainfall from ThingSpeak Channel " + String(CHANNEL_ID_INPUT_SP_RAINFALL) + ", field1.");
+  Serial.println("Waiting for SP_Rainfall from ThingSpeak Channel " + String(CHANNEL_ID_INPUT_SP_RAINFALL) + ", field2.");
   Serial.println("rainfallActual will be published to ThingSpeak Channel " + String(CHANNEL_ID_OUTPUT_RAINFALL_ACTUAL) + ", field1.");
 }
 
@@ -241,10 +239,10 @@ void loop() {
     client.loop(); // Penting untuk memproses pesan masuk dan menjaga koneksi
   }
 
-  // ===== Logika pompa ON =====
+  // ===== Pompa ON =====
   if (isRunning) {
-    static unsigned long lastReadTime = 0; // Ganti nama variabel agar lebih jelas
-    if (now - lastReadTime >= 1000) { // Baca flowrate tiap 1 detik
+    static unsigned long lastReadTime = 0;
+    if (now - lastReadTime >= 1000) {  // Baca setiap 1 detik
       lastReadTime = now;
 
       noInterrupts();
@@ -252,75 +250,73 @@ void loop() {
       pulseCount = 0;
       interrupts();
 
-      float freq = currentPulseCount; // Pulses per detik
-      flowRate = a_flow * freq + b_flow; // Gunakan nama var flowmeter yang baru
-      if (flowRate < 0.2) flowRate = 0; // Threshold noise
+      float freq = currentPulseCount;
+      flowRate = (a_flow * freq) + b_flow; //regresi flowmeter
+      if (flowRate < 0.2) flowRate = 0;
 
-      float volumeThisSecond = flowRate / 60.0; // Volume dalam Liter (flowRate L/min)
+      float volumeThisSecond = flowRate / 60.0; // Volume dalam Liter
       volume += volumeThisSecond;
       totalVolume += volumeThisSecond;
-
-      if (luasArea > 0) {
-        rainfallActual = totalVolume / luasArea; // Curah hujan kumulatif dalam mm
-      } else {
-        rainfallActual = 0;
-      }
+      rainfallActual = totalVolume / luasArea;
 
       float error = volumeTarget - volume;
       integral += error;
-      if (Ki != 0) { // Anti-windup sederhana
-        float integralLimit = 150.0 / Ki; 
-        integral = constrain(integral, -integralLimit, integralLimit);
-      }
       float derivative = error - lastError;
       float outputPID = Kp * error + Ki * integral + Kd * derivative;
       lastError = error;
 
-      pwmPercent = constrain((int)(outputPID), 0, 100);
-      analogWrite(RPWM_PIN, map(pwmPercent, 0, 100, 0, 255));
-      analogWrite(LPWM_PIN, 0); // Asumsi RPWM untuk maju
+      int pwmPercent = constrain((int)outputPID, 0, 100);
 
-      Serial.print("Flow: "); Serial.print(flowRate, 2);
-      Serial.print(" L/m | VolSpr: "); Serial.print(volume, 2);
-      Serial.print(" L (Tgt: "); Serial.print(volumeTarget,2); Serial.print(" L)");
-      Serial.print(" | TotVol: "); Serial.print(totalVolume, 2);
-      Serial.print(" L | RainAct: "); Serial.print(rainfallActual, 2);
-      Serial.print(" mm | PWM: "); Serial.print(pwmPercent);
-      Serial.println(" %");
-
-      if (volume >= volumeTarget && userInputReceived) {
+      if (volume >= volumeTarget || error <= 0) {
         analogWrite(RPWM_PIN, 0);
         analogWrite(LPWM_PIN, 0);
+        digitalWrite(R_EN_PIN, LOW);
+        digitalWrite(L_EN_PIN, LOW);
+
         isRunning = false;
         lastSwitchTime = now;
         cycleCount++;
-        Serial.print("Semprotan ke-"); Serial.print(cycleCount);
-        Serial.println(" selesai.");
-        Serial.print("Volume semprotan aktual: "); Serial.print(volume, 3);
-        Serial.println(" L\n");
+
+        integral = 0;
+        lastError = 0;
+      } else {
+        analogWrite(RPWM_PIN, map(pwmPercent, 0, 100, 0, 255));
+        analogWrite(LPWM_PIN, 0);
+        digitalWrite(R_EN_PIN, HIGH);
+        digitalWrite(L_EN_PIN, HIGH);
+
+        Serial.print("Flowrate: ");
+        Serial.print(flowRate, 3);
+        Serial.print(" L/min | Volume semprotan: ");
+       Serial.print(volume, 3);
+       Serial.print(" L | Total volume: ");
+       Serial.print(totalVolume, 3);
+       Serial.print(" L | Curah Hujan Aktual: ");
+        Serial.print(rainfallActual, 3);
+       Serial.print(" mm/jam | PWM: ");
+       Serial.print(pwmPercent);
+        Serial.println(" %");
       }
     }
   }
-  // ===== Pompa OFF dan tunggu interval =====
-  else { // isRunning is false
-    if (userInputReceived && (now - lastSwitchTime >= interval_off) && cycleCount < maxCycle) {
+
+  // ===== Pompa OFF (tunggu interval untuk nyala lagi) =====
+  if (!isRunning && userInputReceived && cycleCount < maxCycle) {
+    if (now - lastSwitchTime >= interval_off) {
       volume = 0;
       pulseCount = 0;
       integral = 0;
       lastError = 0;
+
       isRunning = true;
       lastSwitchTime = now;
-      Serial.print("Memulai semprotan ke-");
-      Serial.print(cycleCount + 1);
-      Serial.println(".");
-    } else if (userInputReceived && cycleCount >= maxCycle) {
-        if (cycleCount == maxCycle){
-             Serial.println("Semua siklus (" + String(maxCycle) + ") selesai untuk SP_Rainfall: " + String(SP_Rainfall) + " mm/jam.");
-             Serial.print("Total Vol: "); Serial.print(totalVolume, 3); Serial.println(" L");
-             Serial.print("Rainfall Aktual (Kumulatif): "); Serial.print(rainfallActual, 3); Serial.println(" mm");
-             Serial.println("Menunggu SP_Rainfall baru via MQTT Channel " + String(CHANNEL_ID_INPUT_SP_RAINFALL) + "/field1...");
-             cycleCount++; // Agar pesan ini tidak berulang
-        }
+
+      digitalWrite(R_EN_PIN, HIGH);
+      digitalWrite(L_EN_PIN, HIGH);
+
+      Serial.print("Semprotan ke-");
+      Serial.print(cycleCount +1);
+      Serial.println(" dimulai.");
     }
   }
 
@@ -329,7 +325,7 @@ void loop() {
   if (currentMillisMQTT_now - previousMillisMQTT >= intervalMQTT) {
     previousMillisMQTT = currentMillisMQTT_now;
     if (WiFi.status() == WL_CONNECTED && client.connected()) {
-        publishRainfallActualToThingSpeak();
+      publishRainfallActualToThingSpeak();
     }
   }
 }
