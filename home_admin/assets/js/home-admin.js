@@ -280,7 +280,7 @@ function navigateTo(page) {
         if (data.status === "success") {
           console.log('Anda telah logout.');
           alert('Anda telah berhasil logout.');
-          sessionStorage.clear(); localStorage.clear(); window.location.href = 'login';
+          sessionStorage.clear(); localStorage.clear(); window.location.href = '../public/login';
         } else {
             console.error('Logout gagal. Silakan coba lagi.');
             alert('Logout gagal. Silakan coba lagi.');
