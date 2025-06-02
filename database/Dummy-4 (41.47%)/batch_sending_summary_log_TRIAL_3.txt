@@ -1,0 +1,742 @@
+Log Pengiriman Batch - Trial #3 - 2025-05-29 04:40:16
+File Data: data_simulasi_5_trial_target_75_valid_v2\data_simulasi_trial_3.json
+URL Target: http://localhost/Capstonedesignlongsor_Reorganized/backend/php/save_simulation_batch.php
+Total batch yang akan dikirim: 120
+Nama Simulasi (dari file): SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3
+Input Kemiringan (dari file): 35.0
+Input Curah Hujan (dari file): 2.0
+--------------------------------------------------
+
+--- Batch #1 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:00:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "20 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 10.", "processed": 30, "saved": 20, "skipped_total": 10}
+
+--- Batch #2 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:00:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "22 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 8.", "processed": 30, "saved": 22, "skipped_total": 8}
+
+--- Batch #3 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:01:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "22 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 8.", "processed": 30, "saved": 22, "skipped_total": 8}
+
+--- Batch #4 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:01:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "23 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 7.", "processed": 30, "saved": 23, "skipped_total": 7}
+
+--- Batch #5 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:02:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "23 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 7.", "processed": 30, "saved": 23, "skipped_total": 7}
+
+--- Batch #6 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:02:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "25 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 5.", "processed": 30, "saved": 25, "skipped_total": 5}
+
+--- Batch #7 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:03:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "19 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 11.", "processed": 30, "saved": 19, "skipped_total": 11}
+
+--- Batch #8 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:03:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "16 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 14.", "processed": 30, "saved": 16, "skipped_total": 14}
+
+--- Batch #9 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:04:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "17 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 13.", "processed": 30, "saved": 17, "skipped_total": 13}
+
+--- Batch #10 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:04:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "1 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 29.", "processed": 30, "saved": 1, "skipped_total": 29}
+
+--- Batch #11 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:05:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #12 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:05:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "2 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 28.", "processed": 30, "saved": 2, "skipped_total": 28}
+
+--- Batch #13 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:06:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "1 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 29.", "processed": 30, "saved": 1, "skipped_total": 29}
+
+--- Batch #14 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:06:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "13 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 17.", "processed": 30, "saved": 13, "skipped_total": 17}
+
+--- Batch #15 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:07:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "1 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 29.", "processed": 30, "saved": 1, "skipped_total": 29}
+
+--- Batch #16 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:07:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "3 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 27.", "processed": 30, "saved": 3, "skipped_total": 27}
+
+--- Batch #17 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:08:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "18 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 12.", "processed": 30, "saved": 18, "skipped_total": 12}
+
+--- Batch #18 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:08:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "20 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 10.", "processed": 30, "saved": 20, "skipped_total": 10}
+
+--- Batch #19 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:09:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "1 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 29.", "processed": 30, "saved": 1, "skipped_total": 29}
+
+--- Batch #20 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:09:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "9 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 21.", "processed": 30, "saved": 9, "skipped_total": 21}
+
+--- Batch #21 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:10:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "24 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 6.", "processed": 30, "saved": 24, "skipped_total": 6}
+
+--- Batch #22 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:10:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "18 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 12.", "processed": 30, "saved": 18, "skipped_total": 12}
+
+--- Batch #23 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:11:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "18 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 12.", "processed": 30, "saved": 18, "skipped_total": 12}
+
+--- Batch #24 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:11:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "21 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 9.", "processed": 30, "saved": 21, "skipped_total": 9}
+
+--- Batch #25 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:12:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "25 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 5.", "processed": 30, "saved": 25, "skipped_total": 5}
+
+--- Batch #26 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:12:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "7 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 23.", "processed": 30, "saved": 7, "skipped_total": 23}
+
+--- Batch #27 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:13:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "13 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 17.", "processed": 30, "saved": 13, "skipped_total": 17}
+
+--- Batch #28 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:13:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #29 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:14:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #30 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:14:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #31 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:15:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "1 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 29.", "processed": 30, "saved": 1, "skipped_total": 29}
+
+--- Batch #32 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:15:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "1 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 29.", "processed": 30, "saved": 1, "skipped_total": 29}
+
+--- Batch #33 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:16:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #34 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:16:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #35 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:17:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #36 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:17:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #37 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:18:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #38 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:18:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #39 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:19:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #40 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:19:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #41 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:20:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #42 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:20:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #43 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:21:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #44 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:21:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "1 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 29.", "processed": 30, "saved": 1, "skipped_total": 29}
+
+--- Batch #45 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:22:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #46 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:22:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #47 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:23:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #48 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:23:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #49 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:24:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #50 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:24:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "1 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 29.", "processed": 30, "saved": 1, "skipped_total": 29}
+
+--- Batch #51 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:25:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #52 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:25:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "1 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 29.", "processed": 30, "saved": 1, "skipped_total": 29}
+
+--- Batch #53 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:26:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #54 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:26:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #55 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:27:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #56 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:27:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #57 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:28:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #58 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:28:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #59 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:29:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #60 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:29:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "1 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 29.", "processed": 30, "saved": 1, "skipped_total": 29}
+
+--- Batch #61 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:30:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #62 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:30:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #63 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:31:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #64 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:31:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "1 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 29.", "processed": 30, "saved": 1, "skipped_total": 29}
+
+--- Batch #65 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:32:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #66 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:32:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #67 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:33:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "1 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 29.", "processed": 30, "saved": 1, "skipped_total": 29}
+
+--- Batch #68 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:33:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #69 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:34:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #70 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:34:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #71 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:35:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "1 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 29.", "processed": 30, "saved": 1, "skipped_total": 29}
+
+--- Batch #72 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:35:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "1 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 29.", "processed": 30, "saved": 1, "skipped_total": 29}
+
+--- Batch #73 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:36:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #74 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:36:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #75 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:37:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #76 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:37:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #77 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:38:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #78 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:38:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #79 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:39:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #80 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:39:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #81 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:40:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #82 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:40:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #83 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:41:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #84 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:41:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #85 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:42:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #86 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:42:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #87 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:43:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #88 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:43:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #89 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:44:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #90 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:44:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #91 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:45:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #92 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:45:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #93 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:46:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #94 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:46:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #95 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:47:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #96 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:47:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #97 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:48:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #98 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:48:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #99 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:49:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #100 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:49:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #101 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:50:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #102 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:50:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #103 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:51:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #104 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:51:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #105 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:52:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #106 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:52:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #107 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:53:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #108 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:53:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #109 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:54:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #110 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:54:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #111 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:55:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #112 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:55:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #113 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:56:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #114 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:56:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #115 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:57:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #116 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:57:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #117 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:58:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #118 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:58:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #119 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:59:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #120 dari 120 (Trial 3) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-18T13:59:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'SimulasiFinalValiditas_KmrTinggi_HujanSangatRingan_HujanRingan_KmrTinggi_Trial3'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+
+--- RINGKASAN UNTUK TRIAL INI ---
+Total Data Points Seharusnya (dari file JSON): 3600
+Total Batch di File Sumber: 120
+Total Batch Gagal Terkirim (Network/Timeout/HTTP Error dari requests): 0
+Total Batch dengan Respons Error dari PHP (Struktur Salah/DB Error/PHP Internal Error): 0
+----------------------------------
+Total Data Points (berdasarkan respons server untuk trial ini):
+  - Diproses oleh Server: 3600
+  - Berhasil Disimpan (Data Valid menurut Server): 392
+  - Dilewati (Validasi/Duplikat oleh PHP): 3208
+  - Error Database (berdasarkan 'db_errors_details' pada respons): 0
+--------------------------------------------------

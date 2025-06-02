@@ -23,9 +23,9 @@ define("MAX_KEMIRINGAN_INPUT", 45);
 define("MIN_KEMIRINGAN_OUTPUT", 0);
 define("MAX_KEMIRINGAN_OUTPUT", 45);
 define("MIN_CURAH_HUJAN_INPUT", 0);
-define("MAX_CURAH_HUJAN_INPUT", 200);
+define("MAX_CURAH_HUJAN_INPUT", 25);
 define("MIN_CURAH_HUJAN_OUTPUT", 0);
-define("MAX_CURAH_HUJAN_OUTPUT", 200);
+define("MAX_CURAH_HUJAN_OUTPUT", 25);
 
 // Threshold Outlier
 define("OUTLIER_KEMIRINGAN_DEVIATION", 10); // Derajat, deviasi antara input dan output

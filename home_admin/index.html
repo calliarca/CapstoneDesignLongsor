@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home Page - <span id="user-name">Guest</span></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+
+    <!-- MQTT.JS -->
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+
+    <!-- Favicons -->
+    <link href="assets/favicon-foNu2KxV.ico" rel="icon" type="image/x-icon">
+    <link href="assets/img/favicon/apple-touch-icon.png" rel="apple-touch-icon" type="image/png">
+
+    <style data-tag="reset-style-sheet">
+      html { line-height: 1.15; }
+      body { margin: 0; }
+      * { box-sizing: border-box; border-width: 0; border-style: solid; -webkit-font-smoothing: antialiased; }
+      p, li, ul, pre, div, h1, h2, h3, h4, h5, h6, figure, blockquote, figcaption { margin: 0; padding: 0; }
+      button { background-color: transparent; }
+      button, input, optgroup, select, textarea { font-family: inherit; font-size: 100%; line-height: 1.15; margin: 0; }
+      button, select { text-transform: none; }
+      button, [type="button"], [type="reset"], [type="submit"] { -webkit-appearance: button; appearance: button; color: inherit; }
+      button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner { border-style: none; padding: 0; }
+      button:-moz-focus, [type="button"]:-moz-focus, [type="reset"]:-moz-focus, [type="submit"]:-moz-focus { outline: 1px dotted ButtonText; }
+      a { color: inherit; text-decoration: inherit; }
+      input { padding: 2px 4px; }
+      img { display: block; }
+      html { scroll-behavior: smooth; }
+    </style>
+    <style data-tag="default-style-sheet">
+      html {
+        font-family: Inter;
+        font-size: 16px;
+      }
+      body {
+        margin: 10;
+        height: 100%;
+        font-weight: 400;
+        font-style: normal;
+        text-decoration: none;
+        text-transform: none;
+        letter-spacing: normal;
+        line-height: 1.15;
+        color: var(--dl-color-theme-neutral-dark);
+        background: var(--dl-color-theme-neutral-light);
+        overflow: hidden;
+        fill: var(--dl-color-theme-neutral-dark);
+      }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/animate.css@4.1.1/animate.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:wght@400;500;600;700&display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css" />
+    <script type="module" crossorigin src="assets/index-BtuBXejX.js"></script>
+    <link rel="stylesheet" crossorigin href="assets/index-CN69Zhmf.css">
+  </head>
+  <body>
+
+    <div>
+
+
+      <div class="frame-home-page1-container">
+        <div class="frame-home-page1-frame-home-page1">
+          <img
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABaAAAAMqAQMAAABOlXQPAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAA1BMVEXKyspx5jomAAAApUlEQVR42u3BMQEAAADCoPVPbQhfoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAzzQAAGK4LyOAAAAAElFTkSuQmCC"
+            alt="bgHome3112"
+            class="frame-home-page1-bg-home"
+          />
+      <div class="frame-home-page1-frame14915">
+        <div id="threejs-container-gyro" class="frame-home-page1-file1">
+            <div id="threejs-gyro-info">Menunggu data giro...</div>
+        </div>
+      </div>
+        
+        
+        <!-- Bar Live -->
+        <div class="frame-home-page1barlive">
+        <div class="frame-home-page1-curah-hujan">
+            <span class="frame-home-page1-text25" id="nilaiOutputCurahHujan">--</span>
+            <span class="frame-home-page1-text26" id="unitOutputCurahHujan">m³</span>
+            <span class="frame-home-page1-text27">
+                <span>Curah</span>
+                <br />
+                <span>Hujan</span>
+            </span>
+            <img
+                src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'%20standalone='no'?%3e%3csvg%20width='53'%20height='73'%20viewBox='0%200%2053%2073'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M0%2028.8549C0%2027.1106%200.865579%2024.8966%202.53015%2022.0789C4.19473%2019.2611%205.85929%2016.913%207.3907%2015.1015C7.7902%2014.6319%208.32287%2013.961%208.92211%2013.223C9.46889%2012.5497%2010.4703%2012.5808%2011.0336%2013.2405L12.451%2014.9003C14.3153%2016.9801%2015.9799%2019.3282%2017.5113%2022.0789C19.0427%2024.8296%2019.8417%2027.0435%2019.8417%2028.8549C19.8417%2031.6056%2018.9096%2034.0209%2016.9786%2035.9665C15.1143%2037.9121%2012.7839%2038.9184%209.98744%2038.9184C7.25754%2038.9184%204.86055%2037.9121%202.92965%2035.9665C0.998741%2033.9538%200%2031.6056%200%2028.8549ZM20.7739%2056.6972C20.7739%2054.7516%2021.3065%2052.5376%2022.3719%2049.9211C23.4372%2047.3717%2024.7688%2044.9565%2026.3668%2042.8096C29.4297%2038.7171%2032.2927%2035.2956%2035.0892%2032.5449C35.1015%2032.5356%2035.1145%2032.5256%2035.1282%2032.5148C36.1395%2031.7239%2037.5622%2031.6523%2038.4849%2032.5449C41.0817%2035.0272%2044.0113%2038.4488%2047.2739%2042.7425C49.005%2045.0236%2050.3367%2047.4388%2051.402%2049.9882C52.4673%2052.5376%2053%2054.7516%2053%2056.6972C53%2061.3264%2051.4686%2065.1505%2048.3392%2068.3037C45.2098%2071.4569%2041.348%2073%2036.8204%2073C32.2927%2073%2028.4975%2071.3899%2025.3681%2068.2366C22.2387%2065.0834%2020.7739%2061.1922%2020.7739%2056.6972ZM30.8945%2010.4053C30.8945%207.91098%2032.537%204.71458%2035.8651%200.85939C36.7472%20-0.162402%2038.3221%20-0.131782%2039.2173%200.878515C40.4824%202.35449%2041.6143%203.96464%2042.6131%205.84316C43.6118%207.65458%2044.1445%209.19764%2044.1445%2010.4053C44.1445%2012.2838%2043.4786%2013.7597%2042.2136%2015.0345C40.9485%2016.2421%2039.4171%2016.913%2037.5528%2016.913C35.6219%2016.913%2034.0239%2016.3092%2032.7588%2015.0345C31.5571%2013.7987%2030.8872%2012.1354%2030.8945%2010.4053Z'%20fill='black'/%3e%3c/svg%3e"
+                alt="Icon Curah Hujan" class="frame-home-page1-vector4"
+            />
+        </div>
+            
+            <div class="frame-home-page1-humidity1">
+              <span class="frame-home-page1-text31" id="average-moisture">--</span>
+              <span class="frame-home-page1-text32">
+                <span>Kelembaban</span>
+                <br />
+                <span>Tanah</span>
+              </span>
+              <span class="frame-home-page1-text33">%</span>
+              <img
+                src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'%20standalone='no'?%3e%3csvg%20width='69'%20height='69'%20viewBox='0%200%2069%2069'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M52.8281%2064.6875C50.7464%2064.8071%2048.6726%2064.3441%2046.8395%2063.3504C45.0064%2062.3568%2043.4865%2060.8718%2042.4505%2059.0623C41.4145%2057.2528%2040.9034%2055.1903%2040.9745%2053.1064C41.0457%2051.0225%2041.6963%2048.9996%2042.8533%2047.265L50.6503%2035.6601C50.8904%2035.303%2051.2146%2035.0104%2051.5943%2034.808C51.9741%2034.6057%2052.3978%2034.4999%2052.8281%2034.4999C53.2584%2034.4999%2053.6821%2034.6057%2054.0619%2034.808C54.4417%2035.0104%2054.7659%2035.303%2055.0059%2035.6601L62.6606%2047.0386C63.9259%2048.9125%2064.6292%2051.109%2064.6875%2053.3693C64.6106%2056.4412%2063.3192%2059.3573%2061.0963%2061.4788C58.8734%2063.6002%2055.9002%2064.7541%2052.8281%2064.6875ZM52.8281%2040.1494L46.4974%2049.5657C45.7523%2050.6486%2045.3312%2051.9213%2045.2833%2053.2348C45.2355%2054.5483%2045.5628%2055.8483%2046.2271%2056.9825C46.8914%2058.1167%2047.8651%2059.0382%2049.0341%2059.639C50.2032%2060.2398%2051.5192%2060.4951%2052.8281%2060.375C54.7565%2060.4415%2056.6328%2059.7419%2058.0469%2058.4292C59.4611%2057.1165%2060.2981%2055.2973%2060.375%2053.3693C60.3244%2051.9237%2059.8522%2050.5244%2059.0166%2049.3436L52.8281%2040.1494ZM23.7188%2034.5V23.7188H25.875C28.1616%2023.7159%2030.3538%2022.8063%2031.9706%2021.1894C33.5875%2019.5725%2034.4971%2017.3804%2034.5%2015.0938V8.625H28.0312C25.8233%208.62906%2023.7019%209.48397%2022.108%2011.012C20.992%208.98414%2019.3523%207.29287%2017.3601%206.1145C15.3678%204.93614%2013.0959%204.31384%2010.7812%204.3125H4.3125V10.7812C4.31649%2014.2113%205.68083%2017.4996%208.10622%2019.925C10.5316%2022.3504%2013.82%2023.7148%2017.25%2023.7188H19.4062V34.5H4.3125V38.8125H34.5V34.5H23.7188ZM28.0312%2012.9375H30.1875V15.0938C30.1875%2016.2375%2029.7331%2017.3344%2028.9244%2018.1431C28.1156%2018.9519%2027.0187%2019.4062%2025.875%2019.4062H23.7188V17.25C23.7188%2016.1063%2024.1731%2015.0094%2024.9819%2014.2006C25.7906%2013.3919%2026.8875%2012.9375%2028.0312%2012.9375ZM17.25%2019.4062C14.9634%2019.4034%2012.7712%2018.4938%2011.1544%2016.8769C9.53747%2015.26%208.62785%2013.0679%208.625%2010.7812V8.625H10.7812C13.0679%208.62785%2015.26%209.53747%2016.8769%2011.1544C18.4938%2012.7712%2019.4034%2014.9634%2019.4062%2017.25V19.4062H17.25ZM4.3125%2045.2812H34.5V49.5938H4.3125V45.2812ZM4.3125%2056.0625H34.5V60.375H4.3125V56.0625Z'%20fill='black'/%3e%3c/svg%3e"
+                alt="Indikator Kelembaban"
+                class="frame-home-page1-carbonsoilmoisturefield"
+              />
+            </div>
+
+            <div class="frame-home-page1-kemiringan">
+              <span class="frame-home-page1-text36" id="nilaiKemiringan">--</span>
+              <span class="frame-home-page1-text37">
+                <span>Derajat</span>
+                <br />
+                <span>Kemiringan</span>
+              </span>
+              <span class="frame-home-page1-text38">°</span>
+              <img
+                src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'%20standalone='no'?%3e%3csvg%20width='52'%20height='58'%20viewBox='0%200%2052%2058'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M34.6704%2033.6541C42.9666%2030.3251%2052%2036.4338%2052%2045.3729C52%2052.3467%2046.3467%2058%2039.3729%2058H6.22427C2.7867%2058%200%2055.2133%200%2051.7757C0%2049.2331%201.54653%2046.9461%203.90626%2045.9992L34.6704%2033.6541ZM49.855%209.31641C50.6264%207.39268%2049.988%205.19082%2048.3073%203.97808L44.7078%201.381C42.5914%20-0.14607%2039.7107%201.75763%2040.2858%204.30333C40.5933%205.66475%2039.8637%207.04737%2038.5663%207.56184L17.7147%2015.8299C15.8829%2016.5563%2013.8708%2015.6869%2012.3402%2014.4458C11.4941%2013.7597%2010.5552%2013.3035%209.57721%2013.1032C8.5992%2012.903%207.60127%2012.9626%206.64051%2013.2786C5.67974%2013.5947%204.77499%2014.1611%203.978%2014.9453C3.18014%2015.7279%202.50547%2016.7132%201.99257%2017.845C1.47966%2018.9767%201.1386%2020.2325%200.988879%2021.5407C0.83916%2022.8489%200.883725%2024.1837%201.12002%2025.4688C1.35632%2026.754%201.77972%2027.9642%202.366%2029.0302C4.81%2033.5513%209.542%2034.4903%2012.896%2031.1864C16.5942%2027.6332%2019.0458%2022.3133%2023.8133%2020.4229L39.8181%2014.0767C41.1092%2013.5647%2042.5526%2014.3263%2042.8586%2015.6812C43.3478%2017.8468%2046.3386%2018.0854%2047.165%2016.0247L49.855%209.31641Z'%20fill='black'/%3e%3c/svg%3e"
+                alt="Vector8840"
+                class="frame-home-page1-vector5"
+              />
+            </div>
+            <div class="frame-home-page1-turn-on">
+              <label class="slider-container">
+                <input type="checkbox" id="toggle-simulation">
+                <span class="slider"></span>
+              </label>
+              <span id="simulation-text" class="frame-home-page1-text41">START SIMULATION</span>
+            </div>
+            <!-- Overlay -->
+            <div id="popup-overlay" class="popup-overlay"></div>
+            <!-- Popup untuk input nama simulasi -->
+            <div id="simulation-popup" class="popup" style="display:none;">
+              <div class="popup-content">
+                <h3>Enter Simulation Name</h3>
+                <input type="text" id="simulation-name" placeholder="Enter simulation name" />
+                <button id="save-simulation-btn">Save</button>
+                <button id="close-popup-btn">Cancel</button>
+              </div>
+            </div>
+        </div>
+
+        <!-- Kemiringan Form -->
+        <div class="frame-home-page1barderajatkemiringina">
+          <span class="frame-home-page1-text10">DERAJAT KEMIRINGAN</span>
+          <div class="input-field-kemiringan">
+            <select id="kemiringan-input" class="select-field" required disabled>
+              <option value="" disabled selected>Pilih Derajat</option>
+              <option value="0">0°</option>
+              <option value="5">5°</option>
+              <option value="10">10°</option>
+              <option value="15">15°</option>
+              <option value="20">20°</option>
+              <option value="25">25°</option>
+              <option value="30">30°</option>
+              <option value="35">35°</option>
+              <option value="40">40°</option>
+              <option value="45">45°</option>
+              <option value="50">50°</option>
+            </select>
+          </div>
+          <button class="frame-home-page1-button1" onclick="handleKemiringan()" disabled>INPUT</button>
+        </div>
+
+        <!-- Curah Hujan Form -->
+        <div class="frame-home-page1barcurahhujan">
+          <span class="frame-home-page1-text12">CURAH HUJAN</span>
+          <div class="input-field-curahhujan">
+            <input type="number" id="curah-hujan-input" 
+                  placeholder="Masukan Curah Hujan (mm)" 
+                  min="0" max="30" required disabled>
+          </div>
+          <button class="frame-home-page1-button2" onclick="handleCurahHujan()" disabled>INPUT</button>
+        </div>
+
+        <!-- Keterangan Curah Hujan -->
+        <div class="frame-home-page1-keterangan-curah-hujan">
+          <span class="frame-home-page1-text19">KLASIFIKASI CURAH HUJAN</span>
+                    <div class="frame-home-page1-siaga41">
+                      <div class="frame-home-page1-group1481">
+                        <img
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAQCAMAAAARSr4IAAAAOVBMVEVHcEwAv2MAvmMAv14Av2EAvmIAv2IAv2IAv2EAv2MAwG8Av18Av2QAwWMAvWIAv2MAv2MAvWIAv2PhJ2ivAAAAEnRSTlMAxZYJOn1d6BiAByjXbG3AS2/DFBNoAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAV0lEQVQI113PSRaAIAwD0DAWcM79DyuISjWr/tdFWgAoQSibR0+aeSV3Cu8cTZlvil6SAfBDFGBVpEPQTH9GzXqEkqlFZjBCNwk+ZyUoy4Tnp8Xa3bXpBDNkCtaA29rNAAAAAElFTkSuQmCC"
+                          alt="Ellipse961255"
+                          class="frame-home-page1-ellipse961"
+                        />
+                      </div>
+                      <span class="frame-home-page1-text14">
+                        Hujan Ringan : 1-5 mm/jam
+                      </span>
+                    </div>
+                    <div class="frame-home-page1-siaga31">
+                      <div class="frame-home-page1-group1471">
+                        <img
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAQCAMAAAARSr4IAAAAOVBMVEVHcEz/0Gz/6nz/6nz/6Hv/6nv/63z/6nv/5n3/6nv/6nv/6n3/6nn/6nz/6nz/6Xv/1mX/6Hv/6nyMKHoZAAAAEnRSTlMAB+TCQI72fxjpbJ4nktZdCW+1bfehAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAXUlEQVQI113PWxaAIAgE0FEzQXsY+19sklnUfHmPHBkBwCUvHBb0EMuV1HlL5FClIZldo3+o49Mr8Xa2pSJa0p/Z8vtUaIu2lzvsNWsrt45S1Ev31Ty+BIql5KqnExfPCtGyrsExAAAAAElFTkSuQmCC"
+                          alt="Ellipse961259"
+                          class="frame-home-page1-ellipse963"
+                        />
+                      </div>
+                      <span class="frame-home-page1-text16">
+                        Hujan Sedang : 5-10 mm/jam
+                      </span>
+                    </div>
+                    <div class="frame-home-page1-siaga21">
+                      <div class="frame-home-page1-group1451">
+                        <img
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAQBAMAAADUulMJAAAALVBMVEVHcEz/kU3/kUz/kU3/jU7/jlH/kUz/j0z/jlH/kE3/j0z/kUz/kU3/j1D/kU1ZCJVWAAAADnRSTlMA+L+RBxmjOxtbgNfpLGamT3YAAAAJcEhZcwAACxMAAAsTAQCanBgAAABZSURBVAjXY2BgmPROkwEI2N69e2cApO2A9GMGBtZ3IFAAFgZJMIJpAYY+MP2EIQ5MP4XyX8DlmcC0AgM7iHpYwMCgB6SfAc31AdJbgDSL4TspB5CFDFeBGAAruEHpQg8cJwAAAABJRU5ErkJggg=="
+                          alt="Ellipse961251"
+                          class="frame-home-page1-ellipse964"
+                        />
+                      </div>
+                      <span class="frame-home-page1-text17">
+                        Hujan Lebat : 10-20 mm/jam
+                      </span>
+                    </div>
+                    <div class="frame-home-page1-siaga11">
+                      <div class="frame-home-page1-group1461">
+                        <img
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAARCAMAAAAxIdauAAAAOVBMVEVHcEz/Ly//MDD/MDD/Ly//MTH/MDD/MTH/MDD/MDD/MTH/MDD/MDD/MDD/MTH/MTH/MDD/MDD/MTFbCbr8AAAAEnRSTlMACMAaFqM66tNb+caAbN/ebyxJgLGdAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAWElEQVQI113PSw6AIAwA0QH5CkTt/Q+riITG2TQv7QIATPPJZkYuSi86BZG9M8msQJBVwCt5itKB6H46FCJWydKUMmZfhxucavVUP9TxidyfWgIzc23vvAFKyAswUcsmAwAAAABJRU5ErkJggg=="
+                          alt="Ellipse961251"
+                          class="frame-home-page1-ellipse965"
+                        />
+                      </div>
+                      <span class="frame-home-page1-text18">
+                        Hujan Sangat Lebat : &gt;20 mm/jam
+                      </span>
+                    </div>
+                 </div>
+        
+        <!-- Keterangan Kemiringan -->
+        <div class="frame-home-page1-keterangan-kemiringan">
+          <span class="frame-home-page1-text24">
+            KLASIFIKASI KEMIRINGAN TANAH
+          </span>
+                    <div class="frame-home-page1-siaga42">
+                      <div class="frame-home-page1-group1483">
+                        <img
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAKBAMAAABlIDIAAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAJ1BMVEVzc3NycnJHcExycnJycnJzc3N0dHRtbW1zc3NsbGxzc3Nzc3Nzc3NkzaatAAAADHRSTlPsGABmf9+/B5AIvtC3w+exAAAALklEQVQI12PQNBFiUDjDzmBz5ghDzplTDDFnDoBxzpnTDD5nDjMUnGFkUOwQAgAdGQ7XBO04WAAAAABJRU5ErkJggg=="
+                          alt="Ellipse961279"
+                          class="frame-home-page1-ellipse966"
+                        />
+                      </div>
+                      <span class="frame-home-page1-text20">0° - 2° : Tanah Datar</span>
+                    </div>
+                    <div class="frame-home-page1-siaga32">
+                      <div class="frame-home-page1-group1472">
+                        <img
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAKBAMAAACK4lk+AAAAJ1BMVEX/6nz/6nv/6ntHcEz/6nv/6Xv/6Xz/6Xj/6nv/9YT/6n3/6nr/6XuEvz6xAAAADXRSTlP9XDsAboFMS+cIoCnm5NMWRgAAAAlwSFlzAAALEwAACxMBAJqcGAAAADJJREFUCNdjMFbdbMBgyMBuwGDBwGDAoMAARA4MDAIQIgHEncDAYcBgwsBqwGAsJWwAAIszBS1m/Ix2AAAAAElFTkSuQmCC"
+                          alt="Ellipse961279"
+                          class="frame-home-page1-ellipse967"
+                        />
+                      </div>
+                      <span class="frame-home-page1-text21">
+                        2° - 15° : Wilayah Landai
+                      </span>
+                    </div>
+                    <div class="frame-home-page1-siaga22">
+                      <div class="frame-home-page1-group1452">
+                        <img
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAKBAMAAACK4lk+AAAAJ1BMVEX/jlFHcEz/kUz/jT3/j0z/kEz/kU3/kkz/j1D/j0n/kk3/j0z/kU01no6kAAAADHRSTlMYAMQIXUXpoS0rtH+9RhYxAAAACXBIWXMAAAsTAAALEwEAmpwYAAAANklEQVQI12MQ0CkWYBA/c0qAgefMGQOGmDNnHBj2gAifM2cCQNwGBqEzhwQYBHISBBgEJQwFALqIEMdPhRDyAAAAAElFTkSuQmCC"
+                          alt="Ellipse961271"
+                          class="frame-home-page1-ellipse968"
+                        />
+                      </div>
+                      <span class="frame-home-page1-text22">
+                        15° - 40° : Wilayah Miring
+                      </span>
+                    </div>
+                    <div class="frame-home-page1-siaga12">
+                      <div class="frame-home-page1-group1462">
+                        <img
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAKBAMAAACK4lk+AAAALVBMVEX/Ly9HcEz/Li7/MDD/MTH/MDD/MDD/MTH/MDD/MDD/MDD/MDD/MjL/MDD/MTGCwNMxAAAADnRSTlMYAAjE6VxKoTwtK160f/WE99AAAAAJcEhZcwAACxMAAAsTAQCanBgAAAA9SURBVAjXATIAzf8AED5yEAAX7uwQAA7u7iAAbu7usADe7u5QAF7u7mAAju7uoAAT7uMQABBOQBAAERkhEAsxE4G9p6iEAAAAAElFTkSuQmCC"
+                          alt="Ellipse961271"
+                          class="frame-home-page1-ellipse969"
+                        />
+                      </div>
+                      <span class="frame-home-page1-text23">
+                        &gt; 40° : Wilayah Terjal
+                      </span>
+                    </div>
+                   </div>
+                  </div>
+
+            <!-- Kotak Sensor Kelembaban -->
+            <div class="soil-sensors-container">
+              <div class="sensors-header">
+                <span>Sensor <br> Kelembaban Tanah</span>
+              </div>
+              <div class="sensors-grid">
+                <div class="sensor-point" id="sensor-1">
+                  <div class="sensor-dot"></div>
+                  <span class="sensor-value">--%</span>
+                  <span class="sensor-label">Sensor 1</span>
+                </div>
+                <div class="sensor-point" id="sensor-2">
+                  <div class="sensor-dot"></div>
+                  <span class="sensor-value">--%</span>
+                  <span class="sensor-label">Sensor 2</span>
+                </div>
+                <div class="sensor-point" id="sensor-3">
+                  <div class="sensor-dot"></div>
+                  <span class="sensor-value">--%</span>
+                  <span class="sensor-label">Sensor 3</span>
+                </div>
+                <div class="sensor-point" id="sensor-4">
+                  <div class="sensor-dot"></div>
+                  <span class="sensor-value">--%</span>
+                  <span class="sensor-label">Sensor 4</span>
+                </div>
+                <div class="sensor-point" id="sensor-5">
+                  <div class="sensor-dot"></div>
+                  <span class="sensor-value">--%</span>
+                  <span class="sensor-label">Sensor 5</span>
+                </div>
+                <div class="sensor-point" id="sensor-6">
+                  <div class="sensor-dot"></div>
+                  <span class="sensor-value">--%</span>
+                  <span class="sensor-label">Sensor 6</span>
+                </div>
+              </div>
+            </div>
+            <!-- Tombol untuk membuka popup kamera -->
+            <button id="open-camera-popup-btn" class="open-camera-btn">
+              <span>📷</span>
+              <span>Camera</span>
+            </button>
+
+            <!-- Overlay untuk popup kamera -->
+            <div class="camera-popup-overlay" style="display:none;"></div>
+
+            <!-- Popup untuk menampilkan tampilan kamera ESP32 -->
+            <div class="camera-popup" style="display:none;">
+              <div class="popup-content">
+                <button id="close-camera-popup-btn">×</button>
+                <h3>ESP32 Camera View</h3>
+                <!-- Video Stream from ESP32 -->
+                <iframe id="esp32-camera-stream" frameborder="0" allowfullscreen></iframe>
+                <p id="camera-error-message" style="color: red; display: none;"></p>
+              </div>
+            </div>     
+          <!-- Sidebar -->
+          <div class="frame-home-page1-sidebar">
+            <div class="frame-home-page1-home" onclick="window.location.href='#'">
+              <img
+                src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'%20standalone='no'?%3e%3csvg%20width='30'%20height='26'%20viewBox='0%200%2030%2026'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M12%2026V16.8235H18V26H25.5V13.7647H30L15%200L0%2013.7647H4.5V26H12Z'%20fill='%230F8B78'/%3e%3c/svg%3e"
+                alt="HomeVector3118"
+                class="frame-home-page1-home-vector"
+              />
+              <span class="frame-home-page1-text46">Home</span>
+            </div>
+            <div class="frame-home-page1-history" onclick="window.location.href='../public/history'">
+              <img
+                src="data:image/svg+xml,%3csvg%20width='35'%20height='35'%20viewBox='0%200%2035%2035'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M30.625%2017.5V6.5625C30.625%205.98234%2030.3945%205.42594%2029.9843%205.0157C29.5741%204.60547%2029.0177%204.375%2028.4375%204.375H6.5625C5.98234%204.375%205.42594%204.60547%205.0157%205.0157C4.60547%205.42594%204.375%205.98234%204.375%206.5625V28.4375C4.375%2029.0177%204.60547%2029.5741%205.0157%2029.9843C5.42594%2030.3945%205.98234%2030.625%206.5625%2030.625H17.5'%20stroke='black'%20stroke-width='2.91667'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M23.3333%2027.7084C25.7495%2027.7084%2027.7083%2025.7496%2027.7083%2023.3334C27.7083%2020.9171%2025.7495%2018.9584%2023.3333%2018.9584C20.917%2018.9584%2018.9583%2020.9171%2018.9583%2023.3334C18.9583%2025.7496%2020.917%2027.7084%2023.3333%2027.7084Z'%20stroke='black'%20stroke-width='2.91667'/%3e%3cpath%20d='M26.9791%2026.25L30.6249%2029.1666M10.2083%2011.6666H24.7916M10.2083%2017.5H16.0416'%20stroke='black'%20stroke-width='2.91667'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
+                alt="History"
+                class="frame-home-page1-history-vector"
+              />
+              <span class="frame-home-page1-text42">History</span>
+            </div>
+            <div class="frame-home-page1-logout" onclick="navigateTo('logout')">
+              <img
+                src="data:image/svg+xml,%3csvg%20width='35'%20height='35'%20viewBox='0%200%2035%2035'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M17.4939%204.375H4.375V30.625H17.5'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M24.0625%2024.0625L30.625%2017.5L24.0625%2010.9375'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M11.6667%2017.4939H30.6251'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
+                alt="Lock8838"
+                class="frame-home-page1-lock"
+              />
+              <span class="frame-home-page1-text44">Logout</span>
+            </div>
+            <div class="frame-home-page1-user" onclick="window.location.href='../public/add-user'">
+              <img
+                src="data:image/svg+xml,%3csvg%20width='35'%20height='35'%20viewBox='0%200%2035%2035'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M22.75%2019.2537C25.0706%2019.2537%2027.2962%2020.099%2028.9372%2021.6035C30.5781%2023.1079%2031.5%2025.1485%2031.5%2027.2761V28.8806C31.5%2029.7317%2031.1313%2030.5479%2030.4749%2031.1497C29.8185%2031.7515%2028.9283%2032.0896%2028%2032.0896H3.5C2.57174%2032.0896%201.6815%2031.7515%201.02513%2031.1497C0.368749%2030.5479%200%2029.7317%200%2028.8806V27.2761C0%2025.1485%200.921872%2023.1079%202.56282%2021.6035C4.20376%2020.099%206.42936%2019.2537%208.75%2019.2537H22.75ZM29.75%209.62687C30.2141%209.62687%2030.6592%209.79592%2030.9874%2010.0968C31.3156%2010.3977%2031.5%2010.8058%2031.5%2011.2314V12.8358H33.25C33.7141%2012.8358%2034.1592%2013.0049%2034.4874%2013.3058C34.8156%2013.6067%2035%2014.0148%2035%2014.4403C35%2014.8658%2034.8156%2015.2739%2034.4874%2015.5748C34.1592%2015.8757%2033.7141%2016.0448%2033.25%2016.0448H31.5V17.6493C31.5%2018.0748%2031.3156%2018.4829%2030.9874%2018.7838C30.6592%2019.0847%2030.2141%2019.2537%2029.75%2019.2537C29.2859%2019.2537%2028.8408%2019.0847%2028.5126%2018.7838C28.1844%2018.4829%2028%2018.0748%2028%2017.6493V16.0448H26.25C25.7859%2016.0448%2025.3408%2015.8757%2025.0126%2015.5748C24.6844%2015.2739%2024.5%2014.8658%2024.5%2014.4403C24.5%2014.0148%2024.6844%2013.6067%2025.0126%2013.3058C25.3408%2013.0049%2025.7859%2012.8358%2026.25%2012.8358H28V11.2314C28%2010.8058%2028.1844%2010.3977%2028.5126%2010.0968C28.8408%209.79592%2029.2859%209.62687%2029.75%209.62687ZM15.75%200C18.0706%200%2020.2962%200.845214%2021.9372%202.3497C23.5781%203.8542%2024.5%205.89472%2024.5%208.02239C24.5%2010.1501%2023.5781%2012.1906%2021.9372%2013.6951C20.2962%2015.1996%2018.0706%2016.0448%2015.75%2016.0448C13.4294%2016.0448%2011.2038%2015.1996%209.56282%2013.6951C7.92187%2012.1906%207%2010.1501%207%208.02239C7%205.89472%207.92187%203.8542%209.56282%202.3497C11.2038%200.845214%2013.4294%200%2015.75%200Z'%20fill='black'/%3e%3c/svg%3e"
+                alt="UserIcon"
+                class="frame-home-page1-user-vector"
+              />
+              <span class="frame-home-page1-text48">User</span>
+            </div>
+            <div class="frame-home-page1-setting" onclick="window.location.href='../public/setting'">
+              <img
+                src="data:image/svg+xml,%3csvg%20width='35'%20height='35'%20viewBox='0%200%2035%2035'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M21.0555%200C21.327%208.33954e-06%2021.5916%200.0840096%2021.811%200.239906C22.0304%200.395803%2022.1934%200.61555%2022.2765%200.8675L23.6874%205.14C24.28%205.4225%2024.8469%205.74%2025.3882%206.0975L29.8928%205.1525C30.1584%205.09724%2030.4352%205.12556%2030.6832%205.23338C30.9312%205.34121%2031.1377%205.52298%2031.273%205.7525L34.8284%2011.75C34.9642%2011.9794%2035.0217%2012.2449%2034.9926%2012.5082C34.9636%2012.7715%2034.8495%2013.019%2034.6668%2013.215L31.5757%2016.54C31.6207%2017.1776%2031.6207%2017.8174%2031.5757%2018.455L34.6668%2021.785C34.8495%2021.981%2034.9636%2022.2285%2034.9926%2022.4918C35.0217%2022.7551%2034.9642%2023.0206%2034.8284%2023.25L31.273%2029.25C31.1373%2029.4791%2030.9307%2029.6603%2030.6827%2029.7677C30.4347%2029.875%2030.1582%2029.903%2029.8928%2029.8475L25.3882%2028.9025C24.8495%2029.2575%2024.28%2029.5775%2023.69%2029.86L22.2765%2034.1325C22.1934%2034.3844%2022.0304%2034.6042%2021.811%2034.7601C21.5916%2034.916%2021.327%2035%2021.0555%2035H13.9445C13.673%2035%2013.4084%2034.916%2013.189%2034.7601C12.9696%2034.6042%2012.8066%2034.3844%2012.7235%2034.1325L11.3151%2029.8625C10.7241%2029.5809%2010.1541%2029.2592%209.60922%2028.9L5.10716%2029.8475C4.84157%2029.9028%204.56483%2029.8744%204.31681%2029.7666C4.06879%2029.6588%203.86228%2029.477%203.72705%2029.2475L0.17158%2023.25C0.0358116%2023.0206%20-0.0216957%2022.7551%200.00735013%2022.4918C0.036396%2022.2285%200.150494%2021.981%200.333192%2021.785L3.42435%2018.455C3.37957%2017.8191%203.37957%2017.1809%203.42435%2016.545L0.333192%2013.215C0.150494%2013.019%200.036396%2012.7715%200.00735013%2012.5082C-0.0216957%2012.2449%200.0358116%2011.9794%200.17158%2011.75L3.72705%205.75C3.86266%205.52093%204.06932%205.33969%204.31731%205.23232C4.5653%205.12496%204.84184%205.09701%205.10716%205.1525L9.60922%206.1C10.1531%205.7425%2010.7225%205.42%2011.3151%205.1375L12.726%200.8675C12.8089%200.616362%2012.9711%200.397196%2013.1895%200.241375C13.4079%200.0855535%2013.6713%200.00106417%2013.942%200H21.0529H21.0555ZM20.1166%202.5H14.8834L13.4263%206.9175L12.4438%207.385C11.9608%207.61534%2011.4946%207.87762%2011.0483%208.17L10.1402%208.77L5.4817%207.79L2.86512%2012.21L6.05888%2015.655L5.98192%2016.715C5.94506%2017.2377%205.94506%2017.7623%205.98192%2018.285L6.05888%2019.345L2.85999%2022.79L5.47913%2027.21L10.1377%2026.2325L11.0458%2026.83C11.492%2027.1224%2011.9583%2027.3847%2012.4413%2027.615L13.4238%2028.0825L14.8834%2032.5H20.1217L21.5839%2028.08L22.5638%2027.615C23.0463%2027.3852%2023.5118%2027.1229%2023.9568%2026.83L24.8623%2026.2325L29.5234%2027.21L32.14%2022.79L28.9437%2019.345L29.0206%2018.285C29.0576%2017.7615%2029.0576%2017.236%2029.0206%2016.7125L28.9437%2015.6525L32.1426%2012.21L29.5234%207.79L24.8623%208.765L23.9568%208.17C23.5118%207.87704%2023.0464%207.61473%2022.5638%207.385L21.5839%206.92L20.1191%202.5H20.1166ZM17.5%2010C19.5411%2010%2021.4985%2010.7902%2022.9418%2012.1967C24.385%2013.6032%2025.1958%2015.5109%2025.1958%2017.5C25.1958%2019.4891%2024.385%2021.3968%2022.9418%2022.8033C21.4985%2024.2098%2019.5411%2025%2017.5%2025C15.4589%2025%2013.5015%2024.2098%2012.0582%2022.8033C10.615%2021.3968%209.80418%2019.4891%209.80418%2017.5C9.80418%2015.5109%2010.615%2013.6032%2012.0582%2012.1967C13.5015%2010.7902%2015.4589%2010%2017.5%2010ZM17.5%2012.5C16.1393%2012.5%2014.8343%2013.0268%2013.8722%2013.9645C12.91%2014.9021%2012.3695%2016.1739%2012.3695%2017.5C12.3695%2018.8261%2012.91%2020.0979%2013.8722%2021.0355C14.8343%2021.9732%2016.1393%2022.5%2017.5%2022.5C18.8607%2022.5%2020.1657%2021.9732%2021.1278%2021.0355C22.09%2020.0979%2022.6305%2018.8261%2022.6305%2017.5C22.6305%2016.1739%2022.09%2014.9021%2021.1278%2013.9645C20.1657%2013.0268%2018.8607%2012.5%2017.5%2012.5Z'%20fill='black'/%3e%3c/svg%3e"
+                alt="SettingIcon"
+                class="frame-home-page1-setting-vector"
+              />
+              <span class="frame-home-page1-text50">Setting</span>
+          </div>
+          <span class="user-name" id="user-name">Loading...</span>          
+        </div>
+      </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="assets/js/home-admin.js"></script>
+
+  </body>
+</html>
+``` 

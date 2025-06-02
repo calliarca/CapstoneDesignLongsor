@@ -1,0 +1,47 @@
+[
+  {
+    "trial": 1,
+    "status_trial": "COMPLETED",
+    "file": "data_simulasi_5_trial_chasing_input\\data_simulasi_trial_1.json",
+    "total_raw_data": 3600,
+    "total_valid_data_server": 1427,
+    "total_skipped_data_server": 2173,
+    "persentase_valid_server": 39.64
+  },
+  {
+    "trial": 2,
+    "status_trial": "COMPLETED",
+    "file": "data_simulasi_5_trial_chasing_input\\data_simulasi_trial_2.json",
+    "total_raw_data": 3600,
+    "total_valid_data_server": 1647,
+    "total_skipped_data_server": 1953,
+    "persentase_valid_server": 45.75
+  },
+  {
+    "trial": 3,
+    "status_trial": "COMPLETED",
+    "file": "data_simulasi_5_trial_chasing_input\\data_simulasi_trial_3.json",
+    "total_raw_data": 3600,
+    "total_valid_data_server": 25,
+    "total_skipped_data_server": 3575,
+    "persentase_valid_server": 0.69
+  },
+  {
+    "trial": 4,
+    "status_trial": "COMPLETED",
+    "file": "data_simulasi_5_trial_chasing_input\\data_simulasi_trial_4.json",
+    "total_raw_data": 3600,
+    "total_valid_data_server": 110,
+    "total_skipped_data_server": 3490,
+    "persentase_valid_server": 3.06
+  },
+  {
+    "trial": 5,
+    "status_trial": "COMPLETED",
+    "file": "data_simulasi_5_trial_chasing_input\\data_simulasi_trial_5.json",
+    "total_raw_data": 3600,
+    "total_valid_data_server": 2842,
+    "total_skipped_data_server": 758,
+    "persentase_valid_server": 78.94
+  }
+]

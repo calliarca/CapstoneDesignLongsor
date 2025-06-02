@@ -1,6 +1,7 @@
 /* Global Settings */
 html, body {
-  overflow: hidden; /* Mencegah halaman di-scroll */
+  overflow-x: hidden; /* Mencegah scroll horizontal pada body, biarkan tabel yg scroll jika perlu */
+  /* overflow: hidden; /* Mencegah halaman di-scroll */ /* Komentar ini dipertimbangkan, mungkin user perlu scroll halaman utama jika kontennya panjang */
   height: 100%;
   margin: 0;
   padding: 0;
@@ -53,13 +54,14 @@ html, body {
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   z-index: 1;
-  max-height: 90vh;
+  max-height: calc(100vh - 60px); /* Adjust max-height considering top/bottom spacing */
   overflow-y: auto;
   border: 1px solid #ddd;
 }
 
 .frame-home-page1-history-table::-webkit-scrollbar {
   width: 8px;
+  height: 8px; /* For horizontal scrollbar on table */
 }
 
 .frame-home-page1-history-table::-webkit-scrollbar-thumb {
@@ -86,6 +88,7 @@ html, body {
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
+  /* white-space: nowrap; /* Dihapus dari global, akan diterapkan spesifik di mobile */
 }
 
 .frame-home-page1-history-table th {
@@ -139,35 +142,6 @@ html, body {
   background-color: #e0a800;
 }
 
-/* Responsive Table */
-@media (max-width: 768px) {
-  .frame-home-page1-history-table {
-    left: 20px;
-    right: 20px;
-    padding: 10px;
-  }
-
-  .frame-home-page1-history-table table {
-    display: block;
-    overflow-x: auto;
-  }
-
-  .frame-home-page1-history-table th,
-  .frame-home-page1-history-table td {
-    padding: 8px 10px;
-    font-size: 12px;
-  }
-
-  .frame-home-page1-history-table h2 {
-    font-size: 20px;
-  }
-
-  .detail-button {
-    padding: 6px 12px;
-    font-size: 12px;
-  }
-}
-
 /* Overlay */
 #overlay {
   position: fixed;
@@ -179,6 +153,7 @@ html, body {
   display: none;
   justify-content: center;
   align-items: center;
+  z-index: 10000;
 }
 
 .overlay-content {
@@ -194,50 +169,56 @@ html, body {
 --------------------------------------------------------------*/
 .charts-container {
   display: flex;
-  flex-direction: column;
-  gap: 2rem; /* Jarak antar grafik */
+  flex-direction: column; /* Kelembaban di atas, lalu baris slope & rainfall */
+  gap: 2rem;
+  margin-bottom: 30px;
 }
 
 .chart-row {
   display: flex;
-  justify-content: space-between;
-  gap: 2rem; /* Jarak antar grafik kemiringan dan curah hujan */
+  justify-content: space-between; /* Slope & rainfall side-by-side on desktop */
+  gap: 2rem;
 }
 
 .chart-container {
   background-color: var(--surface-color);
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100%;
+  width: 100%; /* Default, inline styles akan menentukan jika ada (misal 50% untuk slope/rainfall di desktop) */
+  padding: 10px;
+  box-sizing: border-box;
 }
 
-canvas {
-  width: 100%;
-  height: 300px; /* Ukuran tinggi grafik */
+canvas { /* Aturan umum untuk semua canvas */
+  width: 100% !important;
+  height: 300px; /* Default height untuk desktop */
 }
 
-/* Grafik Kelembaban Tanah */
+/* Khusus untuk grafik kelembaban, bisa diberi ID jika perlu override tinggi spesifik */
 #humidityChart {
-  height: 300px;  /* Sesuaikan ukuran tinggi grafik kelembaban tanah */
+  /* Untuk desktop, bisa sama dengan default atau lebih tinggi jika diinginkan */
+   height: 350px;  /* Contoh jika ingin lebih tinggi di desktop juga */
 }
 
 
 /*--------------------------------------------------------------
 # Raw Data Table Section
 --------------------------------------------------------------*/
-.table {
+#rawDataSection .table { /* Lebih spesifik ke tabel di rawDataSection */
   width: 100%;
   margin-top: 20px;
   border-collapse: collapse;
 }
 
-th, td {
+#rawDataSection .table th,
+#rawDataSection .table td {
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
+  /* white-space: nowrap; /* Dihapus dari global, akan diterapkan spesifik di mobile */
 }
 
-th {
+#rawDataSection .table th {
   background-color: var(--accent-color);
   color: var(--contrast-color);
   font-weight: 600;
@@ -245,19 +226,19 @@ th {
   font-size: 14px;
 }
 
-td {
+#rawDataSection .table td {
   color: var(--default-color);
   font-size: 14px;
 }
 
-tr:hover {
+#rawDataSection .table tr:hover {
   background-color: rgba(0, 156, 234, 0.05);
 }
 
 /*--------------------------------------------------------------
 # Buttons Section - Excel Download Button
 --------------------------------------------------------------*/
-button {
+button { /* Aturan umum button dari CSS asli Anda */
   font-size: 1em;
   padding: 10px 15px;
   margin: 10px 5px;
@@ -267,10 +248,9 @@ button {
 }
 
 button:hover {
-  background-color: var(--accent-color);
+   background-color: var(--accent-color); /* Bootstrap akan menangani hover untuk .btn */
 }
 
-/* Specific Button Style for Download */
 .btn-primary {
   background-color: #009cea;
   color: #ffffff;
@@ -293,40 +273,115 @@ button:hover {
 
 /* Responsive Design for Mobile */
 @media (max-width: 768px) {
-  .charts-container {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  canvas {
-    width: 100% !important;
-    height: auto !important;
-  }
-
   .frame-home-page1-history-table {
-    left: 20px;
-    right: 20px;
+    left: 10px; /* Lebih ringkas untuk mobile */
+    right: 10px;
     padding: 10px;
-  }
-
-  .frame-home-page1-history-table table {
-    display: block;
-    overflow-x: auto;
-  }
-
-  .frame-home-page1-history-table th,
-  .frame-home-page1-history-table td {
-    padding: 8px 10px;
-    font-size: 12px;
+    max-height: calc(100vh - 20px); /* Sesuaikan jika perlu */
   }
 
   .frame-home-page1-history-table h2 {
     font-size: 20px;
   }
 
-  button {
-    padding: 6px 12px;
+  /* Tabel History Responsif */
+  .frame-home-page1-history-table table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .frame-home-page1-history-table th,
+  .frame-home-page1-history-table td {
+    padding: 8px 10px;
     font-size: 12px;
+    white-space: nowrap; /* Penting untuk scroll horizontal tabel history */
+    vertical-align: middle;
+  }
+
+  /* Penyesuaian Chart untuk Mobile */
+  .charts-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .chart-row {
+    flex-direction: column; /* Susun chart Kemiringan dan Curah Hujan secara vertikal */
+    gap: 20px;
+  }
+
+  .chart-row .chart-container,
+  .charts-container > .chart-container { /* Target juga container chart Kelembaban */
+    width: 100% !important; /* Paksa lebar penuh */
+  }
+
+  /* Aturan tinggi canvas umum untuk mobile */
+  canvas {
+    height: 250px !important; /* Default tinggi untuk chart lain di mobile */
+  }
+
+  /* Penyesuaian khusus untuk grafik Kelembaban Tanah di mobile */
+  #humidityChart {
+    height: 400px !important; /* Tingkatkan tinggi canvas grafik kelembaban tanah di mobile */
+                               /* Anda bisa sesuaikan nilai ini (misal 350px, 450px) */
+  }
+  
+  /* Opsi untuk legenda (jika perlu, bisa diatur juga di JS Chart.js) */
+  /*
+  .chart-container .chartjs-legend { // Target legenda Chart.js jika ada class default
+    font-size: 10px; // Perkecil font legenda
+  }
+  .chart-container .chartjs-legend ul li span { // Target kotak warna legenda
+    width: 10px !important;
+    height: 10px !important;
+    margin-right: 5px !important;
+  }
+  */
+
+
+  /* Penyesuaian Tombol dan Kontrol untuk Mobile */
+  .d-flex.align-items-center.gap-2.mb-3.flex-wrap {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .d-flex.align-items-center.gap-2.mb-3.flex-wrap .btn,
+  .d-flex.align-items-center.gap-2.mb-3.flex-wrap div {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .d-flex.align-items-center.gap-2.mb-3.flex-wrap .form-select-sm {
+    width: 100% !important;
+  }
+
+  /* Penyesuaian untuk Tabel Raw Data (Mobile) */
+  #rawDataSection .table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-collapse: collapse; /* Pastikan border tetap baik */
+  }
+
+  #rawDataSection .table th,
+  #rawDataSection .table td {
+    padding: 8px 10px;
+    font-size: 12px; /* Bisa disesuaikan, misal 13px jika terlalu kecil */
+    white-space: nowrap; /* Penting untuk scroll horizontal tabel raw data */
+    vertical-align: middle;
+  }
+
+  #rawDataSection .table thead th {
+    text-align: center; /* Pastikan header tetap di tengah */
+  }
+  
+  /* Aturan umum button dari CSS asli Anda untuk mobile */
+  button {
+    padding: 8px 12px; /* Sedikit lebih besar untuk mobile */
+    font-size: 13px;
   }
 }
 
@@ -335,21 +390,56 @@ button:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   color: white;
-  padding: 20px;
-  border-radius: 5px;
+  padding: 20px 30px;
+  border-radius: 8px;
   font-size: 18px;
   font-weight: bold;
-  display: none;
+  display: none; /* Controlled by JS */
+  z-index: 10001;
 }
 
-.loading-indicator {
+.loading-indicator { /* General class, used by loadingPage */
   text-align: center;
   font-size: 18px;
   font-weight: bold;
   padding: 20px;
 }
+
+/* Efek Loading Halaman */
+#loadingPage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+#loadingPage.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Transisi halaman masuk */
+body {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+body.loaded {
+  opacity: 1;
+}
+
+/* Menghapus duplikasi aturan .charts-container yang berpotensi konflik */
+/*
 .charts-container {
   display: flex;
   justify-content: space-between;
@@ -359,34 +449,4 @@ button:hover {
   width: 32%;
   height: 250px;
 }
-
-/* Efek Loading */
-#loadingPage {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  opacity: 1;
-  transition: opacity 0.3s ease-out;
-}
-
-#loadingPage.hidden {
-  opacity: 0;
-  pointer-events: none; /* Menonaktifkan interaksi saat loading */
-}
-
-/* Transisi halaman masuk */
-body {
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-}
-
-body.loaded {
-  opacity: 1;
-}
+*/

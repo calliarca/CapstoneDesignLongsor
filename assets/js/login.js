@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     sessionStorage.setItem("account_type", data.account_type); // Simpan account_type
 
                     if (data.account_type === "admin") {
-                        window.location.href = "home-admin";
+                        window.location.href = "../home_admin";
                     } else if (data.account_type === "user") {
                         window.location.href = "home-user";
                     } else {

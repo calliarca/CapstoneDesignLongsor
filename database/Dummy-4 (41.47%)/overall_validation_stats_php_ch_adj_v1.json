@@ -1,0 +1,62 @@
+[
+  {
+    "trial": 1,
+    "status_trial": "COMPLETED",
+    "deskripsi": "KmrRendah_HujanRingan",
+    "file": "data_simulasi_5_trial_target_75_valid_v2\\data_simulasi_trial_1.json",
+    "derajatKemiringanInput": 10,
+    "curahHujanInput": 5,
+    "total_raw_data": 3600,
+    "total_valid_data_server": 1210,
+    "total_skipped_data_server": 2390,
+    "persentase_valid_server": 33.61
+  },
+  {
+    "trial": 2,
+    "status_trial": "COMPLETED",
+    "deskripsi": "KmrSedang_HujanTinggi",
+    "file": "data_simulasi_5_trial_target_75_valid_v2\\data_simulasi_trial_2.json",
+    "derajatKemiringanInput": 20,
+    "curahHujanInput": 18,
+    "total_raw_data": 3600,
+    "total_valid_data_server": 2832,
+    "total_skipped_data_server": 768,
+    "persentase_valid_server": 78.67
+  },
+  {
+    "trial": 3,
+    "status_trial": "COMPLETED",
+    "deskripsi": "KmrTinggi_HujanSangatRingan",
+    "file": "data_simulasi_5_trial_target_75_valid_v2\\data_simulasi_trial_3.json",
+    "derajatKemiringanInput": 35,
+    "curahHujanInput": 2,
+    "total_raw_data": 3600,
+    "total_valid_data_server": 392,
+    "total_skipped_data_server": 3208,
+    "persentase_valid_server": 10.89
+  },
+  {
+    "trial": 4,
+    "status_trial": "COMPLETED",
+    "deskripsi": "KmrSangatRendah_TanpaHujan",
+    "file": "data_simulasi_5_trial_target_75_valid_v2\\data_simulasi_trial_4.json",
+    "derajatKemiringanInput": 5,
+    "curahHujanInput": 0,
+    "total_raw_data": 3600,
+    "total_valid_data_server": 282,
+    "total_skipped_data_server": 3318,
+    "persentase_valid_server": 7.83
+  },
+  {
+    "trial": 5,
+    "status_trial": "COMPLETED",
+    "deskripsi": "KmrSangatTinggi_HujanSedang",
+    "file": "data_simulasi_5_trial_target_75_valid_v2\\data_simulasi_trial_5.json",
+    "derajatKemiringanInput": 40,
+    "curahHujanInput": 12,
+    "total_raw_data": 3600,
+    "total_valid_data_server": 2748,
+    "total_skipped_data_server": 852,
+    "persentase_valid_server": 76.33
+  }
+]

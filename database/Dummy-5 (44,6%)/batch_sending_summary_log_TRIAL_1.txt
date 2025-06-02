@@ -1,0 +1,742 @@
+Log Pengiriman Batch - Trial #1 - 2025-05-29 04:54:05
+File Data: data_simulasi_5_trial_range_err_only_v1\data_simulasi_trial_1.json
+URL Target: http://localhost/Capstonedesignlongsor_Reorganized/backend/php/save_simulation_batch.php
+Total batch yang akan dikirim: 120
+Nama Simulasi (dari file): Simulasi 1
+Input Kemiringan (dari file): 10.0
+Input Curah Hujan (dari file): 5.0
+--------------------------------------------------
+
+--- Batch #1 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:00:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "22 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 8.", "processed": 30, "saved": 22, "skipped_total": 8}
+
+--- Batch #2 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:00:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "20 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 10.", "processed": 30, "saved": 20, "skipped_total": 10}
+
+--- Batch #3 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:01:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "19 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 11.", "processed": 30, "saved": 19, "skipped_total": 11}
+
+--- Batch #4 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:01:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "20 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 10.", "processed": 30, "saved": 20, "skipped_total": 10}
+
+--- Batch #5 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:02:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "24 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 6.", "processed": 30, "saved": 24, "skipped_total": 6}
+
+--- Batch #6 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:02:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "21 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 9.", "processed": 30, "saved": 21, "skipped_total": 9}
+
+--- Batch #7 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:03:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "18 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 12.", "processed": 30, "saved": 18, "skipped_total": 12}
+
+--- Batch #8 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:03:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "19 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 11.", "processed": 30, "saved": 19, "skipped_total": 11}
+
+--- Batch #9 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:04:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "25 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 5.", "processed": 30, "saved": 25, "skipped_total": 5}
+
+--- Batch #10 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:04:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "22 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 8.", "processed": 30, "saved": 22, "skipped_total": 8}
+
+--- Batch #11 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:05:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "23 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 7.", "processed": 30, "saved": 23, "skipped_total": 7}
+
+--- Batch #12 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:05:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "24 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 6.", "processed": 30, "saved": 24, "skipped_total": 6}
+
+--- Batch #13 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:06:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "23 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 7.", "processed": 30, "saved": 23, "skipped_total": 7}
+
+--- Batch #14 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:06:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "17 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 13.", "processed": 30, "saved": 17, "skipped_total": 13}
+
+--- Batch #15 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:07:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "20 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 10.", "processed": 30, "saved": 20, "skipped_total": 10}
+
+--- Batch #16 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:07:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "22 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 8.", "processed": 30, "saved": 22, "skipped_total": 8}
+
+--- Batch #17 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:08:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "25 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 5.", "processed": 30, "saved": 25, "skipped_total": 5}
+
+--- Batch #18 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:08:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "24 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 6.", "processed": 30, "saved": 24, "skipped_total": 6}
+
+--- Batch #19 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:09:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "25 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 5.", "processed": 30, "saved": 25, "skipped_total": 5}
+
+--- Batch #20 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:09:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "21 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 9.", "processed": 30, "saved": 21, "skipped_total": 9}
+
+--- Batch #21 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:10:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "18 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 12.", "processed": 30, "saved": 18, "skipped_total": 12}
+
+--- Batch #22 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:10:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "21 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 9.", "processed": 30, "saved": 21, "skipped_total": 9}
+
+--- Batch #23 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:11:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "23 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 7.", "processed": 30, "saved": 23, "skipped_total": 7}
+
+--- Batch #24 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:11:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "24 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 6.", "processed": 30, "saved": 24, "skipped_total": 6}
+
+--- Batch #25 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:12:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "23 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 7.", "processed": 30, "saved": 23, "skipped_total": 7}
+
+--- Batch #26 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:12:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "24 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 6.", "processed": 30, "saved": 24, "skipped_total": 6}
+
+--- Batch #27 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:13:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "19 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 11.", "processed": 30, "saved": 19, "skipped_total": 11}
+
+--- Batch #28 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:13:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "23 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 7.", "processed": 30, "saved": 23, "skipped_total": 7}
+
+--- Batch #29 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:14:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "23 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 7.", "processed": 30, "saved": 23, "skipped_total": 7}
+
+--- Batch #30 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:14:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "25 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 5.", "processed": 30, "saved": 25, "skipped_total": 5}
+
+--- Batch #31 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:15:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "24 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 6.", "processed": 30, "saved": 24, "skipped_total": 6}
+
+--- Batch #32 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:15:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "20 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 10.", "processed": 30, "saved": 20, "skipped_total": 10}
+
+--- Batch #33 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:16:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "19 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 11.", "processed": 30, "saved": 19, "skipped_total": 11}
+
+--- Batch #34 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:16:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "22 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 8.", "processed": 30, "saved": 22, "skipped_total": 8}
+
+--- Batch #35 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:17:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "22 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 8.", "processed": 30, "saved": 22, "skipped_total": 8}
+
+--- Batch #36 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:17:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "21 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 9.", "processed": 30, "saved": 21, "skipped_total": 9}
+
+--- Batch #37 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:18:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "21 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 9.", "processed": 30, "saved": 21, "skipped_total": 9}
+
+--- Batch #38 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:18:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "23 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 7.", "processed": 30, "saved": 23, "skipped_total": 7}
+
+--- Batch #39 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:19:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "20 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 10.", "processed": 30, "saved": 20, "skipped_total": 10}
+
+--- Batch #40 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:19:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "23 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 7.", "processed": 30, "saved": 23, "skipped_total": 7}
+
+--- Batch #41 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:20:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "20 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 10.", "processed": 30, "saved": 20, "skipped_total": 10}
+
+--- Batch #42 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:20:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "22 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 8.", "processed": 30, "saved": 22, "skipped_total": 8}
+
+--- Batch #43 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:21:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "26 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 4.", "processed": 30, "saved": 26, "skipped_total": 4}
+
+--- Batch #44 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:21:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "26 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 4.", "processed": 30, "saved": 26, "skipped_total": 4}
+
+--- Batch #45 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:22:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "21 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 9.", "processed": 30, "saved": 21, "skipped_total": 9}
+
+--- Batch #46 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:22:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "20 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 10.", "processed": 30, "saved": 20, "skipped_total": 10}
+
+--- Batch #47 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:23:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "25 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 5.", "processed": 30, "saved": 25, "skipped_total": 5}
+
+--- Batch #48 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:23:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #49 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:24:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #50 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:24:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "1 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 29.", "processed": 30, "saved": 1, "skipped_total": 29}
+
+--- Batch #51 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:25:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "13 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 17.", "processed": 30, "saved": 13, "skipped_total": 17}
+
+--- Batch #52 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:25:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "1 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 29.", "processed": 30, "saved": 1, "skipped_total": 29}
+
+--- Batch #53 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:26:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "3 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 27.", "processed": 30, "saved": 3, "skipped_total": 27}
+
+--- Batch #54 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:26:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #55 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:27:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #56 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:27:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #57 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:28:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #58 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:28:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #59 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:29:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #60 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:29:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #61 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:30:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #62 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:30:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "9 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 21.", "processed": 30, "saved": 9, "skipped_total": 21}
+
+--- Batch #63 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:31:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #64 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:31:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #65 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:32:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #66 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:32:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #67 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:33:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #68 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:33:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #69 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:34:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #70 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:34:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #71 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:35:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #72 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:35:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #73 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:36:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #74 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:36:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #75 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:37:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #76 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:37:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #77 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:38:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #78 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:38:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #79 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:39:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #80 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:39:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #81 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:40:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #82 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:40:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #83 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:41:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #84 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:41:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #85 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:42:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #86 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:42:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #87 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:43:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #88 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:43:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #89 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:44:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #90 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:44:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #91 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:45:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #92 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:45:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #93 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:46:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #94 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:46:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #95 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:47:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #96 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:47:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #97 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:48:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #98 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:48:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #99 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:49:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #100 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:49:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #101 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:50:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #102 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:50:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #103 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:51:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #104 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:51:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #105 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:52:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #106 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:52:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #107 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:53:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #108 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:53:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #109 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:54:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #110 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:54:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #111 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:55:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #112 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:55:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #113 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:56:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #114 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:56:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #115 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:57:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #116 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:57:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #117 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:58:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #118 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:58:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #119 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:59:00Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+--- Batch #120 dari 120 (Trial 1) ---
+  Jumlah Data Points di Batch ini: 30
+  Timestamp Data Point Pertama: 2025-07-16T11:59:30Z
+  Status Code Server: 200
+  Respons Server (JSON): {"status": "success", "message": "0 dari 30 data points berhasil disimpan untuk simulasi 'Simulasi 1'. Total dilewati (duplikat/validasi): 30.", "processed": 30, "saved": 0, "skipped_total": 30}
+
+
+--- RINGKASAN UNTUK TRIAL INI ---
+Total Data Points Seharusnya (dari file JSON): 3600
+Total Batch di File Sumber: 120
+Total Batch Gagal Terkirim (Network/Timeout/HTTP Error dari requests): 0
+Total Batch dengan Respons Error dari PHP (Struktur Salah/DB Error/PHP Internal Error): 0
+----------------------------------
+Total Data Points (berdasarkan respons server untuk trial ini):
+  - Diproses oleh Server: 3600
+  - Berhasil Disimpan (Data Valid menurut Server): 1059
+  - Dilewati (Validasi/Duplikat oleh PHP): 2541
+  - Error Database (berdasarkan 'db_errors_details' pada respons): 0
+--------------------------------------------------
