@@ -30,15 +30,16 @@ let batchSaveIntervalId = null;   // ID interval untuk mengirim batch data
 const COLLECT_INTERVAL_MS = 1000;    // Kumpulkan data setiap 1 detik
 const BATCH_SAVE_INTERVAL_MS = 30000; // Kirim batch ke server setiap 30 detik
 
+// --- Variabel untuk Polling Pergerakan ---
+let pergerakanPollingIntervalId = null;
+const PERGERAKAN_POLLING_INTERVAL_MS = 2000; // Cek status pergerakan setiap 2 detik
 
 // --- PENGATURAN CHANNEL ID & FIELD UNTUK API POLLING ---
 const CHANNEL_ID_KELEMBABAN_API = "2843704";
 const READ_API_KEY_KELEMBABAN = "ZVBZD7YQNNEJR1U1";
-
 const CHANNEL_ID_KEMIRINGAN_API = "2889619";
 const READ_API_KEY_KEMIRINGAN = "VHCFV8DETRRXRGCN";
 const KEMIRINGAN_FIELD_NUMBER_API = '2';
-
 const CHANNEL_ID_CURAH_HUJAN_API = "2972562";
 const READ_API_KEY_CURAHHUJAN = "46I76YZ62FSW76YF";
 const CURAH_HUJAN_FIELD_NUMBER_API = '1';
@@ -89,7 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("[Simulasi] Mode simulasi dihentikan via toggle.");
         alert("Simulasi dihentikan."); // ALERT SAAT SIMULASI BERHENTI
         stopApiPolling(); 
-        
+        stopPergerakanPolling();
+
         console.log("[Simulasi] Menghentikan interval pengumpulan dan pengiriman batch data.");
         if (collectDataIntervalId) {
             clearInterval(collectDataIntervalId);
@@ -172,7 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(`Simulasi "${simulationName}" dimulai!`); // ALERT SAAT SIMULASI DIMULAI
             if (simulationText) simulationText.textContent = simulationName; 
             
-            startApiPolling(); 
+            startApiPolling();
+            startPergerakanPolling(); 
 
             if (collectDataIntervalId) clearInterval(collectDataIntervalId);
             if (batchSaveIntervalId) clearInterval(batchSaveIntervalId);
@@ -926,3 +929,44 @@ document.querySelectorAll('.sensor-point').forEach(sensor => {
     console.log(`Detail Sensor ${sensorId}\nNilai saat ini: ${currentValue}`);
   });
 });
+
+// --- Fungsi untuk memeriksa status pergerakan ---
+function checkPergerakanStatus() {
+    if (!currentActiveSimulationName) {
+        stopPergerakanPolling();
+        return;
+    }
+
+    fetch(`../backend/php/check_pergerakan_status.php?simulationName=${encodeURIComponent(currentActiveSimulationName)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.pergerakan_terdeteksi === 1) {
+                console.log('[Pergerakan] Pergerakan terdeteksi dari database!');
+                stopPergerakanPolling();
+
+                alert('⚠ PERGERAKAN TANAH TERDETEKSI! Simulasi akan dihentikan secara otomatis.');
+
+                if (toggleSimulation) {
+                    toggleSimulation.checked = false;
+                    toggleSimulation.dispatchEvent(new Event('change'));
+                }
+            }
+        })
+        .catch(error => {
+            console.error('[Pergerakan] Error saat memeriksa status pergerakan:', error);
+        });
+}
+
+function startPergerakanPolling() {
+    stopPergerakanPolling();
+    console.log('[Pergerakan] Memulai polling status pergerakan.');
+    pergerakanPollingIntervalId = setInterval(checkPergerakanStatus, PERGERAKAN_POLLING_INTERVAL_MS);
+}
+
+function stopPergerakanPolling() {
+    if (pergerakanPollingIntervalId) {
+        clearInterval(pergerakanPollingIntervalId);
+        pergerakanPollingIntervalId = null;
+        console.log('[Pergerakan] Polling status pergerakan dihentikan.');
+    }
+}

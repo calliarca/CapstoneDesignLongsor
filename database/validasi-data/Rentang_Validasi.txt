@@ -1,0 +1,35 @@
+
+// Rentang Nilai Valid
+define("MIN_KELEMBABAN", 0);
+define("MAX_KELEMBABAN", 100);
+define("MIN_KEMIRINGAN_INPUT", 0);
+define("MAX_KEMIRINGAN_INPUT", 45);
+define("MIN_KEMIRINGAN_OUTPUT", 0);
+define("MAX_KEMIRINGAN_OUTPUT", 45);
+define("MIN_CURAH_HUJAN_INPUT", 0);
+define("MAX_CURAH_HUJAN_INPUT", 20);
+
+// Threshold Outlier
+define("OUTLIER_KEMIRINGAN_DEVIATION", 10); // Derajat, deviasi antara input dan output
+define("OUTLIER_CURAHHUJAN_DEVIATION", 15); // mm, deviasi antara input dan output
+define("OUTLIER_KELEMBABAN_DEVIATION_PERCENT", 30); // Persen, deviasi dari rata-rata kelembapan lain
+// --- AKHIR KONFIGURASI ---
+
+
+// Rentang Nilai Valid 
+define("MIN_KELEMBABAN_DP", 0);
+define("MAX_KELEMBABAN_DP", 100);
+define("MIN_KEMIRINGAN_INPUT_BATCH", 0);
+define("MAX_KEMIRINGAN_INPUT_BATCH", 45);
+define("MIN_KEMIRINGAN_OUTPUT_DP", 0);
+define("MAX_KEMIRINGAN_OUTPUT_DP", 45);
+define("MIN_CURAH_HUJAN_INPUT_BATCH", 0);
+define("MAX_CURAH_HUJAN_INPUT_BATCH", 200);
+define("MIN_CURAH_HUJAN_OUTPUT_DP", 0);
+define("MAX_CURAH_HUJAN_OUTPUT_DP", 200);
+
+// Threshold Outlier
+define("OUTLIER_KEMIRINGAN_DEVIATION_DP", 10); // Derajat
+define("OUTLIER_CURAHHUJAN_DEVIATION_DP", 50); // mm
+define("OUTLIER_KELEMBABAN_DEVIATION_PERCENT_DP", 30); // Persen
+// --- AKHIR KONFIGURASI ---
