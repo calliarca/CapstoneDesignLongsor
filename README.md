@@ -13,43 +13,6 @@ A smart landslide simulator system developed for **research and educational purp
 
 ---
 
-## 🗂️ Project Structure
-CAPSTONE/
-├── arduino/ # Arduino sketches for ESP32
-│ ├── esp32_canmv/ # CANMV module (e.g. for image processing)
-│ ├── KelembapanMQTT/ # Soil moisture sensor logic via MQTT
-│ └── KemiringanMQTT/ # Inclination (tilt) sensor via MQTT
-│
-├── assets/ # Frontend resources
-│ ├── css/ # Stylesheets
-│ ├── img/ # Images
-│ ├── js/ # JavaScript logic
-│ └── vendor/ # Third-party frontend libraries
-│
-├── backend/ # Server-side logic
-│ ├── cron/ # Scheduled scripts (e.g., fetch from MQTT)
-│ ├── forms/ # User form handlers
-│ └── php/ # Other backend PHP logic (e.g., simulation control)
-│
-├── database/ # Database connection and scripts
-│
-├── public/ # Main public-facing HTML pages
-│ ├── index.html # Landing page
-│ ├── login.html # User login
-│ ├── home-user.html # User dashboard (real-time data)
-│ ├── home-admin.html # Admin dashboard
-│ ├── history.html # Simulation history logs
-│ ├── lihat-data.html # Raw data view
-│ ├── setting.html # Change MQTT/ThingSpeak channel settings
-│ ├── add-user.html # Admin user management
-│ ├── 404.html # Error page
-│ └── .htaccess # Apache routing configuration
-│
-├── composer.json # (Optional) PHP dependency file
-
-
----
-
 ## ⚙️ Key Components
 
 ### 🧠 Hardware
