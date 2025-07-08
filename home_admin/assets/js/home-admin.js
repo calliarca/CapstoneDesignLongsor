@@ -11,6 +11,8 @@ let currentKelembabanTanah4 = 0;
 let currentKelembabanTanah5 = 0;
 let currentKelembabanTanah6 = 0;
 let currentOutputKemiringan = 0; // Data sensor kemiringan aktual (dari device/polling)
+let currentOutputYaw = 0;      // <-- TAMBAHKAN INI
+let currentOutputRoll = 0;     // <-- TAMBAHKAN INI
 let currentOutputCurahHujan = 0;  // Data sensor curah hujan aktual (dari device/polling)
 
 // Inisialisasi globalGyroData untuk three_scene.js
@@ -30,16 +32,17 @@ let batchSaveIntervalId = null;   // ID interval untuk mengirim batch data
 const COLLECT_INTERVAL_MS = 1000;    // Kumpulkan data setiap 1 detik
 const BATCH_SAVE_INTERVAL_MS = 30000; // Kirim batch ke server setiap 30 detik
 
-// --- Variabel untuk Polling Pergerakan ---
-let pergerakanPollingIntervalId = null;
-const PERGERAKAN_POLLING_INTERVAL_MS = 2000; // Cek status pergerakan setiap 2 detik
+// Variabel untuk menampung konfigurasi dari file JSON
+let channelConfig = {};
 
-// --- PENGATURAN CHANNEL ID & FIELD UNTUK API POLLING ---
-const CHANNEL_ID_KELEMBABAN_API = "2843704";
+// --- PERUBAHAN: API Key & Fields masih di sini untuk sementara ---
+// Anda bisa memindahkannya ke channel_config.json nanti
 const READ_API_KEY_KELEMBABAN = "ZVBZD7YQNNEJR1U1";
-const CHANNEL_ID_KEMIRINGAN_API = "2889619";
 const READ_API_KEY_KEMIRINGAN = "VHCFV8DETRRXRGCN";
-const KEMIRINGAN_FIELD_NUMBER_API = '2';
+const KEMIRINGAN_FIELD_PITCH = '2'; // Pitch (Kemiringan)
+const KEMIRINGAN_FIELD_YAW = '3';   // Yaw
+const KEMIRINGAN_FIELD_ROLL = '4';  // Roll
+
 const CHANNEL_ID_CURAH_HUJAN_API = "2972562";
 const READ_API_KEY_CURAHHUJAN = "46I76YZ62FSW76YF";
 const CURAH_HUJAN_FIELD_NUMBER_API = '1';
@@ -90,8 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("[Simulasi] Mode simulasi dihentikan via toggle.");
         alert("Simulasi dihentikan."); // ALERT SAAT SIMULASI BERHENTI
         stopApiPolling(); 
-        stopPergerakanPolling();
-
+        
         console.log("[Simulasi] Menghentikan interval pengumpulan dan pengiriman batch data.");
         if (collectDataIntervalId) {
             clearInterval(collectDataIntervalId);
@@ -174,8 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(`Simulasi "${simulationName}" dimulai!`); // ALERT SAAT SIMULASI DIMULAI
             if (simulationText) simulationText.textContent = simulationName; 
             
-            startApiPolling();
-            startPergerakanPolling(); 
+            startApiPolling(); 
 
             if (collectDataIntervalId) clearInterval(collectDataIntervalId);
             if (batchSaveIntervalId) clearInterval(batchSaveIntervalId);
@@ -264,6 +265,19 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+document.addEventListener('DOMContentLoaded', async () => {
+    // Memuat konfigurasi channel dari JSON saat halaman dimuat
+    try {
+        const response = await fetch('../backend/assets/js/channel_config.json');
+        if (!response.ok) throw new Error(`Gagal memuat channel_config.json`);
+        channelConfig = await response.json();
+        console.log("[Config] Konfigurasi channel berhasil dimuat:", channelConfig);
+    } catch (error) {
+        console.error("[Config] Error saat memuat file konfigurasi channel:", error);
+        alert(`Gagal memuat file konfigurasi channel. Fitur pengambilan data sensor tidak akan berfungsi.`);
+    }
+    });
+
 document.addEventListener('wheel', function (event) {
   if (event.ctrlKey) event.preventDefault();
 }, { passive: false });
@@ -283,7 +297,7 @@ function navigateTo(page) {
         if (data.status === "success") {
           console.log('Anda telah logout.');
           alert('Anda telah berhasil logout.');
-          sessionStorage.clear(); localStorage.clear(); window.location.href = '../public/login';
+          sessionStorage.clear(); localStorage.clear(); window.location.href = '../public/login.html';
         } else {
             console.error('Logout gagal. Silakan coba lagi.');
             alert('Logout gagal. Silakan coba lagi.');
@@ -466,7 +480,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(data => {
       console.log("Check Session Response:", data);
       if (data.status !== "success" || !data.session_data) {
-        console.error("Sesi tidak valid, kembali ke login."); window.location.href = "login";
+        console.error("Sesi tidak valid, kembali ke login."); window.location.href = "../public/login.html";
       } else {
         console.log("Sesi valid:", data);
         let userNameElement = document.getElementById("user-name");
@@ -474,7 +488,7 @@ document.addEventListener("DOMContentLoaded", function () {
         else console.warn("#user-name tidak ditemukan atau nama tidak ada di data sesi!");
       }
     })
-    .catch(error => { console.error("Gagal memeriksa session:", error); window.location.href = "login"; });
+    .catch(error => { console.error("Gagal memeriksa session:", error); window.location.href = "../public/login.html"; });
 
   fetch("../backend/php/get_name.php").then(response => response.json())
     .then(data => {
@@ -494,88 +508,69 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-function extractYouTubeVideoId(url) {
-    if (!url) return null;
-    const regexes = [
-        /youtu\.be\/([a-zA-Z0-9_-]{11})/, 
-        /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/, 
-        /youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/, 
-        /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/, 
-        /youtube\.com\/live\/([a-zA-Z0-9_-]{11})/, 
-        /googleusercontent\.com\/youtube\.com\/\d+\/([a-zA-Z0-9_-]{11})/ 
-    ];
-    for (const regex of regexes) {
-        const match = url.match(regex);
-        if (match && match[1]) {
-            return match[1];
-        }
-    }
-    return null;
-}
 
+// ⭐ --- PERUBAHAN UTAMA UNTUK KAMERA --- ⭐
+/**
+ * Membuka popup kamera dan memuat stream dari URL di file konfigurasi.
+ * Fungsi ini sekarang mengambil URL dari `backend/assets/js/camera_config.json`
+ * dan langsung menggunakannya tanpa validasi format yang rumit.
+ */
 function openCameraPopup() {
-  fetch('../assets/js/camera_config.json')
-    .then(response => { if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`); return response.json(); })
-    .then(data => {
-      const cameraStreamUrl = data.camera_stream_url;
+  // 1. Path diubah ke direktori backend
+  fetch('../backend/assets/js/camera_config.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Gagal memuat camera_config.json (Status: ${response.status})`);
+      }
+      return response.json();
+    })
+    .then(config => {
+      // 2. Ambil URL langsung dari file JSON
+      const cameraStreamUrl = config.camera_stream_url;
       const iframeElement = document.getElementById('esp32-camera-stream');
       const errorMessage = document.getElementById('camera-error-message');
       
       if (!iframeElement || !errorMessage) { 
-          console.error("Elemen popup kamera (iframe/error message) tidak ditemukan."); return; 
+          console.error("Elemen popup kamera (iframe/error message) tidak ditemukan.");
+          return; 
       }
       
+      // Reset tampilan
       errorMessage.style.display = 'none'; 
       iframeElement.src = 'about:blank'; 
 
-      if (!cameraStreamUrl) {
-        errorMessage.textContent = 'URL stream kamera tidak dikonfigurasi.'; 
+      // 3. Logika disederhanakan: Cek jika URL ada, lalu langsung gunakan
+      if (cameraStreamUrl && cameraStreamUrl.trim() !== '') {
+        console.log(`[Camera] Memuat URL dari konfigurasi: ${cameraStreamUrl}`);
+        iframeElement.src = cameraStreamUrl;
+      } else {
+        // Tampilkan pesan error jika URL kosong atau tidak ada di JSON
+        errorMessage.textContent = 'URL stream kamera tidak ditemukan di file konfigurasi.'; 
         errorMessage.style.display = 'block'; 
-        if (document.querySelector('.camera-popup')) document.querySelector('.camera-popup').style.display = 'block';
-        if (document.querySelector('.camera-popup-overlay')) document.querySelector('.camera-popup-overlay').style.display = 'block';
-        return;
+        console.warn('[Camera] Kunci "camera_stream_url" tidak ada atau kosong di camera_config.json.');
       }
 
-      let finalUrl = 'about:blank';
-      const videoId = extractYouTubeVideoId(cameraStreamUrl);
-
-      if (videoId) {
-          finalUrl = `https://t0.gstatic.com/faviconV2?url=https://www.youtube.com/&client=BARD&type=FAVICON&size=256&fallback_opts=TYPE,SIZE,URL5{videoId}`; 
-          console.log(`[Camera] YouTube video ID terdeteksi: ${videoId}. URL embed: ${finalUrl}`);
-      } else if (cameraStreamUrl.startsWith("http://") || cameraStreamUrl.startsWith("https://")) {
-          finalUrl = cameraStreamUrl;
-          console.log(`[Camera] URL stream langsung: ${finalUrl}`);
-      } else {
-          errorMessage.textContent = 'Format URL kamera tidak valid atau tidak didukung.';
-          errorMessage.style.display = 'block';
-          console.warn(`[Camera] URL tidak valid atau tidak didukung: ${cameraStreamUrl}`);
-      }
-      
-      if (finalUrl !== 'about:blank') {
-        iframeElement.src = finalUrl;
-      } else {
-         if (errorMessage.style.display === 'none') { 
-            errorMessage.textContent = 'URL stream kamera tidak dapat diproses.';
-            errorMessage.style.display = 'block';
-         }
-      }
-
+      // Tampilkan popup
       if (document.querySelector('.camera-popup')) document.querySelector('.camera-popup').style.display = 'block';
       if (document.querySelector('.camera-popup-overlay')) document.querySelector('.camera-popup-overlay').style.display = 'block';
     })
     .catch(error => {
-      console.error('Error fetching camera_config.json:', error);
+      // Menangani error jika file JSON tidak ditemukan atau tidak valid
+      console.error('Error saat memuat atau memproses camera_config.json:', error);
       const errorMessage = document.getElementById('camera-error-message');
-      if(errorMessage){ 
-          errorMessage.textContent = 'Gagal mengambil konfigurasi kamera. Pastikan file camera_config.json ada dan valid.'; 
+      if (errorMessage) { 
+          errorMessage.textContent = 'Gagal mengambil konfigurasi kamera. Pastikan file ada dan format JSON-nya benar.'; 
           errorMessage.style.display = 'block';
       }
+      // Tetap tampilkan popup agar pengguna tahu ada masalah
       if (document.querySelector('.camera-popup')) document.querySelector('.camera-popup').style.display = 'block';
       if (document.querySelector('.camera-popup-overlay')) document.querySelector('.camera-popup-overlay').style.display = 'block';
       const iframeElement = document.getElementById('esp32-camera-stream');
-      if(iframeElement) iframeElement.src = 'about:blank';
+      if (iframeElement) iframeElement.src = 'about:blank';
     });
 }
+
+// Pastikan event listener untuk tombol kamera tetap ada
 const openCamBtn = document.getElementById('open-camera-popup-btn');
 if(openCamBtn) openCamBtn.addEventListener('click', openCameraPopup);
 
@@ -586,7 +581,7 @@ if(closeCamBtn) closeCamBtn.addEventListener('click', function () {
   if (camOverlay) camOverlay.style.display = 'none';
   if (camPopup) camPopup.style.display = 'none';
   const iframeElement = document.getElementById('esp32-camera-stream');
-  if (iframeElement) iframeElement.src = 'about:blank'; 
+  if (iframeElement) iframeElement.src = 'about:blank'; // Hentikan stream saat ditutup
 });
 
 function processAndDisplaySensorData(data) {
@@ -600,16 +595,24 @@ function processAndDisplaySensorData(data) {
       currentKelembabanTanah6 = parseFloat(data.kelembaban.sensor6) || currentKelembabanTanah6 || 0;
     }
     currentOutputKemiringan = parseFloat(data.kemiringan) || currentOutputKemiringan || 0;
+    currentOutputYaw = parseFloat(data.yaw) || currentOutputYaw || 0;       // <-- GUNAKAN data.yaw
+    currentOutputRoll = parseFloat(data.roll) || currentOutputRoll || 0;     // <-- GUNAKAN data.roll
+    // Perbarui objek globalGyroData secara lengkap
     if (window.globalGyroData) { 
-        window.globalGyroData.x = currentOutputKemiringan * (Math.PI / 180); 
+        window.globalGyroData.x = currentOutputKemiringan * (Math.PI / 180); // Pitch
+        window.globalGyroData.y = currentOutputYaw * (Math.PI / 180);      // Yaw  <-- TAMBAHAN
+        window.globalGyroData.z = currentOutputRoll * (Math.PI / 180);     // Roll <-- TAMBAHAN
     }
     currentOutputCurahHujan = parseFloat(data.curahHujan) || currentOutputCurahHujan || 0;
     
     // Penambahan yang disarankan threejs di home-admin.js
+    // Modifikasi objek ini untuk MENAMBAHKAN yaw dan roll
     window.dataFromThingSpeak = {
-        kemiringan: currentOutputKemiringan,
+        kemiringan: currentOutputKemiringan, // Ini tetap ada sesuai permintaan Anda
+        yaw: currentOutputYaw,               // <-- TAMBAHAN
+        roll: currentOutputRoll,             // <-- TAMBAHAN
         curahHujan: currentOutputCurahHujan,
-        newData: true 
+        newData: true
     };
 
     const sensorsForUI = data.kelembaban || { 
@@ -646,17 +649,26 @@ function processAndDisplaySensorData(data) {
 }
 
 function fetchDataForAllSensors() {
+    // Pastikan konfigurasi sudah dimuat
+    if (!channelConfig.humidity_channel_id || !channelConfig.slope_channel_id) {
+        console.error("[API Polling] ID Channel tidak ditemukan di konfigurasi. Polling dibatalkan.");
+        processAndDisplaySensorData({ status: 'error', message: 'ID Channel tidak lengkap.' });
+        return;
+    }
+
     const currentTime = new Date().getTime();
 
-    const fetchKelembaban = fetch(`https://api.thingspeak.com/channels/${CHANNEL_ID_KELEMBABAN_API}/feeds.json?results=1&api_key=${READ_API_KEY_KELEMBABAN}`)
+   // Fetch untuk Kelembaban
+    const fetchKelembaban = fetch(`https://api.thingspeak.com/channels/${channelConfig.humidity_channel_id}/feeds.json?results=1&api_key=${READ_API_KEY_KELEMBABAN}`)
         .then(response => {
-            if (!response.ok) throw new Error(`HTTP error Kelembaban! status: ${response.status} - ${response.statusText}`);
+            if (!response.ok) throw new Error(`HTTP error Kelembaban! status: ${response.status}`);
             return response.json();
         });
 
-    const fetchKemiringan = fetch(`https://api.thingspeak.com/channels/${CHANNEL_ID_KEMIRINGAN_API}/fields/${KEMIRINGAN_FIELD_NUMBER_API}.json?results=1&api_key=${READ_API_KEY_KEMIRINGAN}`)
+    // Fetch untuk Kemiringan (Pitch, Yaw, Roll)
+    const fetchKemiringan = fetch(`https://api.thingspeak.com/channels/${channelConfig.slope_channel_id}/feeds.json?results=1&api_key=${READ_API_KEY_KEMIRINGAN}`)
         .then(response => {
-            if (!response.ok) throw new Error(`HTTP error Kemiringan! status: ${response.status} - ${response.statusText}`);
+            if (!response.ok) throw new Error(`HTTP error Kemiringan! status: ${response.status}`);
             return response.json();
         });
 
@@ -673,53 +685,34 @@ function fetchDataForAllSensors() {
                 sensor4: null, sensor5: null, sensor6: null
             };
             let kemiringanValue = null;
+            let yawValue = null;         // <-- TAMBAHKAN
+            let rollValue = null;        // <-- TAMBAHKAN
             let curahHujanValue = null;
             let latestValidTimestamp = null;
 
+           // Proses data kelembaban (sama seperti sebelumnya)
             if (dataKelembaban.feeds && dataKelembaban.feeds.length > 0) {
                 const feed = dataKelembaban.feeds[0];
-                const dataTimestamp = Date.parse(feed.created_at);
-                if (currentTime - dataTimestamp <= MAX_DATA_AGE_MS) {
-                    kelembabanFields = {
-                        sensor1: feed.field1, sensor2: feed.field2, sensor3: feed.field3,
-                        sensor4: feed.field4, sensor5: feed.field5, sensor6: feed.field6
-                    };
+                if (currentTime - Date.parse(feed.created_at) <= MAX_DATA_AGE_MS) {
+                    kelembabanFields = { sensor1: feed.field1, sensor2: feed.field2, sensor3: feed.field3, sensor4: feed.field4, sensor5: feed.field5, sensor6: feed.field6 };
                     latestValidTimestamp = feed.created_at;
-                    console.log("[API Polling] Data kelembaban diterima dan valid.");
-                } else {
-                    console.log(`[API Polling] Data kelembaban basi (timestamp: ${feed.created_at}). Tidak digunakan.`); 
                 }
-            } else {
-                 console.log(`[API Polling] Tidak ada feeds data kelembaban.`); 
             }
 
+            // Proses data kemiringan
             if (dataKemiringan.feeds && dataKemiringan.feeds.length > 0) {
                 const feed = dataKemiringan.feeds[0];
-                const dataTimestamp = Date.parse(feed.created_at);
-                if (currentTime - dataTimestamp <= MAX_DATA_AGE_MS) {
-                    kemiringanValue = feed[`field${KEMIRINGAN_FIELD_NUMBER_API}`];
+                if (currentTime - Date.parse(feed.created_at) <= MAX_DATA_AGE_MS) {
+                    kemiringanValue = feed[`field${KEMIRINGAN_FIELD_PITCH}`];
+                    yawValue = feed[`field${KEMIRINGAN_FIELD_YAW}`];
+                    rollValue = feed[`field${KEMIRINGAN_FIELD_ROLL}`];
                     if (!latestValidTimestamp || new Date(feed.created_at) > new Date(latestValidTimestamp)) {
                         latestValidTimestamp = feed.created_at;
                     }
-                    console.log("[API Polling] Data kemiringan diterima dan valid.");
-                } else {
-                    console.log(`[API Polling] Data kemiringan basi (timestamp: ${feed.created_at}). Tidak digunakan.`); 
                 }
-            } else if (dataKemiringan.channel && dataKemiringan.channel[`field${KEMIRINGAN_FIELD_NUMBER_API}`] && dataKemiringan.channel.updated_at) {
-                const dataTimestamp = Date.parse(dataKemiringan.channel.updated_at);
-                if (currentTime - dataTimestamp <= MAX_DATA_AGE_MS) {
-                    kemiringanValue = dataKemiringan.channel[`field${KEMIRINGAN_FIELD_NUMBER_API}`];
-                     if (!latestValidTimestamp || new Date(dataKemiringan.channel.updated_at) > new Date(latestValidTimestamp)) {
-                        latestValidTimestamp = dataKemiringan.channel.updated_at;
-                    }
-                    console.log("[API Polling] Data kemiringan (dari channel fallback) diterima dan valid.");
-                } else {
-                     console.log(`[API Polling] Data kemiringan (dari channel fallback) basi. Tidak digunakan.`); 
-                }
-            } else {
-                console.log(`[API Polling] Tidak ada feeds atau fallback data kemiringan.`); 
             }
-
+            
+            // BAGIAN BARU UNTUK CURAH HUJAN
             if (dataCurahHujan.feeds && dataCurahHujan.feeds.length > 0) {
                 const feed = dataCurahHujan.feeds[0];
                 const dataTimestamp = Date.parse(feed.created_at);
@@ -758,6 +751,8 @@ function fetchDataForAllSensors() {
                     sensor6: parseFloat(kelembabanFields.sensor6) || currentKelembabanTanah6,
                 },
                 kemiringan: parseFloat(kemiringanValue) || currentOutputKemiringan,
+                yaw: parseFloat(yawValue) || currentOutputYaw,         // <-- TAMBAHKAN
+                roll: parseFloat(rollValue) || currentOutputRoll,       // <-- TAMBAHKAN
                 curahHujan: parseFloat(curahHujanValue) || currentOutputCurahHujan,
                 timestamp: latestValidTimestamp || new Date().toISOString() 
             };
@@ -929,44 +924,3 @@ document.querySelectorAll('.sensor-point').forEach(sensor => {
     console.log(`Detail Sensor ${sensorId}\nNilai saat ini: ${currentValue}`);
   });
 });
-
-// --- Fungsi untuk memeriksa status pergerakan ---
-function checkPergerakanStatus() {
-    if (!currentActiveSimulationName) {
-        stopPergerakanPolling();
-        return;
-    }
-
-    fetch(`../backend/php/check_pergerakan_status.php?simulationName=${encodeURIComponent(currentActiveSimulationName)}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data && data.pergerakan_terdeteksi === 1) {
-                console.log('[Pergerakan] Pergerakan terdeteksi dari database!');
-                stopPergerakanPolling();
-
-                alert('⚠ PERGERAKAN TANAH TERDETEKSI! Simulasi akan dihentikan secara otomatis.');
-
-                if (toggleSimulation) {
-                    toggleSimulation.checked = false;
-                    toggleSimulation.dispatchEvent(new Event('change'));
-                }
-            }
-        })
-        .catch(error => {
-            console.error('[Pergerakan] Error saat memeriksa status pergerakan:', error);
-        });
-}
-
-function startPergerakanPolling() {
-    stopPergerakanPolling();
-    console.log('[Pergerakan] Memulai polling status pergerakan.');
-    pergerakanPollingIntervalId = setInterval(checkPergerakanStatus, PERGERAKAN_POLLING_INTERVAL_MS);
-}
-
-function stopPergerakanPolling() {
-    if (pergerakanPollingIntervalId) {
-        clearInterval(pergerakanPollingIntervalId);
-        pergerakanPollingIntervalId = null;
-        console.log('[Pergerakan] Polling status pergerakan dihentikan.');
-    }
-}

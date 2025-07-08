@@ -1,6 +1,7 @@
 {
     "require": {
         "bluerhinos/phpmqtt": "^1.0",
-        "php-mqtt/client": "^2.2"
+        "php-mqtt/client": "^2.2",
+        "php-ffmpeg/php-ffmpeg": "^1.3"
     }
 }

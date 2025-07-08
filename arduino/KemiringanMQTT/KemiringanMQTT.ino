@@ -14,8 +14,8 @@ const char clientID[] = "FzYrCCo6MSE0OBMFJBgYDSw";
 const char mqttPass[] = "7lOfdFz+hqyVUSzEhsevqgg/";
 
 // Channel IDs
-#define channelIDData 2889619        // Channel untuk publish data (field2 - Pitch)
-#define channelIDKontrol 2963900     // GANTI dengan Channel ID untuk kontrol (field1 - setpoint)
+#define channelIDData 2889619      // Channel untuk publish data (field2 - Pitch)
+#define channelIDKontrol 2963900    // GANTI dengan Channel ID untuk kontrol (field1 - setpoint)
 
 // MQTT Server (ThingSpeak)
 const char* mqttServer = "mqtt3.thingspeak.com";
@@ -96,7 +96,7 @@ void loop() {
         Serial.print(", Motor Active: "); Serial.println(motorActive);
 
         kontrolMotor();
-        publishMQTT(Pitch);
+        publishMQTT(Pitch, Yaw, Roll);
     }
 }
 
@@ -139,16 +139,30 @@ void callback(char* topic, byte* payload, unsigned int length) {
     }
 }
 
-void publishMQTT(float pitchValue) {
+/**
+ * Mempublikasikan data Pitch, Yaw, dan Roll ke ThingSpeak.
+ * Menggunakan field2 untuk Pitch, field3 untuk Yaw, dan field4 untuk Roll.
+ * NILAI PITCH YANG DIKIRIM DIKURANGI 4.
+ */
+void publishMQTT(float pitchValue, float yawValue, float rollValue) {
+    // Validasi nilai Pitch asli sebelum mengirim
     if (pitchValue < 0 || pitchValue > 90) {
-        Serial.println("Pitch negatif atau tidak valid, tidak dikirim!");
+        Serial.println("Pitch asli tidak valid, data tidak dikirim!");
         return;
     }
 
-    String payload = "field2=" + String(pitchValue, 2);
+    // ⭐ PERUBAHAN DI SINI: Nilai pitch dikurangi 4 sebelum dikirim
+    float adjustedPitch = pitchValue - 4;
 
+    // Buat payload dengan format multi-field untuk ThingSpeak
+    // Format: "field2=NILAI_PITCH&field3=NILAI_YAW&field4=NILAI_ROLL"
+    String payload = "field2=" + String(adjustedPitch, 2) +
+                     "&field3=" + String(yawValue, 2) +
+                     "&field4=" + String(rollValue, 2);
+
+    // Publikasikan payload ke topic MQTT
     if (client.publish(mqttPublishTopic.c_str(), payload.c_str())) {
-        Serial.print("Data terkirim (Pitch): ");
+        Serial.print("Data terkirim ke ThingSpeak: ");
         Serial.println(payload);
     } else {
         Serial.println("Gagal mengirim data MQTT!");
