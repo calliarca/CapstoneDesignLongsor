@@ -47,6 +47,9 @@ const CHANNEL_ID_CURAH_HUJAN_API = "2972562";
 const READ_API_KEY_CURAHHUJAN = "46I76YZ62FSW76YF";
 const CURAH_HUJAN_FIELD_NUMBER_API = '1';
 
+const NOTIFICATION_CHANNEL_ID = "2963900";
+const READ_API_KEY_NOTIFIKASI = "IC22IRXRBEMPWGEW";
+const NOTIFICATION_FIELD_NUMBER = '3'; // Field yang berisi flag (1 = longsor)
 
 document.addEventListener('DOMContentLoaded', () => {
   toggleSimulation = document.querySelector('#toggle-simulation');
@@ -175,8 +178,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(`Simulasi "${simulationName}" berhasil disimpan (data awal)! Memulai polling API dan koleksi data.`);
             alert(`Simulasi "${simulationName}" dimulai!`); // ALERT SAAT SIMULASI DIMULAI
             if (simulationText) simulationText.textContent = simulationName; 
-            
-            startApiPolling(); 
+          
+            startApiPolling();
 
             if (collectDataIntervalId) clearInterval(collectDataIntervalId);
             if (batchSaveIntervalId) clearInterval(batchSaveIntervalId);
@@ -650,8 +653,8 @@ function processAndDisplaySensorData(data) {
 
 function fetchDataForAllSensors() {
     // Pastikan konfigurasi sudah dimuat
-    if (!channelConfig.humidity_channel_id || !channelConfig.slope_channel_id) {
-        console.error("[API Polling] ID Channel tidak ditemukan di konfigurasi. Polling dibatalkan.");
+    if (!channelConfig.humidity_channel_id || !channelConfig.slope_channel_id || !NOTIFICATION_CHANNEL_ID) {
+        console.error("[API Polling] Konfigurasi ID Channel tidak lengkap. Polling dibatalkan.");
         processAndDisplaySensorData({ status: 'error', message: 'ID Channel tidak lengkap.' });
         return;
     }
@@ -672,14 +675,40 @@ function fetchDataForAllSensors() {
             return response.json();
         });
 
+    // Fetch untuk Curah Hujan
     const fetchCurahHujan = fetch(`https://api.thingspeak.com/channels/${CHANNEL_ID_CURAH_HUJAN_API}/fields/${CURAH_HUJAN_FIELD_NUMBER_API}.json?results=1&api_key=${READ_API_KEY_CURAHHUJAN}`)
         .then(response => {
             if (!response.ok) throw new Error(`HTTP error Curah Hujan! status: ${response.status} - ${response.statusText}`);
             return response.json();
         });
 
-    Promise.all([fetchKelembaban, fetchKemiringan, fetchCurahHujan])
-        .then(([dataKelembaban, dataKemiringan, dataCurahHujan]) => {
+    // ⭐ --- FETCH BARU KHUSUS UNTUK NOTIFIKASI --- ⭐
+    const fetchNotifikasi = fetch(`https://api.thingspeak.com/channels/${NOTIFICATION_CHANNEL_ID}/fields/${NOTIFICATION_FIELD_NUMBER}.json?results=1&api_key=${READ_API_KEY_NOTIFIKASI}`)
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP error Notifikasi! status: ${response.status}`);
+            return response.json();
+        });
+
+    // Tambahkan fetchNotifikasi ke dalam Promise.all
+    Promise.all([fetchKelembaban, fetchKemiringan, fetchCurahHujan, fetchNotifikasi])
+        .then(([dataKelembaban, dataKemiringan, dataCurahHujan, dataNotifikasi]) => {
+            // ⭐ --- LOGIKA BARU: Cek Notifikasi Terlebih Dahulu --- ⭐
+            if (dataNotifikasi && dataNotifikasi.feeds && dataNotifikasi.feeds.length > 0) {
+                const feed = dataNotifikasi.feeds[0];
+                const notifikasiLongsor = feed[`field${NOTIFICATION_FIELD_NUMBER}`];
+
+                // Jika field notifikasi bernilai '1', hentikan semuanya
+                if (notifikasiLongsor == '1') {
+                    console.log("!!! PERINGATAN: Notifikasi longsor diterima dari Channel Notifikasi !!!");
+                    stopApiPolling();
+                    alert('⚠ PERGERAKAN TANAH TERDETEKSI! Simulasi akan dihentikan secara otomatis.');
+                    if (toggleSimulation) {
+                        toggleSimulation.checked = false;
+                        toggleSimulation.dispatchEvent(new Event('change'));
+                    }
+                    return; // Hentikan pemrosesan data lain
+                }
+            }
             let kelembabanFields = {
                 sensor1: null, sensor2: null, sensor3: null, 
                 sensor4: null, sensor5: null, sensor6: null
@@ -699,7 +728,7 @@ function fetchDataForAllSensors() {
                 }
             }
 
-            // Proses data kemiringan
+            // Proses data kemiringan (sekarang tanpa logika notifikasi)
             if (dataKemiringan.feeds && dataKemiringan.feeds.length > 0) {
                 const feed = dataKemiringan.feeds[0];
                 if (currentTime - Date.parse(feed.created_at) <= MAX_DATA_AGE_MS) {

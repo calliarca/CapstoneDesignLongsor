@@ -2,7 +2,7 @@
 function navigateTo(page) {
     switch (page) {
         case 'home':
-            window.location.href = 'home-admin.html';
+            window.location.href = '../../home_admin/index.html';
             break;
         case 'logout':
             fetch('../backend/php/logout.php', {
@@ -54,15 +54,15 @@ function submitForm(event) {
 
     const humidityChannel = document.getElementById('channelIDMoisture').value.trim();
     const slopeChannel = document.getElementById('channelIDSlope').value.trim();
-    const regex = /^[0-9]{6}$/;
+    const regex = /^[0-9]{7}$/;
 
     if (!regex.test(humidityChannel)) {
-        showNotification('Channel ID - Kelembapan Tanah harus berupa 6 digit angka.', 'error');
+        showNotification('Channel ID - Kelembapan Tanah harus berupa 7 digit angka.', 'error');
         return;
     }
 
     if (!regex.test(slopeChannel)) {
-        showNotification('Channel ID - Kemiringan harus berupa 6 digit angka.', 'error');
+        showNotification('Channel ID - Kemiringan harus berupa 7 digit angka.', 'error');
         return;
     }
 
