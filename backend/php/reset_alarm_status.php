@@ -1,28 +1,26 @@
 <?php
-// File BARU: backend/php/reset_alarm_status.php
-// Tugas file ini hanya satu: mengirim nilai 0 ke field notifikasi di ThingSpeak.
-
 header('Content-Type: application/json');
 
-// --- KONFIGURASI (Sesuaikan dengan channel notifikasi Anda) ---
-$writeApiKey = "5NSA14X55QWZPH0L"; // PENTING: Gunakan WRITE API Key
-$notificationField = "field3"; // Field yang akan di-reset
-// -----------------------------------------------------------
+// 1. Muat konfigurasi terpusat
+require_once 'config_loader.php';
+
+// 2. Ambil konfigurasi dari variabel $thingspeakConfig
+$kontrolConfig = $thingspeakConfig['kontrol_simulator'];
+$writeApiKey = $kontrolConfig['write_api_key'];
+$notificationField = "field" . $kontrolConfig['fields']['alert_longsor'];
 
 // Buat URL untuk ThingSpeak Update API
 $url = "https://api.thingspeak.com/update?api_key=" . $writeApiKey . "&" . $notificationField . "=0";
 
-// Gunakan file_get_contents untuk mengirim request GET (cara sederhana)
 $response = @file_get_contents($url);
 
 if ($response === FALSE) {
-    // Gagal mengirim request
+    http_response_code(500);
     echo json_encode(['status' => 'error', 'message' => 'Gagal mengirim request reset ke ThingSpeak.']);
 } else if ($response == "0") {
-    // ThingSpeak merespons "0" jika update gagal (misalnya, update terlalu cepat)
-    echo json_encode(['status' => 'error', 'message' => 'ThingSpeak menolak update (mungkin karena rate limit).']);
+    http_response_code(429); // 429 Too Many Requests adalah kode yang lebih tepat
+    echo json_encode(['status' => 'error', 'message' => 'ThingSpeak menolak update (rate limit).']);
 } else {
-    // Berhasil
     echo json_encode(['status' => 'success', 'message' => 'Status alarm berhasil di-reset ke 0.']);
 }
 ?>

@@ -1,90 +1,122 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 
-// ===== WiFi Credentials =====
-const char ssid[] = "Xiaomi MiA1";      // Ganti dengan nama WiFi Anda
-const char pass[] = "1234qwer";  // Ganti dengan password WiFi Anda
+// =================================================================
+//                    KONFIGURASI JARINGAN & MQTT
+// =================================================================
 
-// ===== ThingSpeak MQTT Credentials =====
-const char mqttUserName[] = "FzYrCCo6MSE0OBMFJBgYDSw";
-const char clientID[] = "FzYrCCo6MSE0OBMFJBgYDSw";
-const char mqttPass[] = "7lOfdFz+hqyVUSzEhsevqgg/";
+// ----- WiFi Credentials -----
+// Ganti dengan SSID dan Password WiFi Anda
+const char ssid[] = "Reee";
+const char pass[] = "Reeee1234";
 
-// ===== ThingSpeak Channel IDs =====
-// GANTI dengan Channel ID ThingSpeak Anda untuk MENERIMA SP_Rainfall (misal: Channel 1 Anda)
-#define CHANNEL_ID_INPUT_SP_RAINFALL 2963900
-// GANTI dengan Channel ID ThingSpeak Anda untuk MENGIRIM rainfallActual (misal: Channel 2 Anda)
-#define CHANNEL_ID_OUTPUT_RAINFALL_ACTUAL 2972562
-
-// ===== MQTT Server (ThingSpeak) =====
+// ----- MQTT Broker & Port -----
 const char* mqttServer = "mqtt3.thingspeak.com";
 const int mqttPort = 1883;
 
-// MQTT Topics
-// Subscribe ke field1 dari Channel Input untuk SP_Rainfall
+// ----- Kredensial MQTT untuk Channel "Curah Hujan" (ID: 3013754) -----
+// Kredensial ini digunakan untuk menghubungkan ESP32 ke ThingSpeak.
+const char mqttUserName[] = "EzsUBSsTGRYEOgo3ADMPPAc";
+const char clientID[] = "EzsUBSsTGRYEOgo3ADMPPAc";
+const char mqttPass[] = "HiRIPd9Cx3JRlwezOsd+HDuN";
+
+// ----- Channel IDs -----
+// Channel untuk menerima perintah (Setpoint Curah Hujan) dari Web Admin
+#define CHANNEL_ID_INPUT_SP_RAINFALL 2963900 
+// Channel untuk mengirim data aktual hasil pengukuran curah hujan dari alat ini
+#define CHANNEL_ID_OUTPUT_RAINFALL_ACTUAL 3013754 
+
+// ----- MQTT Topics -----
+// Topik untuk SUBSCRIBE: Mendengarkan perintah dari Field 2 di Channel Kontrol Simulator
 String mqttSubscribeTopic = "channels/" + String(CHANNEL_ID_INPUT_SP_RAINFALL) + "/subscribe/fields/field2";
-// Publish ke Channel Output (payload akan menentukan field1)
+// Topik untuk PUBLISH: Mengirim data ke Channel Curah Hujan
 String mqttPublishTopic = "channels/" + String(CHANNEL_ID_OUTPUT_RAINFALL_ACTUAL) + "/publish";
 
+// Inisialisasi WiFi dan MQTT Client
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-// ===== Konfigurasi Pin (sesuai kode awal Anda) =====
-const int RPWM_PIN = 18;
-const int LPWM_PIN = 19;
-const int R_EN_PIN = 23;
-const int L_EN_PIN = 22;
-const int sensorPin = 32; // Flowmeter sensor pin
+// =================================================================
+//                  KONFIGURASI PIN & KONTROL POMPA
+// =================================================================
 
-// ===== Flowmeter =====
+// ----- Pin Motor Driver -----
+const int RPWM_PIN = 18; // Pin PWM Kanan (Maju)
+const int LPWM_PIN = 19; // Pin PWM Kiri (Mundur, tidak digunakan)
+const int R_EN_PIN = 23; // Pin Enable Kanan
+const int L_EN_PIN = 22; // Pin Enable Kiri
+
+// ----- Pin Sensor Aliran Air (Flowmeter) -----
+const int sensorPin = 32;
+
+// =================================================================
+//                VARIABEL GLOBAL UNTUK PENGUKURAN & KONTROL
+// =================================================================
+
+// ----- Variabel Flowmeter -----
 volatile unsigned long pulseCount = 0;
 volatile unsigned long lastPulseTime = 0;
-float flowRate = 0.0;     // L/min
-float volume = 0.0;       // volume per semprotan (liter)
-float totalVolume = 0.0;  // total volume keseluruhan (liter)
+float flowRate = 0.0;       // Laju aliran (L/min)
+float volume = 0.0;         // Volume dalam satu siklus (L)
+float totalVolume = 0.0;    // Akumulasi volume dari semua siklus (L)
 
-//Persamaan Regresi Flowmeter
-const float a_flow = 0.0245; // Disarankan ganti nama agar tidak konflik jika ada var 'a' lain
-const float b_flow = 0.1828; // Disarankan ganti nama
+// Koefisien kalibrasi sensor aliran (didapat dari eksperimen)
+const float a_flow = 0.00001701;
+const float b_flow = 0.02554036;
+const float c_flow = 0.09168697;
 
-// ===== Luas area =====
-const float luasArea = 1.001; // luas area dalam meter persegi
+// Luas area yang disiram (m^2) untuk konversi Volume ke Curah Hujan
+const float luasArea = 1.073; 
 
-// Nilai PID (Perlu di Tuning)
-float Kp = 1.5, Ki = 0.5, Kd = 0.1;
+// ----- Variabel Kontroler PID -----
+float Kp = 3.37, Ki = 0, Kd = 0.1;
 float integral = 0, lastError = 0;
+float pwmActual = 70.0; // Nilai awal PWM
 
-// ===== Simulasi Siklus =====
-const unsigned long interval_off = 60000; // interval OFF = 1 menit (nama variabel diubah)
-const int maxCycle = 6;               // jumlah semprotan per jam (6 kali)
-unsigned long lastSwitchTime = 0;
-
-bool isRunning = false;
-bool userInputReceived = false; // Akan true jika SP_Rainfall valid diterima dari MQTT
+// ----- Variabel Logika Siklus Penyiraman -----
+const int maxCycle = 6;
+unsigned long cycleInterval[maxCycle];
+unsigned long programStartTime = 0;
+unsigned long cycleStartTime = 0;
 int cycleCount = 0;
+bool cycleStarted = false;
+bool isRunning = false;
+bool userInputReceived = false; // Flag penanda perintah baru diterima
 
-// ===== Target Curah Hujan dan volume target per semprotan =====
-float SP_Rainfall = 0;      // setpoint curah hujan (mm/jam) - dari MQTT
-float volumeTarget = 0;     // liter per semprotan
+// ----- Variabel Status & Data -----
+float SP_Rainfall = 0;      // Setpoint curah hujan dari pengguna (mm/jam)
+float volumeTarget = 0;     // Target total volume air (L)
+float volumePerCycle = 0;   // Target volume per siklus (L)
+float rainfallActual = 0;   // Curah hujan aktual yang terukur (mm/jam)
+int dataSentCount = 0;      // Penghitung jumlah data yang berhasil dikirim
 
-float rainfallActual = 0;   // curah hujan aktual kumulatif (mm) - dikirim ke ThingSpeak
-
-// ===== MQTT Publish Timer =====
+// Timer untuk publikasi data MQTT
 unsigned long previousMillisMQTT = 0;
-const long intervalMQTT = 30000; // Interval untuk publish data ke ThingSpeak (misal: 30 detik)
+const unsigned long intervalMQTT = 30000; // Kirim data setiap 30 detik
 
-// ===== Fungsi interrupt hitung pulse flowmeter =====
+// =================================================================
+//                    FUNGSI-FUNGSI UTAMA
+// =================================================================
+
+/**
+ * @brief Interrupt Service Routine (ISR) untuk menghitung pulsa dari flowmeter.
+ * Dijalankan setiap kali ada sinyal jatuh (FALLING edge) dari sensor.
+ */
 void IRAM_ATTR countPulse() {
   unsigned long now = micros();
-  if (now - lastPulseTime > 1000) { // debounce 1ms
+  // Debouncing sederhana untuk menghindari pulsa ganda
+  if (now - lastPulseTime > 1000) {
     pulseCount++;
     lastPulseTime = now;
   }
 }
 
+/**
+ * @brief Menghubungkan ESP32 ke jaringan WiFi.
+ */
 void setupWiFi() {
   Serial.println();
-  Serial.print("Connecting to WiFi: ");
+  Serial.print("Menghubungkan ke WiFi: ");
   Serial.println(ssid);
   WiFi.begin(ssid, pass);
   int wifi_retries = 0;
@@ -94,238 +126,250 @@ void setupWiFi() {
     wifi_retries++;
   }
   if (WiFi.status() == WL_CONNECTED) {
-    Serial.println("\nWiFi connected!");
-    Serial.print("IP address: ");
+    Serial.println("\nWiFi terhubung!");
+    Serial.print("Alamat IP: ");
     Serial.println(WiFi.localIP());
   } else {
-    Serial.println("\nWiFi connection failed. Please check credentials/network.");
+    Serial.println("\nKoneksi WiFi gagal. Periksa kredensial/jaringan.");
   }
 }
 
+/**
+ * @brief Fungsi callback yang dipanggil saat ada pesan masuk dari topik MQTT yang di-subscribe.
+ * @param topic Topik dari pesan yang masuk.
+ * @param payload Isi pesan (data).
+ * @param length Panjang isi pesan.
+ */
 void callback_mqtt(char* topic, byte* payload, unsigned int length) {
-  Serial.print("Message arrived [");
-  Serial.print(topic);
-  Serial.print("] ");
-  String message;
-  for (int i = 0; i < length; i++) {
-    message += (char)payload[i];
+  String msg;
+  for (unsigned int i = 0; i < length; i++) {
+    msg += (char)payload[i];
   }
-  Serial.println(message);
-
-  float input = message.toFloat();
-  if (input >= 0 && input <= 20) { // Asumsi valid rainfall 0-20 mm/jam
+  
+  float input = msg.toFloat();
+  
+  // Validasi input dari pengguna
+  if (input >= 0 && input <= 20) {
     SP_Rainfall = input;
-    userInputReceived = true;
-    cycleCount = 0;
+    volumeTarget = SP_Rainfall * luasArea;
+    volumePerCycle = volumeTarget / maxCycle;
+    
+    // Reset semua variabel status untuk memulai simulasi baru
     totalVolume = 0;
-    rainfallActual = 0; // Reset rainfall aktual saat setpoint baru diterima
-
-    Serial.print("New Setpoint Curah Hujan from MQTT (Channel " + String(CHANNEL_ID_INPUT_SP_RAINFALL) + "/field1): ");
-    Serial.print(SP_Rainfall);
+    rainfallActual = 0;
+    cycleCount = 0;
+    programStartTime = millis();
+    userInputReceived = true;
+    isRunning = false;
+    cycleStarted = false;
+    dataSentCount = 0;
+    
+    Serial.println("==============================");
+    Serial.print("PERINTAH BARU DITERIMA");
+    Serial.print("Curah hujan diset: ");
+    Serial.print(SP_Rainfall, 2);
     Serial.println(" mm/jam");
-
-    volumeTarget = (SP_Rainfall * luasArea) / maxCycle; // liter
-    } else { // Jika maxCycle tidak valid, anggap 1 siklus besar
-        volumeTarget = SP_Rainfall * luasArea;
-    }
-    Serial.print("Target volume per semprotan: ");
+    Serial.print("Target volume total: ");
     Serial.print(volumeTarget, 3);
-    Serial.println(" L");
-
-    volume = 0;
-    pulseCount = 0; // Reset pulse count untuk pembacaan flowrate awal yang akurat
-    integral = 0;
-    lastError = 0;
-
-    if (!isRunning && cycleCount < maxCycle) {
-         isRunning = true;
-         lastSwitchTime = millis();
-         Serial.println("Pompa dinyalakan berdasarkan setpoint MQTT baru.");
-    } else if (isRunning) {
-        Serial.println("Setpoint diperbarui, siklus saat ini akan melanjutkan.");
-    } else {
-        Serial.println("Setpoint diterima. Pompa akan mulai pada siklus berikutnya jika interval terpenuhi.");
-    }
+    Serial.print(" L (");
+    Serial.print(volumePerCycle, 3);
+    Serial.println(" L per siklus)");
+    Serial.println("==============================");
   } else {
-    Serial.print("Nilai setpoint dari MQTT tidak valid: ");
+    Serial.print("Input tidak valid diterima: ");
     Serial.println(input);
   }
 }
 
+/**
+ * @brief Menghubungkan kembali ke broker MQTT jika koneksi terputus.
+ */
 void reconnectMQTT() {
-  int mqtt_retries = 0;
-  while (!client.connected() && mqtt_retries < 5) {
-    Serial.print("Attempting MQTT connection...");
+  while (!client.connected()) {
+    Serial.print("Mencoba koneksi MQTT...");
     if (client.connect(clientID, mqttUserName, mqttPass)) {
-      Serial.println("connected");
-      if (client.subscribe(mqttSubscribeTopic.c_str())) {
-        Serial.print("Subscribed to: ");
-        Serial.println(mqttSubscribeTopic);
-      } else {
-        Serial.println("Subscription failed!");
-      }
+      Serial.println("terhubung!");
+      // Subscribe ke topik setelah berhasil terhubung
+      client.subscribe(mqttSubscribeTopic.c_str());
+      Serial.print("Subscribe ke topik: ");
+      Serial.println(mqttSubscribeTopic);
     } else {
-      Serial.print("failed, rc=");
+      Serial.print("gagal, rc=");
       Serial.print(client.state());
-      Serial.println(" try again in 5 seconds");
+      Serial.println(" coba lagi dalam 5 detik");
       delay(5000);
     }
-    mqtt_retries++;
-  }
-   if (!client.connected()){
-    Serial.println("MQTT connection failed after several retries.");
   }
 }
 
-void publishRainfallActualToThingSpeak() {
-  if (client.connected() && userInputReceived) {
-    // Kirim rainfallActual ke field1 dari CHANNEL_ID_OUTPUT_RAINFALL_ACTUAL
-    String payload = "field1=" + String(rainfallActual, 3);
-
-    Serial.print("Publishing to ThingSpeak (Channel " + String(CHANNEL_ID_OUTPUT_RAINFALL_ACTUAL) + "/field1): ");
-    Serial.println(payload);
-
-    if (client.publish(mqttPublishTopic.c_str(), payload.c_str())) {
-      Serial.println("Data (rainfallActual) published successfully.");
-    } else {
-      Serial.println("Failed to publish data (rainfallActual).");
-    }
+/**
+ * @brief Mempublikasikan data curah hujan aktual ke ThingSpeak.
+ */
+void publishRainfallActual() {
+  String payload = "field1=" + String(rainfallActual, 3);
+  Serial.print("Mengirim data ke ThingSpeak: ");
+  Serial.println(payload);
+  
+  if (client.publish(mqttPublishTopic.c_str(), payload.c_str())) {
+    dataSentCount++;
+    Serial.println("Data berhasil dikirim.");
+  } else {
+    Serial.println("Gagal mengirim data.");
   }
 }
 
+// =================================================================
+//                          SETUP UTAMA
+// =================================================================
 void setup() {
   Serial.begin(115200);
-  Serial.println("Rainfall Simulator with ThingSpeak MQTT Starting...");
-  Serial.println("Version 2.0 - Specific Channel/Field Target");
-
+  
+  // Konfigurasi pin motor driver
   pinMode(RPWM_PIN, OUTPUT);
   pinMode(LPWM_PIN, OUTPUT);
   pinMode(R_EN_PIN, OUTPUT);
   pinMode(L_EN_PIN, OUTPUT);
+  
+  // Konfigurasi pin sensor dan interrupt
   pinMode(sensorPin, INPUT_PULLUP);
-
+  attachInterrupt(digitalPinToInterrupt(sensorPin), countPulse, FALLING);
+  
+  // Set kondisi awal motor driver (mati)
   digitalWrite(R_EN_PIN, HIGH);
-  digitalWrite(L_EN_PIN, HIGH); // Pastikan ini sesuai dengan cara kerja driver motor Anda
-
-  attachInterrupt(digitalPinToInterrupt(sensorPin), countPulse, FALLING); //Baca pulsa flowmeter
-
-  analogWrite(RPWM_PIN, 0); // Pompa mati
+  digitalWrite(L_EN_PIN, HIGH);
+  analogWrite(RPWM_PIN, 0);
   analogWrite(LPWM_PIN, 0);
 
-  setupWiFi();
-  if (WiFi.status() == WL_CONNECTED) {
-    client.setServer(mqttServer, mqttPort);
-    client.setCallback(callback_mqtt);
-    // reconnectMQTT(); // Panggil reconnectMQTT di loop jika koneksi terputus
+  // Mengatur jadwal interval untuk setiap siklus (0, 10, 20, 30, 40, 50 menit)
+  for (int i = 0; i < maxCycle; i++) {
+    cycleInterval[i] = (i * 10UL * 60 * 1000) + 1000; // +1 detik untuk buffer
   }
 
-  Serial.println("Waiting for SP_Rainfall from ThingSpeak Channel " + String(CHANNEL_ID_INPUT_SP_RAINFALL) + ", field2.");
-  Serial.println("rainfallActual will be published to ThingSpeak Channel " + String(CHANNEL_ID_OUTPUT_RAINFALL_ACTUAL) + ", field1.");
+  setupWiFi();
+  client.setServer(mqttServer, mqttPort);
+  client.setCallback(callback_mqtt);
 }
 
+// =================================================================
+//                           LOOP UTAMA
+// =================================================================
 void loop() {
+  if (WiFi.status() != WL_CONNECTED) {
+    setupWiFi(); // Coba hubungkan kembali jika WiFi terputus
+  }
+  if (!client.connected()) {
+    reconnectMQTT(); // Coba hubungkan kembali jika MQTT terputus
+  }
+  client.loop(); // Penting untuk menjaga koneksi MQTT dan memproses pesan masuk
+
   unsigned long now = millis();
 
-  if (WiFi.status() != WL_CONNECTED) {
-    Serial.println("WiFi disconnected. Attempting to reconnect...");
-    setupWiFi();
+  // Kirim data secara periodik jika simulasi sedang berjalan
+  if (now - previousMillisMQTT >= intervalMQTT && userInputReceived && cycleCount < maxCycle) {
+    previousMillisMQTT = now;
+    publishRainfallActual();
   }
 
-  if (WiFi.status() == WL_CONNECTED && !client.connected()) {
-    reconnectMQTT(); // Coba sambungkan ulang MQTT jika WiFi terhubung tapi MQTT tidak
-  }
-  
-  if (client.connected()) {
-    client.loop(); // Penting untuk memproses pesan masuk dan menjaga koneksi
-  }
-
-  // ===== Pompa ON =====
-  if (isRunning) {
-    static unsigned long lastReadTime = 0;
-    if (now - lastReadTime >= 1000) {  // Baca setiap 1 detik
-      lastReadTime = now;
-
-      noInterrupts();
-      unsigned long currentPulseCount = pulseCount;
-      pulseCount = 0;
-      interrupts();
-
-      float freq = currentPulseCount;
-      flowRate = (a_flow * freq) + b_flow; //regresi flowmeter
-      if (flowRate < 0.2) flowRate = 0;
-
-      float volumeThisSecond = flowRate / 60.0; // Volume dalam Liter
-      volume += volumeThisSecond;
-      totalVolume += volumeThisSecond;
-      rainfallActual = totalVolume / luasArea;
-
-      float error = volumeTarget - volume;
-      integral += error;
-      float derivative = error - lastError;
-      float outputPID = Kp * error + Ki * integral + Kd * derivative;
-      lastError = error;
-
-      int pwmPercent = constrain((int)outputPID, 0, 100);
-
-      if (volume >= volumeTarget || error <= 0) {
-        analogWrite(RPWM_PIN, 0);
-        analogWrite(LPWM_PIN, 0);
-        digitalWrite(R_EN_PIN, LOW);
-        digitalWrite(L_EN_PIN, LOW);
-
-        isRunning = false;
-        lastSwitchTime = now;
-        cycleCount++;
-
-        integral = 0;
-        lastError = 0;
-      } else {
-        analogWrite(RPWM_PIN, map(pwmPercent, 0, 100, 0, 255));
-        analogWrite(LPWM_PIN, 0);
-        digitalWrite(R_EN_PIN, HIGH);
-        digitalWrite(L_EN_PIN, HIGH);
-
-        Serial.print("Flowrate: ");
-        Serial.print(flowRate, 3);
-        Serial.print(" L/min | Volume semprotan: ");
-       Serial.print(volume, 3);
-       Serial.print(" L | Total volume: ");
-       Serial.print(totalVolume, 3);
-       Serial.print(" L | Curah Hujan Aktual: ");
-        Serial.print(rainfallActual, 3);
-       Serial.print(" mm/jam | PWM: ");
-       Serial.print(pwmPercent);
-        Serial.println(" %");
-      }
+  // Jika tidak ada perintah atau semua siklus sudah selesai, hentikan proses
+  if (!userInputReceived || cycleCount >= maxCycle) {
+    if (userInputReceived && cycleCount >= maxCycle) {
+      Serial.println("==============================");
+      Serial.println("Semua siklus selesai.");
+      Serial.print("Jumlah data yang dikirim: ");
+      Serial.println(dataSentCount);
+      Serial.println("==============================");
+      userInputReceived = false; // Reset flag agar loop berhenti
     }
+    return;
   }
 
-  // ===== Pompa OFF (tunggu interval untuk nyala lagi) =====
-  if (!isRunning && userInputReceived && cycleCount < maxCycle) {
-    if (now - lastSwitchTime >= interval_off) {
-      volume = 0;
-      pulseCount = 0;
-      integral = 0;
-      lastError = 0;
+  unsigned long elapsedTime = now - programStartTime;
 
-      isRunning = true;
-      lastSwitchTime = now;
-
-      digitalWrite(R_EN_PIN, HIGH);
-      digitalWrite(L_EN_PIN, HIGH);
-
-      Serial.print("Semprotan ke-");
-      Serial.print(cycleCount +1);
-      Serial.println(" dimulai.");
-    }
+  // Cek apakah sudah waktunya memulai siklus berikutnya
+  if (!cycleStarted && elapsedTime >= cycleInterval[cycleCount]) {
+    // Reset variabel untuk siklus baru
+    volume = 0;
+    pulseCount = 0;
+    integral = 0;
+    lastError = 0;
+    pwmActual = 70; // Reset PWM ke nilai awal
+    cycleStartTime = now;
+    isRunning = true;
+    cycleStarted = true;
+    
+    // Hidupkan pompa
+    digitalWrite(R_EN_PIN, HIGH);
+    digitalWrite(L_EN_PIN, HIGH);
+    analogWrite(RPWM_PIN, map((int)pwmActual, 0, 100, 0, 255));
+    analogWrite(LPWM_PIN, 0);
+    
+    Serial.print("▶️  Mulai siklus ke-");
+    Serial.println(cycleCount + 1);
   }
 
-  // ===== Publish data ke ThingSpeak secara periodik =====
-  unsigned long currentMillisMQTT_now = millis(); // Ganti nama var agar tidak konflik
-  if (currentMillisMQTT_now - previousMillisMQTT >= intervalMQTT) {
-    previousMillisMQTT = currentMillisMQTT_now;
-    if (WiFi.status() == WL_CONNECTED && client.connected()) {
-      publishRainfallActualToThingSpeak();
+  // Logika kontrol PID dijalankan setiap 200ms saat pompa menyala
+  static unsigned long lastPIDUpdate = 0;
+  if (isRunning && now - lastPIDUpdate >= 200) {
+    lastPIDUpdate = now;
+
+    // Ambil jumlah pulsa dengan aman (non-blocking interrupt)
+    noInterrupts();
+    unsigned long count = pulseCount;
+    pulseCount = 0;
+    interrupts();
+
+    // Hitung laju aliran dan volume
+    float freq = count * 5.0; // 1 / (200ms / 1000ms) = 5
+    flowRate = a_flow * freq * freq + b_flow * freq + c_flow;
+    if (flowRate < 0.2) flowRate = 0; // Filter noise
+
+    volume += flowRate / 300.0; // (L/min) / (60s/min * 5Hz) = L
+    totalVolume += flowRate / 300.0;
+    rainfallActual = totalVolume / luasArea;
+
+    // Perhitungan PID
+    float error = 2.0 - flowRate; // Target laju aliran 2.0 L/min
+    integral += error * 0.2;
+    float derivative = (error - lastError) / 0.2;
+    lastError = error;
+    float output = Kp * error + Ki * integral + Kd * derivative;
+    
+    // Update dan batasi nilai PWM
+    pwmActual += output;
+    pwmActual = constrain(pwmActual, 0, 100);
+    int pwmVal = map((int)pwmActual, 0, 100, 0, 255);
+    if (pwmVal > 0 && pwmVal < 70) pwmVal = 70; // Batas bawah PWM agar pompa berputar
+
+    // Terapkan nilai PWM baru ke motor
+    analogWrite(RPWM_PIN, pwmVal);
+    analogWrite(LPWM_PIN, 0);
+
+    // Tampilkan data telemetri ke Serial Monitor
+    Serial.print("t="); Serial.print((now - cycleStartTime) / 1000.0, 2); Serial.print("s | ");
+    Serial.print("f="); Serial.print(freq, 1); Serial.print(" Hz | ");
+    Serial.print("Q="); Serial.print(flowRate, 3); Serial.print(" L/min | ");
+    Serial.print("e="); Serial.print(error, 3); Serial.print(" | ");
+    Serial.print("v="); Serial.print(volume, 3); Serial.print(" L | ");
+    Serial.print("r="); Serial.print(rainfallActual, 3); Serial.print(" mm/j | ");
+    Serial.print("PWM="); Serial.println(pwmActual, 1);
+
+    // Cek apakah target volume untuk siklus ini sudah tercapai
+    if (volume >= volumePerCycle - 0.01) {
+      // Matikan pompa
+      analogWrite(RPWM_PIN, 0);
+      analogWrite(LPWM_PIN, 0);
+      digitalWrite(R_EN_PIN, LOW);
+      digitalWrite(L_EN_PIN, LOW);
+      isRunning = false;
+      cycleStarted = false;
+      
+      Serial.print("✅ Siklus ke-");
+      Serial.print(cycleCount + 1);
+      Serial.print(" selesai. Volume tercapai: ");
+      Serial.print(volume, 3);
+      Serial.println(" L");
+      
+      cycleCount++;
     }
   }
 }
