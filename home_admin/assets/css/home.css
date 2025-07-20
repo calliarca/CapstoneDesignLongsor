@@ -29,9 +29,9 @@
 
         .frame-home-page1-file1 {
             top: 5%;
-            left: 50%;
-            width: 35%; /* Lebar kontainer 3D */
-            height: 50%; /* Tinggi kontainer 3D */
+            left: 55%;
+            width: 37%; /* Lebar kontainer 3D */
+            height: 70%; /* Tinggi kontainer 3D */
             position: absolute;
             transform: translateX(-50%);
             max-width: 100%;

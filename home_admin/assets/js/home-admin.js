@@ -953,3 +953,20 @@ document.querySelectorAll('.sensor-point').forEach(sensor => {
     console.log(`Detail Sensor ${sensorId}\nNilai saat ini: ${currentValue}`);
   });
 });
+
+// ⭐ --- FUNGSI BARU UNTUK MERESET STATUS ALARM --- ⭐
+function resetAlarmStatusOnServer() {
+    console.log("[Reset Alarm] Mengirim permintaan untuk mereset status alarm di ThingSpeak...");
+    fetch('../backend/php/reset_alarm_status.php', { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                console.log("[Reset Alarm] Server mengonfirmasi status alarm telah di-reset.");
+            } else {
+                console.error("[Reset Alarm] Gagal mereset status alarm:", data.message);
+            }
+        })
+        .catch(error => {
+            console.error("[Reset Alarm] Error saat mengirim permintaan reset:", error);
+        });
+}

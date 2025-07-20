@@ -1,16 +1,16 @@
+#include <Arduino.h>
 #include <WiFi.h>
 #include <PubSubClient.h>
 
 // WiFi Credentials
-const char ssid[] = "ASUS";
-const char pass[] = "123456789";
+const char ssid[] = "Reee";
+const char pass[] = "Reeee1234";
 
 // ThingSpeak MQTT Credentials
-#define channelID 2843704
-// ===== ThingSpeak MQTT Credentials =====
-const char mqttUserName[] = "FzYrCCo6MSE0OBMFJBgYDSw";
-const char clientID[] = "FzYrCCo6MSE0OBMFJBgYDSw";
-const char mqttPass[] = "7lOfdFz+hqyVUSzEhsevqgg/";
+#define channelID 3013752
+const char mqttUserName[] = "LgwUJRonHwAaGiIANxUFGQ8";
+const char clientID[] = "LgwUJRonHwAaGiIANxUFGQ8";
+const char mqttPass[] = "LgwUJRonHwAaGiIANxUFGQ8";
 
 // MQTT Server (ThingSpeak)
 const char* mqttServer = "mqtt3.thingspeak.com";
@@ -20,26 +20,36 @@ String mqttTopic = "channels/" + String(channelID) + "/publish";
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-// Timer MQTT
+// === PENGATURAN TIMER DAN LAPORAN ===
 unsigned long lastSentTime = 0;
-const unsigned long updateInterval = 15000; // 15 detik sesuai rate ThingSpeak
+// Interval ini kurang berpengaruh karena ada delay(20000) di akhir loop
+const unsigned long updateInterval = 1000; 
 
-// Array kelembapan untuk kirim data MQTT
-float kelembapan[6];
+// Variabel untuk laporan per jam
+unsigned long dataSentCount = 0; // Menghitung jumlah data yang terkirim
+unsigned long oneHourTimerStart = 0; // Timer untuk periode satu jam
+const unsigned long oneHourMillis = 3600000; // 1 jam = 3,600,000 milidetik
 
-// Gunakan hanya ADC1 pin: 32, 33, 34, 35, 36
-// Reuse pin 35 untuk sensor 5 dan 6 (dibaca bergantian)
-const int sensorPins[6] = {32, 33, 34, 35, 36, 36}; // Sensor 6 pakai GPIO35 juga
+// BARU: Flag untuk mengontrol apakah sistem sedang aktif atau sudah berhenti
+bool isMonitoringActive = true;
 
-float slopes[6]     = {-0.02289, -0.02297, -0.02038, -0.02089, -0.02109, -0.02115};
-float intercepts[6] = { 81.44,    82.51,    78.83,    83.51,    80.44,    85.17};
+// Variabel Sensor
+const int soilPins[6] = {36, 39, 34, 35, 33, 32};
+int adcValues[6];
+float moisturePercent[6];
+
+// Fungsi prototipe
+void reconnectMQTT();
+void sendToThingSpeak();
 
 void setup() {
   Serial.begin(115200);
-  for (int i = 0; i < 5; i++) {
-    pinMode(sensorPins[i], INPUT);
+  for (int i = 0; i < 6; i++) {
+    pinMode(soilPins[i], INPUT);
   }
-
+  Serial.println("=== Monitoring 6 Soil Moisture Sensors ===");
+  
+  // Koneksi WiFi
   WiFi.begin(ssid, pass);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -47,43 +57,72 @@ void setup() {
   }
   Serial.println("\n✅ WiFi connected");
 
+  // Koneksi MQTT
   client.setServer(mqttServer, mqttPort);
   reconnectMQTT();
+
+  // Mulai timer untuk laporan per jam
+  oneHourTimerStart = millis();
+  Serial.println("Timer monitoring selama 1 jam dimulai.");
 }
 
 void loop() {
-  for (int i = 0; i < 6; i++) {
-    int pin = sensorPins[i];
+  // Seluruh logika utama hanya berjalan jika monitoring aktif
+  if (isMonitoringActive) {
+    // Pastikan koneksi MQTT selalu terjaga
+    if (!client.connected()) {
+      reconnectMQTT();
+    }
+    client.loop();
 
-    // Kalau sensor ke-6 (pakai pin sama seperti sensor 5), kasih delay agar pembacaan stabil
-    if (i == 5) delay(20);
+    // Baca data dari semua sensor
+    for (int i = 0; i < 6; i++) {
+      adcValues[i] = analogRead(soilPins[i]);
 
-    int adcValue = analogRead(pin);
-    float moisture = slopes[i] * adcValue + intercepts[i];
+      // Hitung kelembapan berdasarkan persamaan linear masing-masing sensor
+      switch (i) {
+        case 0: moisturePercent[i] = -0.0127 * adcValues[i] + 39.245; break;
+        case 1: moisturePercent[i] = -0.0133 * adcValues[i] + 39.824; break;
+        case 2: moisturePercent[i] = -0.0136 * adcValues[i] + 40.538; break;
+        case 3: moisturePercent[i] = -0.0133 * adcValues[i] + 40.263; break;
+        case 4: moisturePercent[i] = -0.0136 * adcValues[i] + 40.605; break;
+        case 5: moisturePercent[i] = -0.0128 * adcValues[i] + 39.454; break;
+      }
+      moisturePercent[i] = constrain(moisturePercent[i], 0.0, 100.0);
 
-    if (moisture < 0) moisture = 0;
-    if (moisture > 100) moisture = 100;
+      // Tampilkan hasil di Serial Monitor
+      Serial.print("Sensor "); Serial.print(i + 1);
+      Serial.print(" | ADC: "); Serial.print(adcValues[i]);
+      Serial.print(" | Moisture: "); Serial.print(moisturePercent[i], 2);
+      Serial.println(" %");
+    }
+    Serial.println("--------------------------------------------------");
 
-    kelembapan[i] = moisture;
+    // Kirim data ke ThingSpeak. Dengan delay(20000), blok ini akan selalu tereksekusi.
+    if (millis() - lastSentTime > updateInterval) {
+      lastSentTime = millis();
+      sendToThingSpeak();
+    }
 
-    Serial.print("Sensor ");
-    Serial.print(i + 1);
-    Serial.print(" - ADC: ");
-    Serial.print(adcValue);
-    Serial.print(" -> Kelembaban: ");
-    Serial.print(moisture, 2);
-    Serial.println(" %");
+    // Cek apakah sudah satu jam untuk MENGHENTIKAN monitoring
+    if (millis() - oneHourTimerStart >= oneHourMillis) {
+      Serial.println("\n================== WAKTU MONITORING SELESAI ==================");
+      Serial.println("Proses pengiriman data selama 1 jam telah selesai.");
+      Serial.print("Total data yang berhasil terkirim: ");
+      Serial.println(dataSentCount);
+      Serial.println("==============================================================");
+      Serial.println("Sistem berhenti mengirim data. Silakan restart ESP32 untuk memulai lagi.");
+      
+      isMonitoringActive = false; // Hentikan siklus monitoring
+    }
+    
+    // Delay utama untuk loop, menentukan interval pembacaan dan pengiriman (20 detik)
+    delay(16000); 
+  } else {
+    // Setelah 1 jam, program akan masuk ke sini dan tidak melakukan apa-apa.
+    // Pesan terakhir sudah dicetak di atas.
+    delay(5000); // Delay agar tidak membebani prosesor tanpa guna.
   }
-
-  Serial.println("---------------------------");
-
-  if (millis() - lastSentTime > updateInterval) {
-    lastSentTime = millis();
-    sendToThingSpeak();
-  }
-
-  client.loop();
-  delay(2000);
 }
 
 void reconnectMQTT() {
@@ -101,16 +140,19 @@ void reconnectMQTT() {
 }
 
 void sendToThingSpeak() {
-  String payload = "field1=" + String(kelembapan[0], 2) +
-                   "&field2=" + String(kelembapan[1], 2) +
-                   "&field3=" + String(kelembapan[2], 2) +
-                   "&field4=" + String(kelembapan[3], 2) +
-                   "&field5=" + String(kelembapan[4], 2) +
-                   "&field6=" + String(kelembapan[5], 2);
+  String payload = "field1=" + String(moisturePercent[0], 2) +
+                   "&field2=" + String(moisturePercent[1], 2) +
+                   "&field3=" + String(moisturePercent[2], 2) +
+                   "&field4=" + String(moisturePercent[3], 2) +
+                   "&field5=" + String(moisturePercent[4], 2) +
+                   "&field6=" + String(moisturePercent[5], 2);
 
-  Serial.println("Sending to ThingSpeak: " + payload);
+  // MODIFIKASI: Tambahkan hitungan pengiriman pada pesan log
+  Serial.println("Mengirim data ke ThingSpeak (Percobaan ke-" + String(dataSentCount + 1) + ")");
+  
   if (client.publish(mqttTopic.c_str(), payload.c_str())) {
     Serial.println("✅ Data sent successfully!");
+    dataSentCount++; // Tambahkan 1 ke penghitung jika berhasil terkirim
   } else {
     Serial.println("❌ Failed to send data.");
   }
