@@ -1054,3 +1054,8 @@ input[type="checkbox"]:checked + .slider:before {
 .sensor-dot.wet {
   background: #4CAF50; /* Hijau untuk tanah basah */
 }
+
+.button-busy {
+  opacity: 0.6;
+  cursor: not-allowed; /* Menunjukkan bahwa tombol tidak bisa digunakan saat ini */
+}

@@ -11,6 +11,7 @@ let currentOutputKemiringan = 0;
 let currentOutputYaw = 0;
 let currentOutputRoll = 0;
 let currentOutputCurahHujan = 0;
+let isControlBusy = false; // ⭐ BARU: Flag untuk menandai tombol sedang sibuk
 
 // Inisialisasi globalGyroData untuk three_scene.js
 window.globalGyroData = { x: 0, y: 0, z: 0 };
@@ -44,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const curahHujanInput = document.querySelector('#curah-hujan-input');
   const kemiringanButton = document.querySelector('.frame-home-page1-button1');
   const curahHujanButton = document.querySelector('.frame-home-page1-button2');
+  
 
   if (kemiringanInput) kemiringanInput.disabled = true;
   if (curahHujanInput) curahHujanInput.disabled = true;
@@ -255,12 +257,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // =================================================================================
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        // Muat konfigurasi channel lama (jika masih digunakan di bagian lain)
-        const responseChannel = await fetch('../backend/assets/js/channel_config.json');
-        if (!responseChannel.ok) throw new Error(`Gagal memuat channel_config.json`);
-        channelConfig = await responseChannel.json();
-        console.log("[Config] Konfigurasi channel (channel_config.json) berhasil dimuat:", channelConfig);
-
         // Muat konfigurasi ThingSpeak yang baru
         const responseThingspeak = await fetch('../backend/assets/js/thingspeak_config.json');
         if (!responseThingspeak.ok) throw new Error(`Gagal memuat thingspeak_config.json`);
@@ -318,7 +314,17 @@ function sendAndLogEvent(eventType, eventValue) {
         return;
     }
 
-    // 2. Siapkan data untuk dikirim ke perangkat (Thingspeak via PHP)
+    // ⭐ BARU: Dapatkan referensi tombol di sini
+    const kemiringanButton = document.querySelector('.frame-home-page1-button1');
+    const curahHujanButton = document.querySelector('.frame-home-page1-button2');
+
+    // ⭐ PERUBAHAN: Gunakan flag dan class, bukan disabled
+    isControlBusy = true;
+    if (kemiringanButton) kemiringanButton.classList.add('button-busy');
+    if (curahHujanButton) curahHujanButton.classList.add('button-busy');
+    showNotification('Mengirim pengaturan ke perangkat...', 'info');
+
+    // 2. Siapkan data untuk dikirim
     const dataForDevice = {
         derajatKemiringan: eventType === 'kemiringan' ? eventValue : currentKemiringan,
         curahHujanKontrol: eventType === 'curahHujan' ? eventValue : currentCurahHujan
@@ -326,7 +332,7 @@ function sendAndLogEvent(eventType, eventValue) {
 
     console.log(`[Kontrol ${eventType}] Mengirim ke ThingSpeak:`, dataForDevice);
 
-    // 3. Kirim data ke backend (yang akan meneruskan ke Thingspeak)
+    // 3. Kirim data ke backend
     fetch("../backend/php/send_to_thingspeak.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -336,9 +342,8 @@ function sendAndLogEvent(eventType, eventValue) {
     .then(resultSend => {
         if (resultSend.status === "success") {
             console.log(`Pengaturan ${eventType} berhasil dikirim.`);
-            alert(`Pengaturan ${eventType} berhasil dikirim ke perangkat.`);
+            showNotification(`Pengaturan ${eventType} berhasil dikirim!`, 'success'); // Ubah alert ke notifikasi
 
-            // 4. Siapkan data untuk logging ke database lokal
             const eventDataForLog = {
                 simulationName: currentActiveSimulationName,
                 client_timestamp: new Date().toISOString(),
@@ -354,14 +359,12 @@ function sendAndLogEvent(eventType, eventValue) {
                 outputCurahHujan: currentOutputCurahHujan
             };
             
-            // 5. Kirim data log ke backend
             return fetch("../backend/php/save_simulation.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(eventDataForLog)
             });
         } else {
-            // Jika pengiriman ke perangkat gagal, lempar error untuk ditangkap di .catch()
             throw new Error(resultSend.message || "Gagal mengirim pengaturan ke perangkat.");
         }
     })
@@ -370,38 +373,60 @@ function sendAndLogEvent(eventType, eventValue) {
         if (resultSave.status === "success") {
             console.log(`[Event Log] Event perubahan ${eventType} berhasil dicatat.`);
         } else {
-            // Jika logging gagal
             throw new Error(resultSave.message || `Gagal mencatat event ${eventType} di server.`);
         }
     })
     .catch(error => {
-        // Satu tempat untuk menangani semua kemungkinan error
         console.error(`[Event Error] Terjadi kesalahan pada proses ${eventType}:`, error);
-        alert(`Error: ${error.message}`);
+        showNotification(`Error: ${error.message}`, 'error'); // Ubah alert ke notifikasi
+    })
+    .finally(() => {
+        // ⭐ BARU: Blok ini akan selalu dijalankan
+        console.log("Menunggu 16 detik sebelum mengaktifkan tombol kembali...");
+        setTimeout(() => {
+            // ⭐ PERUBAHAN: Set flag ke false dan hapus class
+            isControlBusy = false;
+            if (kemiringanButton) kemiringanButton.classList.remove('button-busy');
+            if (curahHujanButton) curahHujanButton.classList.remove('button-busy');
+            console.log("Tombol kontrol diaktifkan kembali.");
+
+            showNotification("Kontrol siap digunakan kembali.", "success");
+        }, 16000); // 16 detik (15 detik limit + 1 detik buffer)
     });
 }
 
-    function handleKemiringan() {
-      const inputElement = document.querySelector("#kemiringan-input");
-      const value = parseFloat(inputElement.value);
-      if (isNaN(value)) {
-        alert("Silakan pilih derajat kemiringan yang valid.");
-        return;
-      }
-      // Panggil fungsi generik
-      sendAndLogEvent('kemiringan', value);
-    }
+function handleKemiringan() {
+  // ⭐ BARU: Cek apakah kontrol sedang sibuk
+  if (isControlBusy) {
+    showNotification("Harap tunggu, perintah sebelumnya sedang diproses.", "warning");
+    return;
+  }
+  
+  const inputElement = document.querySelector("#kemiringan-input");
+  const value = parseFloat(inputElement.value);
+  if (isNaN(value)) {
+    alert("Silakan pilih derajat kemiringan yang valid.");
+    return;
+  }
+  sendAndLogEvent('kemiringan', value);
+}
 
-    function handleCurahHujan() {
-      const inputElement = document.querySelector('#curah-hujan-input');
-      const value = parseFloat(inputElement.value);
-      if (isNaN(value)) {
-        alert("Silakan masukkan nilai curah hujan yang valid.");
-        return;
-      }
-      // Panggil fungsi generik
-      sendAndLogEvent('curahHujan', value);
-    }
+// Ganti fungsi lama Anda dengan yang ini
+function handleCurahHujan() {
+  // ⭐ BARU: Cek apakah kontrol sedang sibuk
+  if (isControlBusy) {
+    showNotification("Harap tunggu, perintah sebelumnya sedang diproses.", "warning");
+    return;
+  }
+
+  const inputElement = document.querySelector('#curah-hujan-input');
+  const value = parseFloat(inputElement.value);
+  if (isNaN(value)) {
+    alert("Silakan masukkan nilai curah hujan yang valid.");
+    return;
+  }
+  sendAndLogEvent('curahHujan', value);
+}
 
 document.addEventListener("DOMContentLoaded", function () {
   fetch("../backend/php/check_session.php").then(response => response.text())
@@ -664,20 +689,7 @@ function fetchDataForAllSensors() {
                 } else {
                     console.log(`[API Polling] Data curah hujan basi (timestamp: ${feed.created_at}). Tidak digunakan.`);
                 }
-            } else if (dataCurahHujan.channel && dataCurahHujan.channel[`field${curah_hujan.fields.input}`] && dataCurahHujan.channel.updated_at) {
-                const dataTimestamp = Date.parse(dataCurahHujan.channel.updated_at);
-                if (currentTime - dataTimestamp <= MAX_DATA_AGE_MS) {
-                    curahHujanValue = dataCurahHujan.channel[`field${curah_hujan.fields.input}`];
-                     if (!latestValidTimestamp || new Date(dataCurahHujan.channel.updated_at) > new Date(latestValidTimestamp)) {
-                        latestValidTimestamp = dataCurahHujan.channel.updated_at;
-                    }
-                    console.log("[API Polling] Data curah hujan (dari channel fallback) diterima dan valid.");
-                } else {
-                     console.log(`[API Polling] Data curah hujan (dari channel fallback) basi. Tidak digunakan.`);
-                }
-            } else {
-                 console.log(`[API Polling] Tidak ada feeds atau fallback data curah hujan.`);
-            }
+            } 
 
             let apiResponse = {
                 status: 'success',
@@ -798,25 +810,25 @@ function sendBufferedDataToServer(isFinalSend = false) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("[Init] Polling API dan koleksi data tidak dimulai otomatis. Aktifkan simulasi & simpan nama untuk memulai.");
+// document.addEventListener("DOMContentLoaded", () => {
+//   console.log("[Init] Polling API dan koleksi data tidak dimulai otomatis. Aktifkan simulasi & simpan nama untuk memulai.");
 
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
-      console.log("[Page Visibility] Tab tidak aktif.");
-      if (toggleSimulation && toggleSimulation.checked && currentActiveSimulationName) {
-          console.log("[Page Visibility] Simulasi aktif, polling API dihentikan sementara saat tab tidak aktif.");
-          stopApiPolling();
-      }
-    } else {
-      console.log("[Page Visibility] Tab aktif.");
-      if (toggleSimulation && toggleSimulation.checked && currentActiveSimulationName) {
-        console.log("[Page Visibility] Simulasi aktif, polling API dimulai kembali saat tab aktif.");
-        startApiPolling();
-      }
-    }
-  });
-});
+//   document.addEventListener("visibilitychange", () => {
+//     if (document.hidden) {
+//       console.log("[Page Visibility] Tab tidak aktif.");
+//       if (toggleSimulation && toggleSimulation.checked && currentActiveSimulationName) {
+//           console.log("[Page Visibility] Simulasi aktif, polling API dihentikan sementara saat tab tidak aktif.");
+//           stopApiPolling();
+//       }
+//     } else {
+//       console.log("[Page Visibility] Tab aktif.");
+//       if (toggleSimulation && toggleSimulation.checked && currentActiveSimulationName) {
+//         console.log("[Page Visibility] Simulasi aktif, polling API dimulai kembali saat tab aktif.");
+//         startApiPolling();
+//       }
+//     }
+//   });
+// });
 
 function updateMainIndicator(average) {
   const element = document.querySelector('.frame-home-page1-humidity1');

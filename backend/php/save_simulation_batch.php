@@ -29,9 +29,9 @@ define("MIN_CURAH_HUJAN_OUTPUT_DP", 0);
 define("MAX_CURAH_HUJAN_OUTPUT_DP", 25);
 
 // Threshold Outlier
-define("OUTLIER_KEMIRINGAN_DEVIATION_DP", 25); // Derajat
+define("OUTLIER_KEMIRINGAN_DEVIATION_DP", 45); // Derajat
 define("OUTLIER_CURAHHUJAN_DEVIATION_DP", 50); // mm
-define("OUTLIER_KELEMBABAN_DEVIATION_PERCENT_DP", 30); // Persen
+define("OUTLIER_KELEMBABAN_DEVIATION_PERCENT_DP", 50); // Persen
 // --- AKHIR KONFIGURASI ---
 
 write_log($script_name, 'INFO', 'Memulai proses penyimpanan batch simulasi.');

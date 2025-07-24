@@ -28,9 +28,9 @@ define("MIN_CURAH_HUJAN_OUTPUT", 0);
 define("MAX_CURAH_HUJAN_OUTPUT", 25);
 
 // Threshold Outlier
-define("OUTLIER_KEMIRINGAN_DEVIATION", 10); // Derajat, deviasi antara input dan output
+define("OUTLIER_KEMIRINGAN_DEVIATION", 45); // Derajat, deviasi antara input dan output
 define("OUTLIER_CURAHHUJAN_DEVIATION", 50); // mm, deviasi antara input dan output
-define("OUTLIER_KELEMBABAN_DEVIATION_PERCENT", 30); // Persen, deviasi dari rata-rata kelembapan lain
+define("OUTLIER_KELEMBABAN_DEVIATION_PERCENT", 50); // Persen, deviasi dari rata-rata kelembapan lain
 // --- AKHIR KONFIGURASI ---
 
 write_log($script_name, 'INFO', 'Memulai proses penyimpanan simulasi tunggal.');
