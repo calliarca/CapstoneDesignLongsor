@@ -5,11 +5,10 @@
 #include "MPU6050_6Axis_MotionApps20.h"
 
 // =================================================================
-//                    KONFIGURASI JARINGAN & MQTT
+//                      KONFIGURASI JARINGAN & MQTT
 // =================================================================
 
 // ----- WiFi Credentials -----
-// Ganti dengan SSID dan Password WiFi Anda
 const char ssid[] = "Reee";
 const char pass[] = "Reeee1234";
 
@@ -17,126 +16,130 @@ const char pass[] = "Reeee1234";
 const char* mqttServer = "mqtt3.thingspeak.com";
 const int mqttPort = 1883;
 
-// ----- Kredensial MQTT untuk Channel "Sensor Kemiringan" (ID: 3013750) -----
-// Kredensial ini digunakan untuk menghubungkan ESP32 ke ThingSpeak.
-const char mqttUserName[] = "EDclAjUSIiYgCykzEyAKKxs";
-const char clientID[]     = "EDclAjUSIiYgCykzEyAKKxs";
-const char mqttPass[]     = "I+Fad7MFYEWf6szKOWfMOtHq";
-
 // ----- Channel IDs -----
-// Channel untuk MENGIRIM data sensor (Pitch, Yaw, Roll) dari alat ini
-#define CHANNEL_ID_DATA   3013750
-// Channel untuk MENERIMA perintah (Setpoint Kemiringan) dari Web Admin
-#define CHANNEL_ID_KONTROL 2963900
+#define CHANNEL_ID_DATA    3013750 // Channel untuk MENGIRIM data sensor
+#define CHANNEL_ID_KONTROL 2963900 // Channel untuk MENERIMA perintah
 
-// ----- MQTT Topics -----
-// Topik untuk SUBSCRIBE: Mendengarkan perintah dari Field 1 di Channel Kontrol Simulator
-String mqttSubscribeTopic = "channels/" + String(CHANNEL_ID_KONTROL) + "/subscribe/fields/field1";
-// Topik untuk PUBLISH: Mengirim data ke Channel Sensor Kemiringan
-String mqttPublishTopic   = "channels/" + String(CHANNEL_ID_DATA) + "/publish";
+// ----- Kredensial & Klien untuk PUBLISH (Channel Data: 3013750) -----
+const char mqttUserName_pub[] = "EDclAjUSIiYgCykzEyAKKxs";
+const char clientID_pub[]     = "EDclAjUSIiYgCykzEyAKKxs"; // ID harus unik
+const char mqttPass_pub[]     = "I+Fad7MFYEWf6szKOWfMOtHq";
+String mqttPublishTopic       = "channels/" + String(CHANNEL_ID_DATA) + "/publish";
+WiFiClient espClient_pub;
+PubSubClient client_pub(espClient_pub);
 
-// Inisialisasi WiFi dan MQTT Client
-WiFiClient espClient;
-PubSubClient client(espClient);
+// ----- Kredensial & Klien untuk SUBSCRIBE (Channel Kontrol: 2963900) -----
+const char mqttUserName_sub[] = "ICMHJyYYIRkrNgMVGDUcARM";
+const char clientID_sub[]     = "ICMHJyYYIRkrNgMVGDUcARM"; // ID harus unik
+const char mqttPass_sub[]     = "kDU0XPSGjMb7Un3USw59j5Fu";
+String subTopicField1 = "channels/" + String(CHANNEL_ID_KONTROL) + "/subscribe/fields/field1"; // Topik untuk DerajatKemiringan
+WiFiClient espClient_sub;
+PubSubClient client_sub(espClient_sub);
 
 // =================================================================
-//                  KONFIGURASI PIN & PERANGKAT KERAS
+//                      KONFIGURASI PIN & PERANGKAT KERAS
 // =================================================================
 
-// ----- Pin Motor Driver BTS7960 -----
-const int RPWM_PIN = 16; // Pin PWM untuk gerak naik
-const int LPWM_PIN = 17; // Pin PWM untuk gerak turun
-const int R_EN_PIN = 18; // Pin Enable Kanan
-const int L_EN_PIN = 19; // Pin Enable Kiri
+const int RPWM_PIN = 16;
+const int LPWM_PIN = 17;
+const int R_EN_PIN = 18;
+const int L_EN_PIN = 19;
 
-// ----- MPU6050 Gyroscope/Accelerometer -----
 MPU6050 mpu;
 float Yaw, Pitch, Roll;
-// Nilai offset ini didapat dari kalibrasi MPU6050 Anda. JANGAN DIUBAH jika sudah sesuai.
 int MPUOffsets[6] = {669, 1394, 4109, 163, -22, 25};
 
 // =================================================================
 //                VARIABEL GLOBAL UNTUK KONTROL & STATUS
 // =================================================================
 
-// ----- Variabel Kontrol Motor -----
-int setpoint = 0;           // Target kemiringan (derajat) yang diterima dari MQTT. Default 0.
-bool motorActive = false;   // Status apakah motor sedang dalam proses mencapai setpoint.
-const int motorSpeedHigh = 245; // Kecepatan motor saat error > 3 derajat
-const int motorSpeedLow  = 240; // Kecepatan motor saat error <= 3 derajat
-const float tolerance    = 0.5; // Toleransi error (derajat) untuk menghentikan motor
+int setpoint = 0;
+bool motorActive = false;
+const int motorSpeedHigh = 245;
+const int motorSpeedLow  = 240;
+const float tolerance    = 0.5;
 
-// ----- Timer & Penghitung -----
 unsigned long previousMillis = 0;
-const long interval = 2000; // Interval pembacaan sensor dan pengiriman data (2 detik)
+const long interval = 2000;
+
+// Deklarasi fungsi agar bisa dipanggil sebelum definisinya
+void mqtt_callback(char* topic, byte* payload, unsigned int length);
+void reconnectPublishClient();
+void reconnectSubscribeClient();
+void stopMotor();
 
 // =================================================================
-//                          FUNGSI SETUP
+//                                FUNGSI SETUP
 // =================================================================
 
 void setup() {
   Serial.begin(115200);
   
-  // Konfigurasi Pin Motor
   pinMode(RPWM_PIN, OUTPUT);
   pinMode(LPWM_PIN, OUTPUT);
   pinMode(R_EN_PIN, OUTPUT);
   pinMode(L_EN_PIN, OUTPUT);
-  digitalWrite(R_EN_PIN, HIGH); // Aktifkan driver
-  digitalWrite(L_EN_PIN, HIGH); // Aktifkan driver
-  stopMotor(); // Pastikan motor berhenti saat startup
+  digitalWrite(R_EN_PIN, HIGH);
+  digitalWrite(L_EN_PIN, HIGH);
+  stopMotor();
 
-  // Konfigurasi MPU6050
-  Wire.begin(22, 21); // Inisialisasi I2C pada pin SDA=22, SCL=21
-  Wire.setClock(400000); // Set kecepatan I2C ke 400kHz
+  Wire.begin(22, 21);
+  Wire.setClock(400000);
   MPU6050Connect();
 
-  // Koneksi Jaringan
   setupWiFi();
-  client.setServer(mqttServer, mqttPort);
-  client.setCallback(mqtt_callback); // Mengatur fungsi yang akan dipanggil saat ada pesan masuk
+  
+  // Konfigurasi Klien PUBLISH
+  client_pub.setServer(mqttServer, mqttPort);
+
+  // Konfigurasi Klien SUBSCRIBE
+  client_sub.setServer(mqttServer, mqttPort);
+  client_sub.setCallback(mqtt_callback); // Callback hanya untuk subscriber
 }
 
 // =================================================================
-//                           LOOP UTAMA
+//                                LOOP UTAMA
 // =================================================================
 
 void loop() {
-  // Selalu pastikan koneksi WiFi dan MQTT terjaga
   if (WiFi.status() != WL_CONNECTED) {
     Serial.println("Koneksi WiFi terputus, mencoba menyambung ulang...");
     setupWiFi();
   }
-  if (!client.connected()) {
-    reconnectMQTT();
-  }
-  client.loop(); // Wajib dipanggil untuk memproses pesan masuk dan menjaga koneksi
 
-  // Logika utama dieksekusi setiap 'interval' (2 detik)
+  // Jaga koneksi untuk kedua klien
+  if (!client_pub.connected()) {
+    reconnectPublishClient();
+  }
+  if (!client_sub.connected()) {
+    reconnectSubscribeClient();
+  }
+  
+  // Jalankan loop untuk kedua klien
+  client_pub.loop();
+  client_sub.loop();
+
   unsigned long currentMillis = millis();
   if (currentMillis - previousMillis >= interval) {
     previousMillis = currentMillis;
 
-    // 1. Selalu baca data sensor terbaru
     GetDMP();
 
-    // 2. Tampilkan data di Serial Monitor untuk debugging
+    Serial.println("--- STATUS SAAT INI ---");
     Serial.print("Yaw: "); Serial.print(Yaw, 1);
     Serial.print(" | Pitch: "); Serial.print(Pitch, 1);
-    Serial.print(" | Roll: "); Serial.print(Roll, 1);
-    Serial.print(" | Setpoint: "); Serial.print(setpoint);
+    Serial.print(" | Roll: "); Serial.println(Roll, 1);
+    Serial.print("Setpoint Kemiringan: "); Serial.print(setpoint);
     Serial.print(" | Motor Aktif: "); Serial.println(motorActive);
+    Serial.println("-----------------------");
 
-    // 3. Kontrol motor jika diperlukan (jika motorActive == true)
     kontrolMotor();
-
-    // 4. Selalu kirim data sensor terbaru ke ThingSpeak
     publishMQTT();
   }
 }
 
 // =================================================================
-//                   FUNGSI KONEKTIVITAS & MQTT
+//                      FUNGSI KONEKTIVITAS & MQTT
 // =================================================================
 
 void setupWiFi() {
@@ -151,86 +154,92 @@ void setupWiFi() {
   Serial.println(WiFi.localIP());
 }
 
-void reconnectMQTT() {
-  while (!client.connected()) {
-    Serial.print("Menghubungkan ke MQTT Broker...");
-    if (client.connect(clientID, mqttUserName, mqttPass)) {
+void reconnectPublishClient() {
+  while (!client_pub.connected()) {
+    Serial.print("Menghubungkan Klien PUBLISH ke MQTT...");
+    if (client_pub.connect(clientID_pub, mqttUserName_pub, mqttPass_pub)) {
       Serial.println(" Terhubung!");
-      // Subscribe ke topik perintah setelah berhasil terhubung
-      client.subscribe(mqttSubscribeTopic.c_str());
-      Serial.print("Berhasil subscribe ke: ");
-      Serial.println(mqttSubscribeTopic);
     } else {
       Serial.print(" Gagal, rc=");
-      Serial.print(client.state());
+      Serial.print(client_pub.state());
       Serial.println(" Mencoba lagi dalam 5 detik...");
       delay(5000);
     }
   }
 }
 
-/**
- * @brief Fungsi callback yang dipanggil saat ada pesan masuk dari topik MQTT.
- */
-void mqtt_callback(char* topic, byte* payload, unsigned int length) {
-  payload[length] = '\0'; // Menambahkan null terminator untuk mengubah payload menjadi string
-  String message = String((char*)payload);
-  Serial.println("--- Pesan MQTT Diterima ---");
-  Serial.print("Topik: "); Serial.println(topic);
-  Serial.print("Payload: "); Serial.println(message);
-
-  int input = message.toInt();
-
-  // Validasi nilai setpoint yang diterima
-  if (input % 5 == 0 && input >= 0 && input <= 50) { // Rentang 0-50 derajat, kelipatan 5
-    setpoint = input;
-    motorActive = true; // Aktifkan motor untuk mulai bergerak ke setpoint baru
-    Serial.print("Setpoint baru diterima: ");
-    Serial.print(setpoint);
-    Serial.println(" derajat. Motor diaktifkan.");
-    Serial.println("---------------------------");
-  } else {
-    Serial.print("Setpoint tidak valid atau di luar rentang: ");
-    Serial.println(input);
-    Serial.println("---------------------------");
+void reconnectSubscribeClient() {
+    while (!client_sub.connected()) {
+    Serial.print("Menghubungkan Klien SUBSCRIBE ke MQTT...");
+    if (client_sub.connect(clientID_sub, mqttUserName_sub, mqttPass_sub)) {
+      Serial.println(" Terhubung!");
+      // Subscribe hanya ke topik field 1 setelah berhasil terhubung
+      client_sub.subscribe(subTopicField1.c_str());
+      Serial.print("Berhasil subscribe ke topik: ");
+      Serial.println(subTopicField1);
+    } else {
+      Serial.print(" Gagal, rc=");
+      Serial.print(client_sub.state());
+      Serial.println(" Mencoba lagi dalam 5 detik...");
+      delay(5000);
+    }
   }
 }
 
-/**
- * @brief Mempublikasikan data Pitch, Yaw, dan Roll ke ThingSpeak.
- */
+void mqtt_callback(char* topic, byte* payload, unsigned int length) {
+  payload[length] = '\0';
+  String message = String((char*)payload);
+  String topicStr = String(topic);
+
+  Serial.println("--- Pesan MQTT Diterima ---");
+  Serial.print("Topik: "); Serial.println(topicStr);
+  Serial.print("Payload: "); Serial.println(message);
+
+  if (topicStr.equals(subTopicField1)) {
+    int input = message.toInt();
+    if (input % 5 == 0 && input >= 0 && input <= 50) {
+      setpoint = input;
+      motorActive = true;
+      Serial.print("-> Setpoint kemiringan baru diterima: "); Serial.println(setpoint);
+    } else {
+      Serial.print("-> Setpoint kemiringan tidak valid: "); Serial.println(input);
+    }
+  } 
+  
+  Serial.println("---------------------------");
+}
+
 void publishMQTT() {
-  // Pastikan nilai Pitch valid sebelum mengirim
-  if (Pitch < -90 || Pitch > 90) {
+  if (isnan(Pitch) || Pitch < -90 || Pitch > 90) {
     Serial.println("Nilai Pitch tidak wajar, pengiriman dibatalkan.");
     return;
   }
+  if (!client_pub.connected()) {
+    Serial.println("Klien PUBLISH tidak terhubung, pengiriman dibatalkan.");
+    return;
+  }
 
-  // ⭐ PERBAIKAN: Membuat payload untuk 3 field sekaligus
   String payload = "field1=" + String(Pitch, 2) + "&field2=" + String(Yaw, 2) + "&field3=" + String(Roll, 2);
 
-  Serial.print("Mengirim data ke ThingSpeak: ");
+  Serial.print("Mengirim data via Klien PUBLISH: ");
   Serial.println(payload);
 
-  if (client.publish(mqttPublishTopic.c_str(), payload.c_str())) {
+  if (client_pub.publish(mqttPublishTopic.c_str(), payload.c_str())) {
     Serial.println("-> Data berhasil dikirim!");
   } else {
-    Serial.println("-> Gagal mengirim data MQTT!");
+    Serial.println("-> Gagal mengirim data via Klien PUBLISH!");
   }
 }
 
 // =================================================================
-//                      FUNGSI SENSOR & MOTOR
+//                       FUNGSI SENSOR & MOTOR
 // =================================================================
 
-/**
- * @brief Menginisialisasi sensor MPU6050 dan Digital Motion Processor (DMP).
- */
 void MPU6050Connect() {
   mpu.initialize();
   if (!mpu.testConnection()) {
     Serial.println("Koneksi MPU6050 gagal!");
-    while(1); // Hentikan program jika MPU tidak terdeteksi
+    while(1);
   }
   
   uint8_t devStatus = mpu.dmpInitialize();
@@ -240,7 +249,6 @@ void MPU6050Connect() {
     while (1);
   }
 
-  // Terapkan offset yang sudah dikalibrasi
   mpu.setXAccelOffset(MPUOffsets[0]);
   mpu.setYAccelOffset(MPUOffsets[1]);
   mpu.setZAccelOffset(MPUOffsets[2]);
@@ -252,16 +260,14 @@ void MPU6050Connect() {
   Serial.println("MPU6050 DMP berhasil diinisialisasi!");
 }
 
-/**
- * @brief Membaca data Yaw, Pitch, dan Roll dari MPU6050.
- */
 void GetDMP() {
-  if (mpu.dmpGetCurrentFIFOPacket(mpu.dmpGetFIFOPacketSize())) {
+  uint8_t fifoBuffer[64]; // buffer untuk menyimpan paket dari FIFO
+  if (mpu.dmpGetCurrentFIFOPacket(fifoBuffer)) {
     Quaternion q;
     VectorFloat gravity;
     float ypr[3];
-    
-    mpu.dmpGetQuaternion(&q, mpu.dmpGetFIFOPacketSize());
+
+    mpu.dmpGetQuaternion(&q, fifoBuffer);
     mpu.dmpGetGravity(&gravity, &q);
     mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
 
@@ -272,35 +278,26 @@ void GetDMP() {
   }
 }
 
-/**
- * @brief Logika utama untuk mengontrol pergerakan motor berdasarkan setpoint.
- */
 void kontrolMotor() {
   if (!motorActive) {
-    return; // Jangan lakukan apa-apa jika motor tidak seharusnya aktif
+    return;
   }
   
   float error = setpoint - Pitch;
   
-  // Cek apakah posisi sudah dalam rentang toleransi
   if (abs(error) <= tolerance) {
     stopMotor();
     Serial.println("✅ Setpoint tercapai! Motor dinonaktifkan.");
-    motorActive = false; // Nonaktifkan motor setelah target tercapai
+    motorActive = false;
   } 
-  // Jika target di atas posisi sekarang, gerak naik
   else if (error > 0) {
     moveUp();
   } 
-  // Jika target di bawah posisi sekarang, gerak turun
   else {
     moveDown();
   }
 }
 
-/**
- * @brief Menggerakkan motor ke atas (menaikkan kemiringan).
- */
 void moveUp() {
   int speed = (abs(setpoint - Pitch) > 3) ? motorSpeedHigh : motorSpeedLow;
   analogWrite(RPWM_PIN, speed);
@@ -309,9 +306,6 @@ void moveUp() {
   Serial.println(speed);
 }
 
-/**
- * @brief Menggerakkan motor ke bawah (menurunkan kemiringan).
- */
 void moveDown() {
   int speed = (abs(setpoint - Pitch) > 3) ? motorSpeedHigh : motorSpeedLow;
   analogWrite(RPWM_PIN, 0);
@@ -320,9 +314,6 @@ void moveDown() {
   Serial.println(speed);
 }
 
-/**
- * @brief Menghentikan motor.
- */
 void stopMotor() {
   analogWrite(RPWM_PIN, 0);
   analogWrite(LPWM_PIN, 0);

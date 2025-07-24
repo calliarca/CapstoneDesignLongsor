@@ -3,14 +3,15 @@
 #include <PubSubClient.h>
 
 // WiFi Credentials
-const char ssid[] = "Reee";
-const char pass[] = "Reeee1234";
+const char ssid[] = "RedmiC";
+const char pass[] = "blablabla";
 
 // ThingSpeak MQTT Credentials
 #define channelID 3013752
+
 const char mqttUserName[] = "LgwUJRonHwAaGiIANxUFGQ8";
 const char clientID[] = "LgwUJRonHwAaGiIANxUFGQ8";
-const char mqttPass[] = "LgwUJRonHwAaGiIANxUFGQ8";
+const char mqttPass[] = "yGYSEib4dSC0AOdq3yVgNL+3";
 
 // MQTT Server (ThingSpeak)
 const char* mqttServer = "mqtt3.thingspeak.com";
@@ -117,7 +118,7 @@ void loop() {
     }
     
     // Delay utama untuk loop, menentukan interval pembacaan dan pengiriman (20 detik)
-    delay(16000); 
+    delay(1200); 
   } else {
     // Setelah 1 jam, program akan masuk ke sini dan tidak melakukan apa-apa.
     // Pesan terakhir sudah dicetak di atas.
