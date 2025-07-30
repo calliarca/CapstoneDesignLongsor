@@ -11,7 +11,7 @@ let currentOutputKemiringan = 0;
 let currentOutputYaw = 0;
 let currentOutputRoll = 0;
 let currentOutputCurahHujan = 0;
-let isControlBusy = false; // ⭐ BARU: Flag untuk menandai tombol sedang sibuk
+let isControlBusy = false; 
 
 // Inisialisasi globalGyroData untuk three_scene.js
 window.globalGyroData = { x: 0, y: 0, z: 0 };
@@ -252,9 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// =================================================================================
-// ⭐ PERUBAHAN UTAMA: Memuat semua file konfigurasi saat halaman dibuka
-// =================================================================================
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         // Muat konfigurasi ThingSpeak yang baru
@@ -268,8 +265,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         alert(`Gagal memuat file konfigurasi penting. Fitur pengambilan data sensor tidak akan berfungsi.`);
     }
 });
-// =================================================================================
-
 
 document.addEventListener('wheel', function (event) {
   if (event.ctrlKey) event.preventDefault();
@@ -381,10 +376,8 @@ function sendAndLogEvent(eventType, eventValue) {
         showNotification(`Error: ${error.message}`, 'error'); // Ubah alert ke notifikasi
     })
     .finally(() => {
-        // ⭐ BARU: Blok ini akan selalu dijalankan
         console.log("Menunggu 16 detik sebelum mengaktifkan tombol kembali...");
         setTimeout(() => {
-            // ⭐ PERUBAHAN: Set flag ke false dan hapus class
             isControlBusy = false;
             if (kemiringanButton) kemiringanButton.classList.remove('button-busy');
             if (curahHujanButton) curahHujanButton.classList.remove('button-busy');
@@ -411,7 +404,6 @@ function handleKemiringan() {
   sendAndLogEvent('kemiringan', value);
 }
 
-// Ganti fungsi lama Anda dengan yang ini
 function handleCurahHujan() {
   // ⭐ BARU: Cek apakah kontrol sedang sibuk
   if (isControlBusy) {
@@ -563,7 +555,14 @@ function processAndDisplaySensorData(data) {
     const averageMoisture = moistureValues.length > 0 ? Math.round(moistureValues.reduce((a,b) => a+b,0)/moistureValues.length*10)/10 : 0;
     
     const avgMoistureEl = document.getElementById('average-moisture');
-    if (avgMoistureEl) avgMoistureEl.textContent = averageMoisture;
+    if (avgMoistureEl) {
+      // --- PERUBAHAN DI SINI ---
+      if (!isNaN(averageMoisture) && averageMoisture > 20) {
+        avgMoistureEl.textContent = '>20'; // Tampilkan '>20' jika nilai di atas 20
+      } else {
+        avgMoistureEl.textContent = averageMoisture; // Tampilkan nilai asli jika 20 atau di bawahnya
+      }
+    }
     updateMainIndicator(averageMoisture);
     updateIndividualSensors(sensorsForUI);
 
@@ -580,7 +579,6 @@ function processAndDisplaySensorData(data) {
     updateMainIndicator(NaN);
     updateIndividualSensors({sensor1:NaN, sensor2:NaN, sensor3:NaN, sensor4:NaN, sensor5:NaN, sensor6:NaN});
 
-
     const nilaiKemiringanEl = document.getElementById('nilaiKemiringan');
     if (nilaiKemiringanEl) nilaiKemiringanEl.textContent = 'ERR';
     const nilaiOutputCHujanEl = document.getElementById('nilaiOutputCurahHujan');
@@ -588,9 +586,6 @@ function processAndDisplaySensorData(data) {
   }
 }
 
-// =================================================================================
-// ⭐ PERUBAHAN UTAMA: Fungsi ini sekarang menggunakan `thingspeakConfig`
-// =================================================================================
 function fetchDataForAllSensors() {
     // Pastikan konfigurasi sudah dimuat
     if (!thingspeakConfig.kelembaban || !thingspeakConfig.kemiringan || !thingspeakConfig.curah_hujan || !thingspeakConfig.kontrol_simulator) {
@@ -685,10 +680,7 @@ function fetchDataForAllSensors() {
                     if (!latestValidTimestamp || new Date(feed.created_at) > new Date(latestValidTimestamp)) {
                         latestValidTimestamp = feed.created_at;
                     }
-                    console.log("[API Polling] Data curah hujan diterima dan valid.");
-                } else {
-                    console.log(`[API Polling] Data curah hujan basi (timestamp: ${feed.created_at}). Tidak digunakan.`);
-                }
+                } 
             } 
 
             let apiResponse = {
@@ -719,8 +711,6 @@ function fetchDataForAllSensors() {
             processAndDisplaySensorData({ status: 'error', message: error.message });
         });
 }
-// =================================================================================
-
 
 function startApiPolling() {
     if (!(toggleSimulation && toggleSimulation.checked && currentActiveSimulationName)) {
@@ -810,26 +800,6 @@ function sendBufferedDataToServer(isFinalSend = false) {
     }
 }
 
-// document.addEventListener("DOMContentLoaded", () => {
-//   console.log("[Init] Polling API dan koleksi data tidak dimulai otomatis. Aktifkan simulasi & simpan nama untuk memulai.");
-
-//   document.addEventListener("visibilitychange", () => {
-//     if (document.hidden) {
-//       console.log("[Page Visibility] Tab tidak aktif.");
-//       if (toggleSimulation && toggleSimulation.checked && currentActiveSimulationName) {
-//           console.log("[Page Visibility] Simulasi aktif, polling API dihentikan sementara saat tab tidak aktif.");
-//           stopApiPolling();
-//       }
-//     } else {
-//       console.log("[Page Visibility] Tab aktif.");
-//       if (toggleSimulation && toggleSimulation.checked && currentActiveSimulationName) {
-//         console.log("[Page Visibility] Simulasi aktif, polling API dimulai kembali saat tab aktif.");
-//         startApiPolling();
-//       }
-//     }
-//   });
-// });
-
 function updateMainIndicator(average) {
   const element = document.querySelector('.frame-home-page1-humidity1');
   if (!element) return;
@@ -860,7 +830,14 @@ function updateIndividualSensors(sensors) {
            valueElement.textContent = `ERR`;
            dotElement.classList.add('error');
       } else {
-        valueElement.textContent = `${value}%`;
+        // --- PERUBAHAN DI SINI ---
+        if (value > 20) {
+          valueElement.textContent = `>20%`; // Tampilkan '>20%' jika nilai di atas 20
+        } else {
+          valueElement.textContent = `${value}%`; // Tampilkan nilai asli jika 20 atau di bawahnya
+        }
+        
+        // Logika untuk warna titik tetap menggunakan nilai asli
         if (value < 30) dotElement.classList.add('dry');
         else if (value < 70) dotElement.classList.add('moderate');
         else dotElement.classList.add('wet');
@@ -880,8 +857,6 @@ document.querySelectorAll('.sensor-point').forEach(sensor => {
 
 function resetAlarmStatusOnServer() {
     console.log("[Reset Alarm] Mengirim permintaan untuk mereset status alarm di ThingSpeak...");
-    // NOTE: Backend script 'reset_alarm_status.php' akan menggunakan kredensial
-    // untuk mereset alarm di Channel "Kontrol Simulator".
     fetch('../backend/php/reset_alarm_status.php', { method: 'POST' })
         .then(response => response.json())
         .then(data => {

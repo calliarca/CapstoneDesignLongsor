@@ -4,6 +4,47 @@ A smart landslide simulator system developed for **research and educational purp
 
 ---
 
+## 📦 How to Run This Website
+
+### 1. Clone Repository
+Clone repo ini ke folder `htdocs` XAMPP Anda:
+```bash
+git clone https://github.com/calliarca/CapstoneDesignLongsor_Reorganized.git
+```
+
+### 2. Install PHP Dependencies
+Masuk ke folder project, lalu jalankan:
+```bash
+composer install
+```
+> Jika belum punya Composer, download di [getcomposer.org](https://getcomposer.org/).
+
+### 3. Setup Database
+- Buka `phpMyAdmin` melalui XAMPP.
+- Import file database yang ada di folder `database/` (misal: `simulator_longsor.sql`).
+- Pastikan konfigurasi database di `backend/php/config.php` sudah sesuai.
+
+### 4. Konfigurasi File
+- Edit file konfigurasi seperti:
+  - `backend/assets/js/camera_config.json`
+  - `backend/assets/js/channel_config.json`
+  - `backend/assets/js/thingspeak_config.json`
+  - `backend/php/config.php`
+  - `simulator_longsor.sql`
+- Isi sesuai kebutuhan (lihat contoh atau dokumentasi).
+
+### 5. Jalankan XAMPP
+- Aktifkan **Apache** dan **MySQL** di XAMPP Control Panel.
+
+### 6. Akses Website
+Buka browser dan akses:
+```
+http://localhost/CapstoneDesignLongsor_Reorganized/
+```
+Login dengan akun yang sudah terdaftar (admin/user).
+
+---
+
 ## 📌 Project Objectives
 
 - Simulate landslide events through a controlled environment (adjustable slope, rainfall).
@@ -34,26 +75,15 @@ A smart landslide simulator system developed for **research and educational purp
 
 ## 🚀 Getting Started
 
-### 1. Setup ESP32
-- Open any sketch under `/arduino/`
-- Install required libraries: `WiFi`, `PubSubClient`, `Wire`, `MPU6050`, etc.
-- Set your **Wi-Fi credentials** and **MQTT credentials**.
-- Upload to your ESP32 via Arduino IDE.
+Untuk melihat kode Arduino (ESP32) dan contoh validasi data, silakan kunjungi repository berikut:
+- [Arduino & Data Validation Source Code](https://github.com/calliarca/CapstoneDesignLongsor_AddOns)  
+  Di repo tersebut juga tersedia dokumentasi dan contoh konfigurasi untuk file berikut:
+  - `backend/assets/js/camera_config.json`
+  - `backend/assets/js/channel_config.json`
+  - `backend/assets/js/thingspeak_config.json`
+  - `backend/php/config.php`
 
-### 2. Setup Web Server
-- Install [XAMPP](https://www.apachefriends.org/index.html)
-- Place the project in the `htdocs/` folder.
-- Import database schema into **phpMyAdmin** (usually under `database/` folder).
-- Start **Apache** and **MySQL** services.
-
-### 3. Access the Web Interface
-Open a browser and visit:
-http://localhost/CAPSTONE/public/
-
-
-Login with admin or user credentials to access respective dashboards.
-
----
+Pastikan Anda membaca README dan dokumentasi pada repository tersebut untuk setup hardware dan validasi data secara lengkap.
 
 ## 🔧 Features
 

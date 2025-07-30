@@ -1,4 +1,7 @@
-camera_config.json
-channel_config.json
-thingspeak_config.json
-config.php
+backend/assets/js/camera_config.json
+backend/assets/js/channel_config.json
+backend/assets/js/thingspeak_config.json
+backend/php/config.php
+
+assets/vendor/
+vendor/
