@@ -9,7 +9,7 @@ A smart landslide simulator system developed for **research and educational purp
 ### 1. Clone Repository
 Clone repo ini ke folder `htdocs` XAMPP Anda:
 ```bash
-git clone https://github.com/calliarca/CapstoneDesignLongsor_Reorganized.git
+git clone https://github.com/calliarca/CapstoneDesignLongsor.git
 ```
 
 ### 2. Install PHP Dependencies
